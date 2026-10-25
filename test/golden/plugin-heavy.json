@@ -1,0 +1,486 @@
+{
+  "schemaVersion": 1,
+  "tool": {
+    "name": "prehello",
+    "version": "0.1.0"
+  },
+  "generatedAt": "2026-10-24T12:00:00.000Z",
+  "redacted": "paths-shortened (~ and ./ prefixes); server and file names kept",
+  "scan": {
+    "cwd": ".",
+    "window": 200000,
+    "tokenizer": {
+      "method": "bpe-o200k",
+      "note": "o200k BPE (gpt-tokenizer, bundled) with per-family scaling"
+    },
+    "claudeProfile": "current"
+  },
+  "agents": [
+    {
+      "id": "cursor",
+      "name": "Cursor",
+      "detected": true,
+      "detectedBy": [
+        "--agent"
+      ],
+      "presentInRepoOnly": false,
+      "profile": {
+        "id": "cursor-mixed",
+        "label": "o200k; model unknown, so midpoint of GPT-like (×1.0) and Claude-like (×1.5) priors",
+        "band": "wide: GPT-like −3% to Claude-like +20%"
+      },
+      "totals": {
+        "always": {
+          "est": 4964,
+          "low": 3852,
+          "high": 7148,
+          "measuredItems": 4,
+          "unmeasuredItems": 0
+        },
+        "conditional": {
+          "est": 0,
+          "low": 0,
+          "high": 0,
+          "measuredItems": 0,
+          "unmeasuredItems": 0
+        },
+        "deferred": {
+          "est": 4663,
+          "low": 3618,
+          "high": 6714,
+          "measuredItems": 2,
+          "unmeasuredItems": 0
+        },
+        "on-demand": {
+          "est": 0,
+          "low": 0,
+          "high": 0,
+          "measuredItems": 0,
+          "unmeasuredItems": 0
+        },
+        "unknown": {
+          "est": 0,
+          "low": 0,
+          "high": 0,
+          "measuredItems": 0,
+          "unmeasuredItems": 0
+        }
+      },
+      "percentOfWindowAlways": 2.4819999999999998,
+      "alwaysIsLowerBound": false,
+      "savings": {
+        "n": 3,
+        "top": [
+          {
+            "label": "plugin analytics-kit",
+            "kind": "skills",
+            "tokens": 2193,
+            "count": 40
+          },
+          {
+            "label": "plugin design-kit",
+            "kind": "skills",
+            "tokens": 1314,
+            "count": 24
+          },
+          {
+            "label": "plugin cloud-kit",
+            "kind": "skills",
+            "tokens": 719,
+            "count": 14
+          }
+        ],
+        "topTokens": 4226,
+        "groupsTokens": 4474,
+        "groupsCount": 4,
+        "pctOfAlways": 85.13295729250603,
+        "pctOfGroups": 94.45686186857398,
+        "pctOfWindow": 2.113,
+        "note": "estimate: what removing these groups would save; not a promise"
+      },
+      "grade": {
+        "letter": "A",
+        "score": 95,
+        "provisional": false,
+        "reasons": [
+          "always-on is ~2.5% of the window (−5)"
+        ]
+      },
+      "coverage": {
+        "agent": "cursor",
+        "alwaysMeasuredItems": 4,
+        "alwaysUnmeasuredItems": 0,
+        "alwaysFraction": 1,
+        "measuredKinds": {
+          "skills-listing": 2,
+          "instructions": 1,
+          "rule": 1
+        },
+        "unmeasuredKinds": {},
+        "mcpServers": 0
+      },
+      "installedButNothingFound": false,
+      "offenders": [
+        {
+          "label": "AGENTS.md",
+          "path": "./AGENTS.md",
+          "kind": "instructions",
+          "loadMode": "always",
+          "tokens": 326
+        },
+        {
+          "label": "./.cursor/rules/always.mdc",
+          "path": "./.cursor/rules/always.mdc",
+          "kind": "rule",
+          "loadMode": "always",
+          "tokens": 164
+        },
+        {
+          "label": "skill \"analytics-task-12\"",
+          "path": "~/.cursor/plugins",
+          "kind": "skills-listing",
+          "loadMode": "always",
+          "tokens": 59,
+          "note": "inside Skills listing (78 skills from 3 plugins)"
+        },
+        {
+          "label": "skill \"analytics-task-26\"",
+          "path": "~/.cursor/plugins",
+          "kind": "skills-listing",
+          "loadMode": "always",
+          "tokens": 59,
+          "note": "inside Skills listing (78 skills from 3 plugins)"
+        },
+        {
+          "label": "skill \"analytics-task-3\"",
+          "path": "~/.cursor/plugins",
+          "kind": "skills-listing",
+          "loadMode": "always",
+          "tokens": 59,
+          "note": "inside Skills listing (78 skills from 3 plugins)"
+        },
+        {
+          "label": "skill \"analytics-task-34\"",
+          "path": "~/.cursor/plugins",
+          "kind": "skills-listing",
+          "loadMode": "always",
+          "tokens": 59,
+          "note": "inside Skills listing (78 skills from 3 plugins)"
+        },
+        {
+          "label": "skill \"design-task-19\"",
+          "path": "~/.cursor/plugins",
+          "kind": "skills-listing",
+          "loadMode": "always",
+          "tokens": 59,
+          "note": "inside Skills listing (78 skills from 3 plugins)"
+        },
+        {
+          "label": "skill \"design-task-22\"",
+          "path": "~/.cursor/plugins",
+          "kind": "skills-listing",
+          "loadMode": "always",
+          "tokens": 59,
+          "note": "inside Skills listing (78 skills from 3 plugins)"
+        },
+        {
+          "label": "skill \"design-task-4\"",
+          "path": "~/.cursor/plugins",
+          "kind": "skills-listing",
+          "loadMode": "always",
+          "tokens": 59,
+          "note": "inside Skills listing (78 skills from 3 plugins)"
+        },
+        {
+          "label": "skill \"design-task-8\"",
+          "path": "~/.cursor/plugins",
+          "kind": "skills-listing",
+          "loadMode": "always",
+          "tokens": 59,
+          "note": "inside Skills listing (78 skills from 3 plugins)"
+        },
+        {
+          "label": "skill \"my-helper-4\"",
+          "path": "~/.cursor/skills",
+          "kind": "skills-listing",
+          "loadMode": "always",
+          "tokens": 51,
+          "note": "inside Skills listing (5 user skills)"
+        },
+        {
+          "label": "skill \"my-helper-5\"",
+          "path": "~/.cursor/skills",
+          "kind": "skills-listing",
+          "loadMode": "always",
+          "tokens": 51,
+          "note": "inside Skills listing (5 user skills)"
+        },
+        {
+          "label": "skill \"my-helper-2\"",
+          "path": "~/.cursor/skills",
+          "kind": "skills-listing",
+          "loadMode": "always",
+          "tokens": 49,
+          "note": "inside Skills listing (5 user skills)"
+        },
+        {
+          "label": "skill \"my-helper-3\"",
+          "path": "~/.cursor/skills",
+          "kind": "skills-listing",
+          "loadMode": "always",
+          "tokens": 49,
+          "note": "inside Skills listing (5 user skills)"
+        },
+        {
+          "label": "skill \"my-helper-1\"",
+          "path": "~/.cursor/skills",
+          "kind": "skills-listing",
+          "loadMode": "always",
+          "tokens": 48,
+          "note": "inside Skills listing (5 user skills)"
+        }
+      ],
+      "mcpServers": [],
+      "unmeasuredBanner": [
+        "User Rules and Team Rules (stored in Cursor, not on disk; paste them with --paste-user-rules to count them)",
+        "built-in system prompt and tools",
+        "plugin install state (3 plugins found under ~/.cursor/plugins)"
+      ],
+      "items": [
+        {
+          "id": "cursor:5",
+          "kind": "skills-listing",
+          "scope": "plugin",
+          "loadMode": "always",
+          "label": "Skills listing (78 skills from 3 plugins)",
+          "path": "~/.cursor/plugins",
+          "tokens": {
+            "est": 4226,
+            "low": 3280,
+            "high": 6086
+          },
+          "unmeasured": false,
+          "chars": 18076,
+          "lines": 0,
+          "breakdown": [
+            {
+              "label": "analytics-task-12",
+              "tokens": 59
+            },
+            {
+              "label": "analytics-task-26",
+              "tokens": 59
+            },
+            {
+              "label": "analytics-task-3",
+              "tokens": 59
+            },
+            {
+              "label": "analytics-task-34",
+              "tokens": 59
+            },
+            {
+              "label": "design-task-19",
+              "tokens": 59
+            },
+            {
+              "label": "design-task-22",
+              "tokens": 59
+            },
+            {
+              "label": "design-task-4",
+              "tokens": 59
+            },
+            {
+              "label": "design-task-8",
+              "tokens": 59
+            }
+          ],
+          "parts": [
+            {
+              "name": "plugin analytics-kit",
+              "tokens": 2193,
+              "count": 40
+            },
+            {
+              "name": "plugin design-kit",
+              "tokens": 1314,
+              "count": 24
+            },
+            {
+              "name": "plugin cloud-kit",
+              "tokens": 719,
+              "count": 14
+            }
+          ],
+          "confidence": "assumed",
+          "evidence": {
+            "docUrl": "https://cursor.com/docs/skills",
+            "verifiedAt": "2026-10-25"
+          },
+          "notes": [
+            "Cursor lists each skill's name + description (exact injection format and token cost unverified; counted as name: description)",
+            "plugin found under ~/.cursor/plugins; Cursor's on-disk plugin layout and install state are undocumented, so it may not be enabled (assumed)"
+          ]
+        },
+        {
+          "id": "cursor:2",
+          "kind": "instructions",
+          "scope": "project",
+          "loadMode": "always",
+          "label": "AGENTS.md",
+          "path": "./AGENTS.md",
+          "tokens": {
+            "est": 326,
+            "low": 253,
+            "high": 470
+          },
+          "unmeasured": false,
+          "chars": 1407,
+          "lines": 22,
+          "confidence": "documented",
+          "evidence": {
+            "docUrl": "https://cursor.com/docs/rules",
+            "verifiedAt": "2026-10-25"
+          },
+          "notes": []
+        },
+        {
+          "id": "cursor:3",
+          "kind": "skills-listing",
+          "scope": "user",
+          "loadMode": "always",
+          "label": "Skills listing (5 user skills)",
+          "path": "~/.cursor/skills",
+          "tokens": {
+            "est": 248,
+            "low": 192,
+            "high": 356
+          },
+          "unmeasured": false,
+          "chars": 1036,
+          "lines": 0,
+          "breakdown": [
+            {
+              "label": "my-helper-4",
+              "tokens": 51
+            },
+            {
+              "label": "my-helper-5",
+              "tokens": 51
+            },
+            {
+              "label": "my-helper-2",
+              "tokens": 49
+            },
+            {
+              "label": "my-helper-3",
+              "tokens": 49
+            },
+            {
+              "label": "my-helper-1",
+              "tokens": 48
+            }
+          ],
+          "parts": [
+            {
+              "name": "5 user skills",
+              "tokens": 248,
+              "count": 5
+            }
+          ],
+          "confidence": "documented",
+          "evidence": {
+            "docUrl": "https://cursor.com/docs/skills",
+            "verifiedAt": "2026-10-25"
+          },
+          "notes": [
+            "Cursor lists each skill's name + description (exact injection format and token cost unverified; counted as name: description)"
+          ]
+        },
+        {
+          "id": "cursor:1",
+          "kind": "rule",
+          "scope": "project",
+          "loadMode": "always",
+          "label": "./.cursor/rules/always.mdc",
+          "path": "./.cursor/rules/always.mdc",
+          "tokens": {
+            "est": 164,
+            "low": 127,
+            "high": 236
+          },
+          "unmeasured": false,
+          "chars": 722,
+          "lines": 3,
+          "confidence": "documented",
+          "evidence": {
+            "docUrl": "https://cursor.com/docs/rules",
+            "verifiedAt": "2026-10-25"
+          },
+          "notes": [
+            "alwaysApply: true"
+          ]
+        },
+        {
+          "id": "cursor:6",
+          "kind": "skill-body",
+          "scope": "plugin",
+          "loadMode": "deferred",
+          "label": "Skill bodies (78 skills from 3 plugins)",
+          "path": "~/.cursor/plugins",
+          "tokens": {
+            "est": 4383,
+            "low": 3401,
+            "high": 6311
+          },
+          "unmeasured": false,
+          "chars": 18598,
+          "lines": 0,
+          "confidence": "assumed",
+          "evidence": {
+            "docUrl": "https://cursor.com/docs/skills",
+            "verifiedAt": "2026-10-25"
+          },
+          "notes": [
+            "loaded only when a skill is used; supporting files in the skill folder are not counted"
+          ]
+        },
+        {
+          "id": "cursor:4",
+          "kind": "skill-body",
+          "scope": "user",
+          "loadMode": "deferred",
+          "label": "Skill bodies (5 user)",
+          "path": "~/.cursor/skills",
+          "tokens": {
+            "est": 280,
+            "low": 217,
+            "high": 403
+          },
+          "unmeasured": false,
+          "chars": 1168,
+          "lines": 0,
+          "confidence": "documented",
+          "evidence": {
+            "docUrl": "https://cursor.com/docs/skills",
+            "verifiedAt": "2026-10-25"
+          },
+          "notes": [
+            "loaded only when a skill is used; supporting files in the skill folder are not counted"
+          ]
+        }
+      ]
+    }
+  ],
+  "excluded": [],
+  "findings": [],
+  "warnings": [],
+  "notMeasurable": [
+    "the agent's built-in system prompt and built-in tool definitions",
+    "server-side / org rules, Cursor User & Team Rules, claude.ai connectors",
+    "MCP servers whose tools are only known at runtime (no server is started by default)",
+    "files outside the scanned locations; anything the agent injects dynamically (hooks, memory/RAG plugins)"
+  ],
+  "partial": null
+}

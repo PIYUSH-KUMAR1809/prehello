@@ -1,0 +1,260 @@
+- [topic-0](topic-0.md) — API handlers validate input with the schema library and return typed errors.
+- [topic-1](topic-1.md) — Keep React components under two hundred lines and extract hooks early.
+- [topic-2](topic-2.md) — Public functions carry doc comments describing units and failure modes.
+- [topic-3](topic-3.md) — Run the unit tests before opening a pull request and paste failures verbatim.
+- [topic-4](topic-4.md) — Run the unit tests before opening a pull request and paste failures verbatim.
+- [topic-5](topic-5.md) — Error messages are written for the on-call engineer at three in the morning.
+- [topic-6](topic-6.md) — Public functions carry doc comments describing units and failure modes.
+- [topic-7](topic-7.md) — Error messages are written for the on-call engineer at three in the morning.
+- [topic-8](topic-8.md) — Run the unit tests before opening a pull request and paste failures verbatim.
+- [topic-9](topic-9.md) — Never commit generated files under dist or build directories.
+- [topic-10](topic-10.md) — Error messages are written for the on-call engineer at three in the morning.
+- [topic-11](topic-11.md) — Do not mock the database in integration tests; use the disposable container.
+- [topic-12](topic-12.md) — Do not mock the database in integration tests; use the disposable container.
+- [topic-13](topic-13.md) — Do not mock the database in integration tests; use the disposable container.
+- [topic-14](topic-14.md) — Run the unit tests before opening a pull request and paste failures verbatim.
+- [topic-15](topic-15.md) — When adding a dependency, explain the alternative you rejected in the PR.
+- [topic-16](topic-16.md) — Public functions carry doc comments describing units and failure modes.
+- [topic-17](topic-17.md) — Feature flags are read through the flags service and default to off.
+- [topic-18](topic-18.md) — Keep React components under two hundred lines and extract hooks early.
+- [topic-19](topic-19.md) — Do not mock the database in integration tests; use the disposable container.
+- [topic-20](topic-20.md) — Error messages are written for the on-call engineer at three in the morning.
+- [topic-21](topic-21.md) — Error messages are written for the on-call engineer at three in the morning.
+- [topic-22](topic-22.md) — API handlers validate input with the schema library and return typed errors.
+- [topic-23](topic-23.md) — Error messages are written for the on-call engineer at three in the morning.
+- [topic-24](topic-24.md) — Never commit generated files under dist or build directories.
+- [topic-25](topic-25.md) — API handlers validate input with the schema library and return typed errors.
+- [topic-26](topic-26.md) — Feature flags are read through the flags service and default to off.
+- [topic-27](topic-27.md) — Never commit generated files under dist or build directories.
+- [topic-28](topic-28.md) — Run the unit tests before opening a pull request and paste failures verbatim.
+- [topic-29](topic-29.md) — API handlers validate input with the schema library and return typed errors.
+- [topic-30](topic-30.md) — Run the unit tests before opening a pull request and paste failures verbatim.
+- [topic-31](topic-31.md) — Error messages are written for the on-call engineer at three in the morning.
+- [topic-32](topic-32.md) — When adding a dependency, explain the alternative you rejected in the PR.
+- [topic-33](topic-33.md) — Never commit generated files under dist or build directories.
+- [topic-34](topic-34.md) — Never commit generated files under dist or build directories.
+- [topic-35](topic-35.md) — Run the unit tests before opening a pull request and paste failures verbatim.
+- [topic-36](topic-36.md) — Error messages are written for the on-call engineer at three in the morning.
+- [topic-37](topic-37.md) — Public functions carry doc comments describing units and failure modes.
+- [topic-38](topic-38.md) — Database migrations must be reversible and reviewed by a second engineer.
+- [topic-39](topic-39.md) — API handlers validate input with the schema library and return typed errors.
+- [topic-40](topic-40.md) — Run the unit tests before opening a pull request and paste failures verbatim.
+- [topic-41](topic-41.md) — Run the unit tests before opening a pull request and paste failures verbatim.
+- [topic-42](topic-42.md) — Do not mock the database in integration tests; use the disposable container.
+- [topic-43](topic-43.md) — Use the shared logger instead of console.log in application code.
+- [topic-44](topic-44.md) — API handlers validate input with the schema library and return typed errors.
+- [topic-45](topic-45.md) — Feature flags are read through the flags service and default to off.
+- [topic-46](topic-46.md) — Database migrations must be reversible and reviewed by a second engineer.
+- [topic-47](topic-47.md) — When adding a dependency, explain the alternative you rejected in the PR.
+- [topic-48](topic-48.md) — Use the shared logger instead of console.log in application code.
+- [topic-49](topic-49.md) — Never commit generated files under dist or build directories.
+- [topic-50](topic-50.md) — Public functions carry doc comments describing units and failure modes.
+- [topic-51](topic-51.md) — Error messages are written for the on-call engineer at three in the morning.
+- [topic-52](topic-52.md) — Prefer small, focused functions and name them after what they return.
+- [topic-53](topic-53.md) — Do not mock the database in integration tests; use the disposable container.
+- [topic-54](topic-54.md) — Never commit generated files under dist or build directories.
+- [topic-55](topic-55.md) — Use the shared logger instead of console.log in application code.
+- [topic-56](topic-56.md) — Use the shared logger instead of console.log in application code.
+- [topic-57](topic-57.md) — Public functions carry doc comments describing units and failure modes.
+- [topic-58](topic-58.md) — Error messages are written for the on-call engineer at three in the morning.
+- [topic-59](topic-59.md) — API handlers validate input with the schema library and return typed errors.
+- [topic-60](topic-60.md) — Prefer small, focused functions and name them after what they return.
+- [topic-61](topic-61.md) — Error messages are written for the on-call engineer at three in the morning.
+- [topic-62](topic-62.md) — API handlers validate input with the schema library and return typed errors.
+- [topic-63](topic-63.md) — Do not mock the database in integration tests; use the disposable container.
+- [topic-64](topic-64.md) — Prefer small, focused functions and name them after what they return.
+- [topic-65](topic-65.md) — When adding a dependency, explain the alternative you rejected in the PR.
+- [topic-66](topic-66.md) — Run the unit tests before opening a pull request and paste failures verbatim.
+- [topic-67](topic-67.md) — When adding a dependency, explain the alternative you rejected in the PR.
+- [topic-68](topic-68.md) — Use the shared logger instead of console.log in application code.
+- [topic-69](topic-69.md) — Use the shared logger instead of console.log in application code.
+- [topic-70](topic-70.md) — Do not mock the database in integration tests; use the disposable container.
+- [topic-71](topic-71.md) — When adding a dependency, explain the alternative you rejected in the PR.
+- [topic-72](topic-72.md) — Prefer small, focused functions and name them after what they return.
+- [topic-73](topic-73.md) — Error messages are written for the on-call engineer at three in the morning.
+- [topic-74](topic-74.md) — Never commit generated files under dist or build directories.
+- [topic-75](topic-75.md) — Never commit generated files under dist or build directories.
+- [topic-76](topic-76.md) — When adding a dependency, explain the alternative you rejected in the PR.
+- [topic-77](topic-77.md) — Never commit generated files under dist or build directories.
+- [topic-78](topic-78.md) — Database migrations must be reversible and reviewed by a second engineer.
+- [topic-79](topic-79.md) — Public functions carry doc comments describing units and failure modes.
+- [topic-80](topic-80.md) — Error messages are written for the on-call engineer at three in the morning.
+- [topic-81](topic-81.md) — API handlers validate input with the schema library and return typed errors.
+- [topic-82](topic-82.md) — Keep React components under two hundred lines and extract hooks early.
+- [topic-83](topic-83.md) — When adding a dependency, explain the alternative you rejected in the PR.
+- [topic-84](topic-84.md) — Never commit generated files under dist or build directories.
+- [topic-85](topic-85.md) — Prefer small, focused functions and name them after what they return.
+- [topic-86](topic-86.md) — Keep React components under two hundred lines and extract hooks early.
+- [topic-87](topic-87.md) — Feature flags are read through the flags service and default to off.
+- [topic-88](topic-88.md) — Public functions carry doc comments describing units and failure modes.
+- [topic-89](topic-89.md) — Never commit generated files under dist or build directories.
+- [topic-90](topic-90.md) — Database migrations must be reversible and reviewed by a second engineer.
+- [topic-91](topic-91.md) — Do not mock the database in integration tests; use the disposable container.
+- [topic-92](topic-92.md) — Feature flags are read through the flags service and default to off.
+- [topic-93](topic-93.md) — Use the shared logger instead of console.log in application code.
+- [topic-94](topic-94.md) — Public functions carry doc comments describing units and failure modes.
+- [topic-95](topic-95.md) — Public functions carry doc comments describing units and failure modes.
+- [topic-96](topic-96.md) — Feature flags are read through the flags service and default to off.
+- [topic-97](topic-97.md) — Feature flags are read through the flags service and default to off.
+- [topic-98](topic-98.md) — Public functions carry doc comments describing units and failure modes.
+- [topic-99](topic-99.md) — Database migrations must be reversible and reviewed by a second engineer.
+- [topic-100](topic-100.md) — Never commit generated files under dist or build directories.
+- [topic-101](topic-101.md) — Error messages are written for the on-call engineer at three in the morning.
+- [topic-102](topic-102.md) — Keep React components under two hundred lines and extract hooks early.
+- [topic-103](topic-103.md) — Run the unit tests before opening a pull request and paste failures verbatim.
+- [topic-104](topic-104.md) — Prefer small, focused functions and name them after what they return.
+- [topic-105](topic-105.md) — When adding a dependency, explain the alternative you rejected in the PR.
+- [topic-106](topic-106.md) — Do not mock the database in integration tests; use the disposable container.
+- [topic-107](topic-107.md) — Feature flags are read through the flags service and default to off.
+- [topic-108](topic-108.md) — Error messages are written for the on-call engineer at three in the morning.
+- [topic-109](topic-109.md) — API handlers validate input with the schema library and return typed errors.
+- [topic-110](topic-110.md) — Error messages are written for the on-call engineer at three in the morning.
+- [topic-111](topic-111.md) — Run the unit tests before opening a pull request and paste failures verbatim.
+- [topic-112](topic-112.md) — Run the unit tests before opening a pull request and paste failures verbatim.
+- [topic-113](topic-113.md) — Database migrations must be reversible and reviewed by a second engineer.
+- [topic-114](topic-114.md) — Keep React components under two hundred lines and extract hooks early.
+- [topic-115](topic-115.md) — Use the shared logger instead of console.log in application code.
+- [topic-116](topic-116.md) — Never commit generated files under dist or build directories.
+- [topic-117](topic-117.md) — Prefer small, focused functions and name them after what they return.
+- [topic-118](topic-118.md) — Prefer small, focused functions and name them after what they return.
+- [topic-119](topic-119.md) — Error messages are written for the on-call engineer at three in the morning.
+- [topic-120](topic-120.md) — Database migrations must be reversible and reviewed by a second engineer.
+- [topic-121](topic-121.md) — API handlers validate input with the schema library and return typed errors.
+- [topic-122](topic-122.md) — API handlers validate input with the schema library and return typed errors.
+- [topic-123](topic-123.md) — Error messages are written for the on-call engineer at three in the morning.
+- [topic-124](topic-124.md) — Database migrations must be reversible and reviewed by a second engineer.
+- [topic-125](topic-125.md) — Keep React components under two hundred lines and extract hooks early.
+- [topic-126](topic-126.md) — Do not mock the database in integration tests; use the disposable container.
+- [topic-127](topic-127.md) — Use the shared logger instead of console.log in application code.
+- [topic-128](topic-128.md) — Feature flags are read through the flags service and default to off.
+- [topic-129](topic-129.md) — Run the unit tests before opening a pull request and paste failures verbatim.
+- [topic-130](topic-130.md) — Keep React components under two hundred lines and extract hooks early.
+- [topic-131](topic-131.md) — Never commit generated files under dist or build directories.
+- [topic-132](topic-132.md) — API handlers validate input with the schema library and return typed errors.
+- [topic-133](topic-133.md) — Use the shared logger instead of console.log in application code.
+- [topic-134](topic-134.md) — Public functions carry doc comments describing units and failure modes.
+- [topic-135](topic-135.md) — Database migrations must be reversible and reviewed by a second engineer.
+- [topic-136](topic-136.md) — Error messages are written for the on-call engineer at three in the morning.
+- [topic-137](topic-137.md) — Public functions carry doc comments describing units and failure modes.
+- [topic-138](topic-138.md) — Keep React components under two hundred lines and extract hooks early.
+- [topic-139](topic-139.md) — Error messages are written for the on-call engineer at three in the morning.
+- [topic-140](topic-140.md) — Use the shared logger instead of console.log in application code.
+- [topic-141](topic-141.md) — Database migrations must be reversible and reviewed by a second engineer.
+- [topic-142](topic-142.md) — Do not mock the database in integration tests; use the disposable container.
+- [topic-143](topic-143.md) — Feature flags are read through the flags service and default to off.
+- [topic-144](topic-144.md) — Never commit generated files under dist or build directories.
+- [topic-145](topic-145.md) — Keep React components under two hundred lines and extract hooks early.
+- [topic-146](topic-146.md) — Use the shared logger instead of console.log in application code.
+- [topic-147](topic-147.md) — Public functions carry doc comments describing units and failure modes.
+- [topic-148](topic-148.md) — Database migrations must be reversible and reviewed by a second engineer.
+- [topic-149](topic-149.md) — Run the unit tests before opening a pull request and paste failures verbatim.
+- [topic-150](topic-150.md) — When adding a dependency, explain the alternative you rejected in the PR.
+- [topic-151](topic-151.md) — Error messages are written for the on-call engineer at three in the morning.
+- [topic-152](topic-152.md) — Public functions carry doc comments describing units and failure modes.
+- [topic-153](topic-153.md) — Keep React components under two hundred lines and extract hooks early.
+- [topic-154](topic-154.md) — Feature flags are read through the flags service and default to off.
+- [topic-155](topic-155.md) — Never commit generated files under dist or build directories.
+- [topic-156](topic-156.md) — Error messages are written for the on-call engineer at three in the morning.
+- [topic-157](topic-157.md) — Database migrations must be reversible and reviewed by a second engineer.
+- [topic-158](topic-158.md) — Database migrations must be reversible and reviewed by a second engineer.
+- [topic-159](topic-159.md) — Do not mock the database in integration tests; use the disposable container.
+- [topic-160](topic-160.md) — Do not mock the database in integration tests; use the disposable container.
+- [topic-161](topic-161.md) — When adding a dependency, explain the alternative you rejected in the PR.
+- [topic-162](topic-162.md) — Use the shared logger instead of console.log in application code.
+- [topic-163](topic-163.md) — Feature flags are read through the flags service and default to off.
+- [topic-164](topic-164.md) — Run the unit tests before opening a pull request and paste failures verbatim.
+- [topic-165](topic-165.md) — Run the unit tests before opening a pull request and paste failures verbatim.
+- [topic-166](topic-166.md) — Prefer small, focused functions and name them after what they return.
+- [topic-167](topic-167.md) — When adding a dependency, explain the alternative you rejected in the PR.
+- [topic-168](topic-168.md) — Never commit generated files under dist or build directories.
+- [topic-169](topic-169.md) — Error messages are written for the on-call engineer at three in the morning.
+- [topic-170](topic-170.md) — API handlers validate input with the schema library and return typed errors.
+- [topic-171](topic-171.md) — Feature flags are read through the flags service and default to off.
+- [topic-172](topic-172.md) — When adding a dependency, explain the alternative you rejected in the PR.
+- [topic-173](topic-173.md) — Run the unit tests before opening a pull request and paste failures verbatim.
+- [topic-174](topic-174.md) — Prefer small, focused functions and name them after what they return.
+- [topic-175](topic-175.md) — Keep React components under two hundred lines and extract hooks early.
+- [topic-176](topic-176.md) — When adding a dependency, explain the alternative you rejected in the PR.
+- [topic-177](topic-177.md) — Do not mock the database in integration tests; use the disposable container.
+- [topic-178](topic-178.md) — Database migrations must be reversible and reviewed by a second engineer.
+- [topic-179](topic-179.md) — Database migrations must be reversible and reviewed by a second engineer.
+- [topic-180](topic-180.md) — Public functions carry doc comments describing units and failure modes.
+- [topic-181](topic-181.md) — Use the shared logger instead of console.log in application code.
+- [topic-182](topic-182.md) — Error messages are written for the on-call engineer at three in the morning.
+- [topic-183](topic-183.md) — Never commit generated files under dist or build directories.
+- [topic-184](topic-184.md) — Public functions carry doc comments describing units and failure modes.
+- [topic-185](topic-185.md) — Use the shared logger instead of console.log in application code.
+- [topic-186](topic-186.md) — Use the shared logger instead of console.log in application code.
+- [topic-187](topic-187.md) — Use the shared logger instead of console.log in application code.
+- [topic-188](topic-188.md) — Do not mock the database in integration tests; use the disposable container.
+- [topic-189](topic-189.md) — Error messages are written for the on-call engineer at three in the morning.
+- [topic-190](topic-190.md) — Use the shared logger instead of console.log in application code.
+- [topic-191](topic-191.md) — Feature flags are read through the flags service and default to off.
+- [topic-192](topic-192.md) — Database migrations must be reversible and reviewed by a second engineer.
+- [topic-193](topic-193.md) — Prefer small, focused functions and name them after what they return.
+- [topic-194](topic-194.md) — Prefer small, focused functions and name them after what they return.
+- [topic-195](topic-195.md) — Do not mock the database in integration tests; use the disposable container.
+- [topic-196](topic-196.md) — Keep React components under two hundred lines and extract hooks early.
+- [topic-197](topic-197.md) — API handlers validate input with the schema library and return typed errors.
+- [topic-198](topic-198.md) — Do not mock the database in integration tests; use the disposable container.
+- [topic-199](topic-199.md) — Database migrations must be reversible and reviewed by a second engineer.
+- [topic-200](topic-200.md) — Do not mock the database in integration tests; use the disposable container.
+- [topic-201](topic-201.md) — Run the unit tests before opening a pull request and paste failures verbatim.
+- [topic-202](topic-202.md) — API handlers validate input with the schema library and return typed errors.
+- [topic-203](topic-203.md) — API handlers validate input with the schema library and return typed errors.
+- [topic-204](topic-204.md) — Never commit generated files under dist or build directories.
+- [topic-205](topic-205.md) — Do not mock the database in integration tests; use the disposable container.
+- [topic-206](topic-206.md) — Use the shared logger instead of console.log in application code.
+- [topic-207](topic-207.md) — Public functions carry doc comments describing units and failure modes.
+- [topic-208](topic-208.md) — Database migrations must be reversible and reviewed by a second engineer.
+- [topic-209](topic-209.md) — Feature flags are read through the flags service and default to off.
+- [topic-210](topic-210.md) — Run the unit tests before opening a pull request and paste failures verbatim.
+- [topic-211](topic-211.md) — Prefer small, focused functions and name them after what they return.
+- [topic-212](topic-212.md) — Error messages are written for the on-call engineer at three in the morning.
+- [topic-213](topic-213.md) — Run the unit tests before opening a pull request and paste failures verbatim.
+- [topic-214](topic-214.md) — Do not mock the database in integration tests; use the disposable container.
+- [topic-215](topic-215.md) — When adding a dependency, explain the alternative you rejected in the PR.
+- [topic-216](topic-216.md) — Feature flags are read through the flags service and default to off.
+- [topic-217](topic-217.md) — Database migrations must be reversible and reviewed by a second engineer.
+- [topic-218](topic-218.md) — Never commit generated files under dist or build directories.
+- [topic-219](topic-219.md) — Prefer small, focused functions and name them after what they return.
+- [topic-220](topic-220.md) — Use the shared logger instead of console.log in application code.
+- [topic-221](topic-221.md) — Error messages are written for the on-call engineer at three in the morning.
+- [topic-222](topic-222.md) — API handlers validate input with the schema library and return typed errors.
+- [topic-223](topic-223.md) — Never commit generated files under dist or build directories.
+- [topic-224](topic-224.md) — Prefer small, focused functions and name them after what they return.
+- [topic-225](topic-225.md) — Keep React components under two hundred lines and extract hooks early.
+- [topic-226](topic-226.md) — Keep React components under two hundred lines and extract hooks early.
+- [topic-227](topic-227.md) — Database migrations must be reversible and reviewed by a second engineer.
+- [topic-228](topic-228.md) — Prefer small, focused functions and name them after what they return.
+- [topic-229](topic-229.md) — Do not mock the database in integration tests; use the disposable container.
+- [topic-230](topic-230.md) — Prefer small, focused functions and name them after what they return.
+- [topic-231](topic-231.md) — Public functions carry doc comments describing units and failure modes.
+- [topic-232](topic-232.md) — When adding a dependency, explain the alternative you rejected in the PR.
+- [topic-233](topic-233.md) — Do not mock the database in integration tests; use the disposable container.
+- [topic-234](topic-234.md) — Error messages are written for the on-call engineer at three in the morning.
+- [topic-235](topic-235.md) — Use the shared logger instead of console.log in application code.
+- [topic-236](topic-236.md) — Keep React components under two hundred lines and extract hooks early.
+- [topic-237](topic-237.md) — Run the unit tests before opening a pull request and paste failures verbatim.
+- [topic-238](topic-238.md) — Keep React components under two hundred lines and extract hooks early.
+- [topic-239](topic-239.md) — Feature flags are read through the flags service and default to off.
+- [topic-240](topic-240.md) — When adding a dependency, explain the alternative you rejected in the PR.
+- [topic-241](topic-241.md) — API handlers validate input with the schema library and return typed errors.
+- [topic-242](topic-242.md) — Never commit generated files under dist or build directories.
+- [topic-243](topic-243.md) — Feature flags are read through the flags service and default to off.
+- [topic-244](topic-244.md) — Feature flags are read through the flags service and default to off.
+- [topic-245](topic-245.md) — Do not mock the database in integration tests; use the disposable container.
+- [topic-246](topic-246.md) — Public functions carry doc comments describing units and failure modes.
+- [topic-247](topic-247.md) — Use the shared logger instead of console.log in application code.
+- [topic-248](topic-248.md) — Run the unit tests before opening a pull request and paste failures verbatim.
+- [topic-249](topic-249.md) — API handlers validate input with the schema library and return typed errors.
+- [topic-250](topic-250.md) — Do not mock the database in integration tests; use the disposable container.
+- [topic-251](topic-251.md) — Do not mock the database in integration tests; use the disposable container.
+- [topic-252](topic-252.md) — Feature flags are read through the flags service and default to off.
+- [topic-253](topic-253.md) — Feature flags are read through the flags service and default to off.
+- [topic-254](topic-254.md) — Database migrations must be reversible and reviewed by a second engineer.
+- [topic-255](topic-255.md) — Error messages are written for the on-call engineer at three in the morning.
+- [topic-256](topic-256.md) — Error messages are written for the on-call engineer at three in the morning.
+- [topic-257](topic-257.md) — Error messages are written for the on-call engineer at three in the morning.
+- [topic-258](topic-258.md) — Error messages are written for the on-call engineer at three in the morning.
+- [topic-259](topic-259.md) — Database migrations must be reversible and reviewed by a second engineer.

@@ -1,0 +1,62 @@
+{
+  "version": 1,
+  "note": "MEASURED with scripts/measure-mcp.cjs: each server was installed from npm (--ignore-scripts), started offline in a network-less sandbox with a scrubbed env, and asked for tools/list over stdio. Tokens are o200k_base over the raw tool-list JSON (name; description+inputSchema). That is NOT the exact text any agent injects, and tool lists change between server versions, so treat these as ballpark for the stated version. measuredAt is a UTC date. Only servers that could be measured without credentials are listed; everything else stays unmeasured.",
+  "servers": [
+    {
+      "package": "@modelcontextprotocol/server-memory",
+      "tools": 9,
+      "nameTokens": 24,
+      "schemaTokens": 905,
+      "measuredAt": "2026-10-24",
+      "version": "1.0.0"
+    },
+    {
+      "package": "@modelcontextprotocol/server-filesystem",
+      "tools": 14,
+      "nameTokens": 36,
+      "schemaTokens": 1614,
+      "measuredAt": "2026-10-24",
+      "version": "1.0.0"
+    },
+    {
+      "package": "@modelcontextprotocol/server-sequential-thinking",
+      "tools": 1,
+      "nameTokens": 3,
+      "schemaTokens": 857,
+      "measuredAt": "2026-10-24",
+      "version": "1.0.0"
+    },
+    {
+      "package": "@modelcontextprotocol/server-everything",
+      "tools": 13,
+      "nameTokens": 48,
+      "schemaTokens": 997,
+      "measuredAt": "2026-10-24",
+      "version": "1.0.0"
+    },
+    {
+      "package": "@modelcontextprotocol/server-github",
+      "tools": 26,
+      "nameTokens": 76,
+      "schemaTokens": 3392,
+      "measuredAt": "2026-10-24",
+      "version": "2025.4.8"
+    },
+    {
+      "package": "@playwright/mcp",
+      "tools": 25,
+      "nameTokens": 70,
+      "schemaTokens": 3617,
+      "measuredAt": "2026-10-24",
+      "version": "0.0.83"
+    },
+    {
+      "package": "@upstash/context7-mcp",
+      "tools": 2,
+      "nameTokens": 6,
+      "schemaTokens": 1050,
+      "measuredAt": "2026-10-24",
+      "version": "4.4.4"
+    }
+  ]
+}

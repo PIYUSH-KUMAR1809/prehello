@@ -1,0 +1,15 @@
+prehello 0.1.0 · this folder + user config · window 200k
+Token counts are ESTIMATES (o200k BPE with per-agent scaling priors), shown with ~. Not exact for
+any model.
+
+
+── Claude Code: agent files exist in this repo but Claude Code was not found on this machine;
+   excluded from headline and card (use --agent claude-code to include).
+
+── Cursor: agent files exist in this repo but Cursor was not found on this machine; excluded from
+   headline and card (use --agent cursor to include).
+
+Never measured: the agent's built-in system prompt and built-in tool definitions; server-side / org
+rules, Cursor User & Team Rules, claude.ai connectors; MCP servers whose tools are only known at
+runtime (no server is started by default); files outside the scanned locations; anything the agent
+injects dynamically (hooks, memory/RAG plugins).

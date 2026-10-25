@@ -1,0 +1,33 @@
+# dependencies and build output
+node_modules/
+dist/
+
+# logs and debug output
+*.log
+npm-debug.log*
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# local secrets
+.env
+.env.*
+
+# packed tarballs and coverage
+*.tgz
+coverage/
+
+# generated cards and reports from running prehello in the repo root
+/prehello-card.*
+/real-card*.png
+/prehello-report.*
+/*.sarif
+/*.sarif.json
+
+# local-only notes (internal planning, never published)
+.dev/
+docs/PRODUCT_PLAN.md
+docs/PUBLISH_CHECKLIST.md

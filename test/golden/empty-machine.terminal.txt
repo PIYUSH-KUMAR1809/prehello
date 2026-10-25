@@ -1,0 +1,19 @@
+prehello 0.1.0 · this folder + user config · window 200k
+Token counts are ESTIMATES (o200k BPE with per-agent scaling priors), shown with ~. Not exact for
+any model.
+
+No coding agents detected on this machine, and no agent files found in this folder.
+
+prehello looked for
+  Claude Code  ~/.claude, ~/.claude.json, `claude` on PATH; CLAUDE.md, .claude/, .mcp.json in the
+               project
+  Cursor       ~/.cursor, Cursor.app, `cursor` on PATH; .cursor/, .cursorrules, AGENTS.md in the
+               project
+  Codex        ~/.codex, `codex` on PATH; AGENTS.md, .codex/, .agents/skills in the project
+
+Try
+  prehello ~/code/my-project       scan a project folder (default: the current directory)
+  prehello --agent claude-code     treat an agent as in use, to see what it WOULD load
+  prehello --help                  all options
+
+Nothing was measured. This is not a score of 0: absence of data is never shown as 0.

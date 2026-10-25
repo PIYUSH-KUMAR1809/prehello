@@ -1,0 +1,8 @@
+# Legacy rules
+
+## One
+
+Prefer small, focused functions and name them after what they return. Prefer small, focused functions and name them after what they return. Error messages are written for the on-call engineer at three in the morning. Never commit generated files under dist or build directories.
+
+- When adding a dependency, explain the alternative you rejected in the PR.
+- API handlers validate input with the schema library and return typed errors.

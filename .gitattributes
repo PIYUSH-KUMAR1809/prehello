@@ -1,0 +1,8 @@
+# Normalise line endings so goldens and fixtures are byte-identical on Windows, macOS and Linux checkouts.
+* text=auto eol=lf
+*.png binary
+*.ttf binary
+*.wasm binary
+# Fixtures that test CRLF handling must keep their CRLF.
+test/fixtures/**/crlf* -text
+test/fixtures/crlf-unicode/** -text

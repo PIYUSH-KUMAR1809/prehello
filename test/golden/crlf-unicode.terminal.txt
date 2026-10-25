@@ -1,0 +1,21 @@
+prehello 0.1.0 · this folder + user config · window 200k
+Token counts are ESTIMATES (o200k BPE with per-agent scaling priors), shown with ~. Not exact for
+any model.
+
+Before your first message: Claude Code ~72 tokens
+
+Measured vs. not measured (always-on items)
+  Claude Code  measured 1 of 1 (100%): 1 instruction file
+
+── Claude Code ────────────────────────────────────────────────────────────────────────────  Grade A
+   estimate model: o200k × 1.5 (Claude-current prior); band ±20%
+ALWAYS ON before hello   ~72 tokens (58–86)  ≈ < 0.1% of 200k
+   CLAUDE.md           72    100%  ████████████████████
+   not measurable from disk: built-in system prompt and built-in tools · claude.ai connectors (not
+      on disk) · hook output
+
+Never measured: the agent's built-in system prompt and built-in tool definitions; server-side / org
+rules, Cursor User & Team Rules, claude.ai connectors; MCP servers whose tools are only known at
+runtime (no server is started by default); files outside the scanned locations; anything the agent
+injects dynamically (hooks, memory/RAG plugins).
+Context Grade (Claude Code): A — heuristic, not a standard. See: prehello explain grade

@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "canary-server-name-zeta": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@canary-org/secret-pkg"
+      ],
+      "env": {
+        "TOKEN": "CANARYENVVALUE-xyz"
+      }
+    }
+  }
+}

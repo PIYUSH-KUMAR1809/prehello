@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "tool": {
+    "name": "prehello",
+    "version": "0.1.0"
+  },
+  "generatedAt": "2026-10-24T12:00:00.000Z",
+  "redacted": "paths-shortened (~ and ./ prefixes); server and file names kept",
+  "scan": {
+    "cwd": ".",
+    "window": 200000,
+    "tokenizer": {
+      "method": "bpe-o200k",
+      "note": "o200k BPE (gpt-tokenizer, bundled) with per-family scaling"
+    },
+    "claudeProfile": "current"
+  },
+  "agents": [],
+  "excluded": [],
+  "findings": [],
+  "warnings": [],
+  "notMeasurable": [
+    "the agent's built-in system prompt and built-in tool definitions",
+    "server-side / org rules, Cursor User & Team Rules, claude.ai connectors",
+    "MCP servers whose tools are only known at runtime (no server is started by default)",
+    "files outside the scanned locations; anything the agent injects dynamically (hooks, memory/RAG plugins)"
+  ],
+  "partial": null
+}

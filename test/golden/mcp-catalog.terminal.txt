@@ -1,0 +1,51 @@
+prehello 0.1.0 · this folder + user config · window 200k
+Token counts are ESTIMATES (o200k BPE with per-agent scaling priors), shown with ~. Not exact for
+any model.
+
+Before your first message: Claude Code ≥ ~236 tokens
+
+Measured vs. not measured (always-on items)
+  Claude Code  measured 2 of 3 (67%): 1 instruction file, 1 MCP server entry
+               NOT measured: 1 MCP server entry (mystery); no token count, never shown as 0
+
+── Claude Code ──────────────────────────────────────────────────────  Grade B (provisional, capped)
+   estimate model: o200k × 1.5 (Claude-current prior); band ±20%
+ALWAYS ON before hello   ≥ ~236 tokens (189–283)  ≈ 0.1% of 200k  + 1 unmeasured
+   MCP servers                 225     95%  ████████████████████
+   CLAUDE.md                    11    4.7%  ▌
+   MCP server "mystery"  unmeasured
+     · MCP "playwright" (tool names): tool search assumed ON (default): names always, schemas
+       deferred
+     · MCP "playwright" (tool names): project-scope server: Claude Code asks for approval before
+       loading
+     · MCP "playwright" (tool names): catalog: measured 2026-01-01 (FIXTURE DATA, not a real
+       measurement) vfixture, 21 tools; your version may differ
+     · MCP "playwright" (tool names): tool names only (tool search)
+     · MCP server "mystery": tool search assumed ON (default): names always, schemas deferred
+     · MCP server "mystery": project-scope server: Claude Code asks for approval before loading
+     · MCP server "mystery": transport: stdio
+     · MCP server "mystery" unmeasured: no local tool-list cache or catalog entry; run is static (no
+       server was started)
+DEFERRED (stub now, body on demand)   ~9.6k tokens (7.7k–11.5k)
+   MCP servers      9,600    100%  ████████████████████
+     · MCP "playwright" (schemas): tool search assumed ON (default): names always, schemas deferred
+     · MCP "playwright" (schemas): project-scope server: Claude Code asks for approval before
+       loading
+     · MCP "playwright" (schemas): catalog: measured 2026-01-01 (FIXTURE DATA, not a real
+       measurement) vfixture, 21 tools; your version may differ
+     · MCP "playwright" (schemas): schemas fetched on demand (tool search)
+   MCP servers configured (2): mystery, playwright; 1 sized from the measured catalog, 1 unknown
+      (never shown as 0)
+   not measurable from disk: built-in system prompt and built-in tools · claude.ai connectors (not
+      on disk) · hook output
+
+Findings (1)
+ ℹ Claude Code: 1 always-loaded item is unmeasured (MCP servers); the always-on total is a lower
+   bound ("at least")
+
+Never measured: the agent's built-in system prompt and built-in tool definitions; server-side / org
+rules, Cursor User & Team Rules, claude.ai connectors; MCP servers whose tools are only known at
+runtime (no server is started by default); files outside the scanned locations; anything the agent
+injects dynamically (hooks, memory/RAG plugins).
+Context Grade (Claude Code): B (provisional, capped at B: some always-loaded items are unmeasured) —
+heuristic, not a standard. See: prehello explain grade

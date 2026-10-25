@@ -1,0 +1,58 @@
+# CI for prehello: Linux, macOS and Windows, Node 18 / 20 / 22.
+#
+# This file is the FIRST real run of the test suite on Windows and macOS: until it has gone green once, Windows and macOS
+# support is "verified by simulation", not "verified".
+#
+# Windows notes
+#  * The suite spawns the built CLI (dist/cli.js) with a hermetic HOME/USERPROFILE; no step needs admin rights.
+#  * Symlink tests need the symlink privilege. GitHub's windows runners have it; on a developer laptop without Developer
+#    Mode those tests skip themselves (or fail with EPERM at fixture creation: enable Developer Mode).
+#  * .gitattributes pins every text file to LF so goldens compare byte-for-byte; goldens are also compared CRLF-insensitively.
+name: ci
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  test:
+    name: ${{ matrix.os }} / node ${{ matrix.node }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        node: [18, 20, 22]
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+          cache: npm
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm test
+        env:
+          # one reproducible clock for every machine
+          TZ: UTC
+      - name: Install smoke test (pack, install without the optional PNG engine, PNG message, then with it)
+        run: node scripts/smoke-install.mjs
+      - name: Windows PowerShell smoke (cmd shim + redirection)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          npm pack --pack-destination $env:RUNNER_TEMP | Out-Null
+          $tgz = Get-ChildItem $env:RUNNER_TEMP -Filter prehello-*.tgz | Select-Object -First 1
+          $d = Join-Path $env:RUNNER_TEMP 'ps-smoke'
+          New-Item -ItemType Directory -Force $d | Out-Null
+          Set-Location $d
+          npm init -y | Out-Null
+          npm install $tgz.FullName --no-audit --no-fund
+          npx prehello --version
+          npx prehello --markdown=report.md
+          if (-not (Test-Path report.md)) { throw 'report.md not written' }
+          npx prehello --json=report.json
+          if (-not (Test-Path report.json)) { throw 'report.json not written' }

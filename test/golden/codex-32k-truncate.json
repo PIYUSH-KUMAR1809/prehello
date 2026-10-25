@@ -1,0 +1,164 @@
+{
+  "schemaVersion": 1,
+  "tool": {
+    "name": "prehello",
+    "version": "0.1.0"
+  },
+  "generatedAt": "2026-10-24T12:00:00.000Z",
+  "redacted": "paths-shortened (~ and ./ prefixes); server and file names kept",
+  "scan": {
+    "cwd": ".",
+    "window": 200000,
+    "tokenizer": {
+      "method": "bpe-o200k",
+      "note": "o200k BPE (gpt-tokenizer, bundled) with per-family scaling"
+    },
+    "claudeProfile": "current"
+  },
+  "agents": [
+    {
+      "id": "codex",
+      "name": "Codex",
+      "detected": true,
+      "detectedBy": [
+        "--agent"
+      ],
+      "presentInRepoOnly": false,
+      "profile": {
+        "id": "openai-o200k",
+        "label": "o200k BPE (OpenAI-family)",
+        "band": "±3%"
+      },
+      "totals": {
+        "always": {
+          "est": 5779,
+          "low": 5606,
+          "high": 5952,
+          "measuredItems": 1,
+          "unmeasuredItems": 0
+        },
+        "conditional": {
+          "est": 0,
+          "low": 0,
+          "high": 0,
+          "measuredItems": 0,
+          "unmeasuredItems": 0
+        },
+        "deferred": {
+          "est": 0,
+          "low": 0,
+          "high": 0,
+          "measuredItems": 0,
+          "unmeasuredItems": 0
+        },
+        "on-demand": {
+          "est": 0,
+          "low": 0,
+          "high": 0,
+          "measuredItems": 0,
+          "unmeasuredItems": 0
+        },
+        "unknown": {
+          "est": 0,
+          "low": 0,
+          "high": 0,
+          "measuredItems": 0,
+          "unmeasuredItems": 0
+        }
+      },
+      "percentOfWindowAlways": 2.8895,
+      "alwaysIsLowerBound": false,
+      "savings": null,
+      "grade": {
+        "letter": "A",
+        "score": 90,
+        "provisional": false,
+        "reasons": [
+          "always-on is ~2.9% of the window (−5)",
+          "1 silent truncation(s) (−5)"
+        ]
+      },
+      "coverage": {
+        "agent": "codex",
+        "alwaysMeasuredItems": 1,
+        "alwaysUnmeasuredItems": 0,
+        "alwaysFraction": 1,
+        "measuredKinds": {
+          "instructions": 1
+        },
+        "unmeasuredKinds": {},
+        "mcpServers": 0
+      },
+      "installedButNothingFound": false,
+      "offenders": [
+        {
+          "label": "./AGENTS.md",
+          "path": "./AGENTS.md",
+          "kind": "instructions",
+          "loadMode": "always",
+          "tokens": 5779
+        }
+      ],
+      "mcpServers": [],
+      "unmeasuredBanner": [
+        "built-in system prompt and tools",
+        "Codex bundled system skills (~/.codex/skills/.system, hidden dirs are skipped)",
+        "server-side / org instructions"
+      ],
+      "items": [
+        {
+          "id": "codex:1",
+          "kind": "instructions",
+          "scope": "project",
+          "loadMode": "always",
+          "label": "./AGENTS.md",
+          "path": "./AGENTS.md",
+          "tokens": {
+            "est": 5779,
+            "low": 5606,
+            "high": 5952
+          },
+          "unmeasured": false,
+          "chars": 32768,
+          "lines": 661,
+          "confidence": "documented",
+          "evidence": {
+            "docUrl": "https://learn.chatgpt.com/docs/agent-configuration/agents-md",
+            "verifiedAt": "2026-10-25"
+          },
+          "notes": [
+            "truncated at project_doc_max_bytes: 32768/71942 bytes loaded"
+          ]
+        }
+      ]
+    }
+  ],
+  "excluded": [
+    {
+      "agent": "codex",
+      "path": "./sub/AGENTS.md",
+      "reason": "below the launch directory (Codex reads AGENTS.md root→cwd only)"
+    }
+  ],
+  "findings": [
+    {
+      "id": "F12",
+      "severity": "warn",
+      "agent": "codex",
+      "message": "./AGENTS.md is truncated by Codex at project_doc_max_bytes (32768 B): only the first 32768 of 71942 bytes load",
+      "paths": [
+        "./AGENTS.md"
+      ],
+      "confidence": "high",
+      "fix": "Shorten the AGENTS.md chain or raise project_doc_max_bytes in ~/.codex/config.toml."
+    }
+  ],
+  "warnings": [],
+  "notMeasurable": [
+    "the agent's built-in system prompt and built-in tool definitions",
+    "server-side / org rules, Cursor User & Team Rules, claude.ai connectors",
+    "MCP servers whose tools are only known at runtime (no server is started by default)",
+    "files outside the scanned locations; anything the agent injects dynamically (hooks, memory/RAG plugins)"
+  ],
+  "partial": null
+}

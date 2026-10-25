@@ -1,0 +1,361 @@
+{
+  "schemaVersion": 1,
+  "tool": {
+    "name": "prehello",
+    "version": "0.1.0"
+  },
+  "generatedAt": "2026-10-24T12:00:00.000Z",
+  "redacted": "paths-shortened (~ and ./ prefixes); server and file names kept",
+  "scan": {
+    "cwd": ".",
+    "window": 200000,
+    "tokenizer": {
+      "method": "bpe-o200k",
+      "note": "o200k BPE (gpt-tokenizer, bundled) with per-family scaling"
+    },
+    "claudeProfile": "current"
+  },
+  "agents": [
+    {
+      "id": "claude-code",
+      "name": "Claude Code",
+      "detected": true,
+      "detectedBy": [
+        "config dir"
+      ],
+      "presentInRepoOnly": false,
+      "profile": {
+        "id": "claude-current",
+        "label": "o200k × 1.5 (Claude-current prior)",
+        "band": "±20%"
+      },
+      "totals": {
+        "always": {
+          "est": 0,
+          "low": 0,
+          "high": 0,
+          "measuredItems": 0,
+          "unmeasuredItems": 1
+        },
+        "conditional": {
+          "est": 0,
+          "low": 0,
+          "high": 0,
+          "measuredItems": 0,
+          "unmeasuredItems": 0
+        },
+        "deferred": {
+          "est": 0,
+          "low": 0,
+          "high": 0,
+          "measuredItems": 0,
+          "unmeasuredItems": 0
+        },
+        "on-demand": {
+          "est": 0,
+          "low": 0,
+          "high": 0,
+          "measuredItems": 0,
+          "unmeasuredItems": 0
+        },
+        "unknown": {
+          "est": 0,
+          "low": 0,
+          "high": 0,
+          "measuredItems": 0,
+          "unmeasuredItems": 0
+        }
+      },
+      "percentOfWindowAlways": null,
+      "alwaysIsLowerBound": true,
+      "savings": null,
+      "grade": null,
+      "gradeNote": "no grade: everything that loads up front is unmeasured",
+      "coverage": {
+        "agent": "claude-code",
+        "alwaysMeasuredItems": 0,
+        "alwaysUnmeasuredItems": 1,
+        "alwaysFraction": 0,
+        "measuredKinds": {},
+        "unmeasuredKinds": {
+          "instructions": 1
+        },
+        "mcpServers": 0
+      },
+      "installedButNothingFound": false,
+      "offenders": [],
+      "mcpServers": [],
+      "unmeasuredBanner": [
+        "built-in system prompt and built-in tools",
+        "claude.ai connectors (not on disk)",
+        "hook output"
+      ],
+      "items": [
+        {
+          "id": "claude-code:1",
+          "kind": "instructions",
+          "scope": "project",
+          "loadMode": "always",
+          "label": "./CLAUDE.md",
+          "path": "./CLAUDE.md",
+          "tokens": null,
+          "unmeasured": true,
+          "unmeasuredReason": "binary content, not read",
+          "chars": 0,
+          "lines": 0,
+          "confidence": "documented",
+          "evidence": {
+            "docUrl": "https://code.claude.com/docs/en/memory",
+            "verifiedAt": "2026-10-25"
+          },
+          "notes": []
+        }
+      ]
+    },
+    {
+      "id": "cursor",
+      "name": "Cursor",
+      "detected": false,
+      "detectedBy": [],
+      "presentInRepoOnly": true,
+      "profile": {
+        "id": "cursor-mixed",
+        "label": "o200k; model unknown, so midpoint of GPT-like (×1.0) and Claude-like (×1.5) priors",
+        "band": "wide: GPT-like −3% to Claude-like +20%"
+      },
+      "totals": {
+        "always": {
+          "est": 8,
+          "low": 6,
+          "high": 11,
+          "measuredItems": 1,
+          "unmeasuredItems": 0
+        },
+        "conditional": {
+          "est": 0,
+          "low": 0,
+          "high": 0,
+          "measuredItems": 0,
+          "unmeasuredItems": 0
+        },
+        "deferred": {
+          "est": 0,
+          "low": 0,
+          "high": 0,
+          "measuredItems": 0,
+          "unmeasuredItems": 0
+        },
+        "on-demand": {
+          "est": 0,
+          "low": 0,
+          "high": 0,
+          "measuredItems": 0,
+          "unmeasuredItems": 0
+        },
+        "unknown": {
+          "est": 0,
+          "low": 0,
+          "high": 0,
+          "measuredItems": 0,
+          "unmeasuredItems": 0
+        }
+      },
+      "percentOfWindowAlways": 0.004,
+      "alwaysIsLowerBound": false,
+      "savings": null,
+      "grade": null,
+      "coverage": {
+        "agent": "cursor",
+        "alwaysMeasuredItems": 1,
+        "alwaysUnmeasuredItems": 0,
+        "alwaysFraction": 1,
+        "measuredKinds": {
+          "instructions": 1
+        },
+        "unmeasuredKinds": {},
+        "mcpServers": 0
+      },
+      "installedButNothingFound": false,
+      "offenders": [
+        {
+          "label": "AGENTS.md",
+          "path": "./AGENTS.md",
+          "kind": "instructions",
+          "loadMode": "always",
+          "tokens": 8
+        }
+      ],
+      "mcpServers": [],
+      "unmeasuredBanner": [
+        "User Rules and Team Rules (stored in Cursor, not on disk; paste them with --paste-user-rules to count them)",
+        "built-in system prompt and tools"
+      ],
+      "items": [
+        {
+          "id": "cursor:2",
+          "kind": "instructions",
+          "scope": "project",
+          "loadMode": "always",
+          "label": "AGENTS.md",
+          "path": "./AGENTS.md",
+          "tokens": {
+            "est": 8,
+            "low": 6,
+            "high": 11
+          },
+          "unmeasured": false,
+          "chars": 24,
+          "lines": 3,
+          "confidence": "documented",
+          "evidence": {
+            "docUrl": "https://cursor.com/docs/rules",
+            "verifiedAt": "2026-10-25"
+          },
+          "notes": []
+        }
+      ]
+    },
+    {
+      "id": "codex",
+      "name": "Codex",
+      "detected": false,
+      "detectedBy": [],
+      "presentInRepoOnly": true,
+      "profile": {
+        "id": "openai-o200k",
+        "label": "o200k BPE (OpenAI-family)",
+        "band": "±3%"
+      },
+      "totals": {
+        "always": {
+          "est": 6,
+          "low": 6,
+          "high": 6,
+          "measuredItems": 1,
+          "unmeasuredItems": 0
+        },
+        "conditional": {
+          "est": 0,
+          "low": 0,
+          "high": 0,
+          "measuredItems": 0,
+          "unmeasuredItems": 0
+        },
+        "deferred": {
+          "est": 0,
+          "low": 0,
+          "high": 0,
+          "measuredItems": 0,
+          "unmeasuredItems": 0
+        },
+        "on-demand": {
+          "est": 0,
+          "low": 0,
+          "high": 0,
+          "measuredItems": 0,
+          "unmeasuredItems": 0
+        },
+        "unknown": {
+          "est": 0,
+          "low": 0,
+          "high": 0,
+          "measuredItems": 0,
+          "unmeasuredItems": 0
+        }
+      },
+      "percentOfWindowAlways": 0.003,
+      "alwaysIsLowerBound": false,
+      "savings": null,
+      "grade": null,
+      "coverage": {
+        "agent": "codex",
+        "alwaysMeasuredItems": 1,
+        "alwaysUnmeasuredItems": 0,
+        "alwaysFraction": 1,
+        "measuredKinds": {
+          "instructions": 1
+        },
+        "unmeasuredKinds": {},
+        "mcpServers": 0
+      },
+      "installedButNothingFound": false,
+      "offenders": [
+        {
+          "label": "./AGENTS.md",
+          "path": "./AGENTS.md",
+          "kind": "instructions",
+          "loadMode": "always",
+          "tokens": 6
+        }
+      ],
+      "mcpServers": [],
+      "unmeasuredBanner": [
+        "built-in system prompt and tools",
+        "Codex bundled system skills (~/.codex/skills/.system, hidden dirs are skipped)",
+        "server-side / org instructions"
+      ],
+      "items": [
+        {
+          "id": "codex:3",
+          "kind": "instructions",
+          "scope": "project",
+          "loadMode": "always",
+          "label": "./AGENTS.md",
+          "path": "./AGENTS.md",
+          "tokens": {
+            "est": 6,
+            "low": 6,
+            "high": 6
+          },
+          "unmeasured": false,
+          "chars": 24,
+          "lines": 3,
+          "confidence": "documented",
+          "evidence": {
+            "docUrl": "https://learn.chatgpt.com/docs/agent-configuration/agents-md",
+            "verifiedAt": "2026-10-25"
+          },
+          "notes": []
+        }
+      ]
+    }
+  ],
+  "excluded": [
+    {
+      "agent": "claude-code",
+      "path": "./AGENTS.md",
+      "reason": "ignored by Claude Code: a CLAUDE.md exists in this directory tree (default instructionFiles = claude-md-or-agents-md)"
+    }
+  ],
+  "findings": [
+    {
+      "id": "F7",
+      "severity": "warn",
+      "agent": "claude-code",
+      "message": "Claude Code ignores ./AGENTS.md: a CLAUDE.md exists in this directory tree (Cursor and Codex still load it)",
+      "paths": [
+        "./AGENTS.md"
+      ],
+      "confidence": "high",
+      "fix": "Add `@AGENTS.md` to CLAUDE.md, or set the AGENTS.md plugin option instructionFiles to claude-md-and-agents-md."
+    },
+    {
+      "id": "F5",
+      "severity": "info",
+      "agent": "claude-code",
+      "message": "Claude Code: 1 always-loaded item is unmeasured (files that could not be read); the always-on total is a lower bound (\"at least\")",
+      "paths": [],
+      "confidence": "needs-your-call"
+    }
+  ],
+  "warnings": [
+    "./CLAUDE.md: binary content, skipped"
+  ],
+  "notMeasurable": [
+    "the agent's built-in system prompt and built-in tool definitions",
+    "server-side / org rules, Cursor User & Team Rules, claude.ai connectors",
+    "MCP servers whose tools are only known at runtime (no server is started by default)",
+    "files outside the scanned locations; anything the agent injects dynamically (hooks, memory/RAG plugins)"
+  ],
+  "partial": null
+}

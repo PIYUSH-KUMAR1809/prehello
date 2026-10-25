@@ -1,0 +1,424 @@
+{
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "prehello",
+          "version": "0.1.0",
+          "semanticVersion": "0.1.0",
+          "shortDescription": {
+            "text": "Shows what a coding agent loads into context before the first message. Token counts are estimates."
+          },
+          "rules": [
+            {
+              "id": "PH001",
+              "name": "LargeAlwaysOnFile",
+              "shortDescription": {
+                "text": "A file that loads before the first message is large"
+              },
+              "fullDescription": {
+                "text": "An instruction, rule or memory file that the coding agent loads into context before the first message costs a lot of tokens. The count is an estimate (o200k BPE with a per-agent scaling prior)."
+              },
+              "help": {
+                "text": "Trim the file, split rarely needed material into scoped rules or skills, or move reference text out of always-loaded files. Token counts are estimates with an error band, not exact for any model.\nSee the SARIF section of the prehello README for the rule list.",
+                "markdown": "Trim the file, split rarely needed material into scoped rules or skills, or move reference text out of always-loaded files. Token counts are estimates with an error band, not exact for any model.\n\nSee the SARIF section of the prehello README for the rule list."
+              },
+              "defaultConfiguration": {
+                "level": "note"
+              },
+              "properties": {
+                "tags": [
+                  "context",
+                  "tokens",
+                  "coding-agents"
+                ],
+                "precision": "medium"
+              }
+            },
+            {
+              "id": "PH002",
+              "name": "HeavyAlwaysOnGroup",
+              "shortDescription": {
+                "text": "A plugin, skills folder or MCP server costs many tokens before the first message"
+              },
+              "fullDescription": {
+                "text": "The listing of a plugin's skills, a skills folder or an MCP server's tool definitions is part of the always-on context. This is what `prehello --fix` calls the cut list. The count is an estimate."
+              },
+              "help": {
+                "text": "If you do not use it, disable or remove the plugin, skills folder or MCP server in the agent's own settings. prehello never edits agent configuration. The saving is an estimate, not a promise.\nSee the SARIF section of the prehello README for the rule list.",
+                "markdown": "If you do not use it, disable or remove the plugin, skills folder or MCP server in the agent's own settings. prehello never edits agent configuration. The saving is an estimate, not a promise.\n\nSee the SARIF section of the prehello README for the rule list."
+              },
+              "defaultConfiguration": {
+                "level": "note"
+              },
+              "properties": {
+                "tags": [
+                  "context",
+                  "tokens",
+                  "coding-agents"
+                ],
+                "precision": "medium"
+              }
+            },
+            {
+              "id": "PH003",
+              "name": "OverTokenBudget",
+              "shortDescription": {
+                "text": "Always-on context is above the --max-tokens budget"
+              },
+              "fullDescription": {
+                "text": "The estimated always-on token count of an agent in use is above the budget given with --max-tokens. When some always-on items could not be measured, the total is a lower bound (at least)."
+              },
+              "help": {
+                "text": "Cut the biggest contributors (see PH001 and PH002), or raise the budget if the size is intentional. This result only exists when --max-tokens is given; the same condition makes prehello exit with code 2.\nSee the SARIF section of the prehello README for the rule list.",
+                "markdown": "Cut the biggest contributors (see PH001 and PH002), or raise the budget if the size is intentional. This result only exists when --max-tokens is given; the same condition makes prehello exit with code 2.\n\nSee the SARIF section of the prehello README for the rule list."
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "tags": [
+                  "context",
+                  "tokens",
+                  "coding-agents"
+                ],
+                "precision": "medium"
+              }
+            },
+            {
+              "id": "PH004",
+              "name": "UnmeasuredAlwaysOnItems",
+              "shortDescription": {
+                "text": "Some always-loaded items could not be measured"
+              },
+              "fullDescription": {
+                "text": "Some items that load before the first message (typically MCP servers whose tools are only known at runtime) have no token count. Their cost is unknown, not zero, so every always-on total for this agent is a lower bound."
+              },
+              "help": {
+                "text": "No action is required. Treat the totals as 'at least'. You can supply measured weights with --mcp-catalog.\nSee the SARIF section of the prehello README for the rule list.",
+                "markdown": "No action is required. Treat the totals as 'at least'. You can supply measured weights with --mcp-catalog.\n\nSee the SARIF section of the prehello README for the rule list."
+              },
+              "defaultConfiguration": {
+                "level": "note"
+              },
+              "properties": {
+                "tags": [
+                  "context",
+                  "tokens",
+                  "coding-agents"
+                ],
+                "precision": "low"
+              }
+            },
+            {
+              "id": "PH005",
+              "name": "DuplicateContextFiles",
+              "shortDescription": {
+                "text": "Two context files are near-duplicates"
+              },
+              "fullDescription": {
+                "text": "Two files that agents load share most of their text (60% or more). If one agent loads both, the text is paid for twice."
+              },
+              "help": {
+                "text": "Keep one copy. Claude Code @imports do not reduce cost. If different agents read the two files, do not delete either; make one the source of truth (for example a CLAUDE.md that only contains @AGENTS.md, or a symlink).\nSee the SARIF section of the prehello README for the rule list.",
+                "markdown": "Keep one copy. Claude Code @imports do not reduce cost. If different agents read the two files, do not delete either; make one the source of truth (for example a CLAUDE.md that only contains @AGENTS.md, or a symlink).\n\nSee the SARIF section of the prehello README for the rule list."
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "tags": [
+                  "context",
+                  "tokens",
+                  "coding-agents"
+                ],
+                "precision": "medium"
+              }
+            },
+            {
+              "id": "PH006",
+              "name": "LongInstructionFile",
+              "shortDescription": {
+                "text": "An always-loaded file is longer than the documented guideline"
+              },
+              "fullDescription": {
+                "text": "The file is longer than the length the agent's documentation recommends (Claude Code: 200 lines for CLAUDE.md, Cursor: 500 lines per rule). Longer files can reduce how well the agent follows them."
+              },
+              "help": {
+                "text": "Split the file into scoped rules or move reference material out of the always-loaded file.\nSee the SARIF section of the prehello README for the rule list.",
+                "markdown": "Split the file into scoped rules or move reference material out of the always-loaded file.\n\nSee the SARIF section of the prehello README for the rule list."
+              },
+              "defaultConfiguration": {
+                "level": "note"
+              },
+              "properties": {
+                "tags": [
+                  "context",
+                  "tokens",
+                  "coding-agents"
+                ],
+                "precision": "medium"
+              }
+            },
+            {
+              "id": "PH007",
+              "name": "SilentTruncation",
+              "shortDescription": {
+                "text": "Part of a context file is silently dropped by the agent"
+              },
+              "fullDescription": {
+                "text": "The agent cuts this content off at a documented limit (Codex 32 KiB project docs, Claude Code MEMORY.md 200 lines / 25 KB, the skill description cap), so the tail never reaches the model."
+              },
+              "help": {
+                "text": "Shorten the file or the description, and put the important parts first.\nSee the SARIF section of the prehello README for the rule list.",
+                "markdown": "Shorten the file or the description, and put the important parts first.\n\nSee the SARIF section of the prehello README for the rule list."
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "tags": [
+                  "context",
+                  "tokens",
+                  "coding-agents"
+                ],
+                "precision": "medium"
+              }
+            },
+            {
+              "id": "PH008",
+              "name": "IgnoredContextFile",
+              "shortDescription": {
+                "text": "A context file is ignored by the agent"
+              },
+              "fullDescription": {
+                "text": "The agent does not load this file (for example AGENTS.md next to a CLAUDE.md for Claude Code, or a .md file in .cursor/rules for Cursor). Other agents may still read it."
+              },
+              "help": {
+                "text": "Rename or restructure the file if you intend the agent to use it, or delete it if it is stale.\nSee the SARIF section of the prehello README for the rule list.",
+                "markdown": "Rename or restructure the file if you intend the agent to use it, or delete it if it is stale.\n\nSee the SARIF section of the prehello README for the rule list."
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "tags": [
+                  "context",
+                  "tokens",
+                  "coding-agents"
+                ],
+                "precision": "medium"
+              }
+            },
+            {
+              "id": "PH009",
+              "name": "PossibleSecretInContextFile",
+              "shortDescription": {
+                "text": "A context file contains something that looks like a secret"
+              },
+              "fullDescription": {
+                "text": "A line of this file matches a secret pattern (cloud keys, tokens, private key headers, key=value credentials). The value is never printed or stored by prehello. Agents send context files to a model provider."
+              },
+              "help": {
+                "text": "Remove the secret from the file and rotate it. This is a pattern match and can be a false positive.\nSee the SARIF section of the prehello README for the rule list.",
+                "markdown": "Remove the secret from the file and rotate it. This is a pattern match and can be a false positive.\n\nSee the SARIF section of the prehello README for the rule list."
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "tags": [
+                  "context",
+                  "tokens",
+                  "coding-agents"
+                ],
+                "precision": "low"
+              }
+            },
+            {
+              "id": "PH010",
+              "name": "SkillsListingOverBudget",
+              "shortDescription": {
+                "text": "A skills listing is above the agent's listing budget"
+              },
+              "fullDescription": {
+                "text": "The skills listing is estimated to be larger than the share of the window the agent reserves for it, so the agent shortens or drops descriptions of the least used skills."
+              },
+              "help": {
+                "text": "Remove skills you do not use, or switch rarely used skills to name-only where the agent supports it.\nSee the SARIF section of the prehello README for the rule list.",
+                "markdown": "Remove skills you do not use, or switch rarely used skills to name-only where the agent supports it.\n\nSee the SARIF section of the prehello README for the rule list."
+              },
+              "defaultConfiguration": {
+                "level": "note"
+              },
+              "properties": {
+                "tags": [
+                  "context",
+                  "tokens",
+                  "coding-agents"
+                ],
+                "precision": "low"
+              }
+            },
+            {
+              "id": "PH011",
+              "name": "IncompleteScan",
+              "shortDescription": {
+                "text": "Some sources could not be read or the scan hit its budget"
+              },
+              "fullDescription": {
+                "text": "Some files were unreadable, too large, binary or skipped, or the scan stopped at its byte or time budget. Every total is then a lower bound."
+              },
+              "help": {
+                "text": "Run prehello locally to see which sources were skipped, or raise --scan-budget-mb / --scan-budget-ms.\nSee the SARIF section of the prehello README for the rule list.",
+                "markdown": "Run prehello locally to see which sources were skipped, or raise --scan-budget-mb / --scan-budget-ms.\n\nSee the SARIF section of the prehello README for the rule list."
+              },
+              "defaultConfiguration": {
+                "level": "note"
+              },
+              "properties": {
+                "tags": [
+                  "context",
+                  "tokens",
+                  "coding-agents"
+                ],
+                "precision": "low"
+              }
+            }
+          ]
+        }
+      },
+      "columnKind": "utf16CodeUnits",
+      "originalUriBaseIds": {
+        "%SRCROOT%": {
+          "description": {
+            "text": "The scanned project folder. Run prehello from the repository root so these paths match the repository."
+          }
+        }
+      },
+      "automationDetails": {
+        "id": "prehello/"
+      },
+      "invocations": [
+        {
+          "executionSuccessful": true,
+          "endTimeUtc": "2026-10-24T12:00:00.000Z",
+          "properties": {
+            "partial": false
+          }
+        }
+      ],
+      "results": [
+        {
+          "ruleId": "PH001",
+          "ruleIndex": 0,
+          "level": "note",
+          "message": {
+            "text": "This file is always loaded before the first message (Claude Code ~7.5k tokens, estimate; up to 3.7% of a 200k window). Item: MEMORY.md."
+          },
+          "locations": [
+            {
+              "logicalLocations": [
+                {
+                  "name": "MEMORY.md",
+                  "fullyQualifiedName": "claude-code/MEMORY.md",
+                  "kind": "module"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "prehello/v1": "c215197648a219f299a73b8d7ed9e355"
+          },
+          "properties": {
+            "perAgent": [
+              {
+                "agent": "claude-code",
+                "kind": "memory",
+                "scope": "user",
+                "loadMode": "always",
+                "estimateTokens": 7469,
+                "lowTokens": 5975,
+                "highTokens": 8963,
+                "isEstimate": true,
+                "percentOfWindow": 3.7
+              }
+            ],
+            "agents": [
+              "Claude Code"
+            ],
+            "anonymized": false
+          }
+        },
+        {
+          "ruleId": "PH007",
+          "ruleIndex": 6,
+          "level": "warning",
+          "message": {
+            "text": "MEMORY.md is over the load cap (200 lines / 25 KB) for Claude Code; the rest is silently dropped."
+          },
+          "locations": [
+            {
+              "logicalLocations": [
+                {
+                  "name": "Claude Code",
+                  "fullyQualifiedName": "claude-code/F8",
+                  "kind": "module"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "prehello/v1": "64b6db2722de5f7be57ff1f205e8dd05"
+          },
+          "properties": {
+            "findingId": "F8",
+            "confidence": "high",
+            "agents": [
+              "Claude Code"
+            ],
+            "anonymized": false
+          }
+        }
+      ],
+      "properties": {
+        "prehello": {
+          "note": "All token numbers are estimates (o200k BPE with per-agent scaling priors), not exact for any model. An unmeasured item has no number, never 0. A total marked isLowerBound is 'at least'.",
+          "tokenizer": "bpe-o200k",
+          "claudeProfile": "current",
+          "windowTokens": 200000,
+          "redacted": false,
+          "namesAnonymized": false,
+          "fileLocations": true,
+          "partial": null,
+          "duplicatePairsNotListed": 0,
+          "agents": [
+            {
+              "id": "claude-code",
+              "profile": "claude-current",
+              "band": "±20%",
+              "always": {
+                "estimateTokens": 7480,
+                "lowTokens": 5984,
+                "highTokens": 8976,
+                "isEstimate": true,
+                "isLowerBound": false,
+                "measuredItems": 2,
+                "unmeasuredItems": 0
+              },
+              "percentOfWindow": 3.7,
+              "grade": {
+                "letter": "A",
+                "provisional": false,
+                "heuristic": true
+              },
+              "savings": null
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

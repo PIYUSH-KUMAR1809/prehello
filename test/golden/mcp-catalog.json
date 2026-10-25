@@ -1,0 +1,256 @@
+{
+  "schemaVersion": 1,
+  "tool": {
+    "name": "prehello",
+    "version": "0.1.0"
+  },
+  "generatedAt": "2026-10-24T12:00:00.000Z",
+  "redacted": "paths-shortened (~ and ./ prefixes); server and file names kept",
+  "scan": {
+    "cwd": ".",
+    "window": 200000,
+    "tokenizer": {
+      "method": "bpe-o200k",
+      "note": "o200k BPE (gpt-tokenizer, bundled) with per-family scaling"
+    },
+    "claudeProfile": "current"
+  },
+  "agents": [
+    {
+      "id": "claude-code",
+      "name": "Claude Code",
+      "detected": true,
+      "detectedBy": [
+        "config dir"
+      ],
+      "presentInRepoOnly": false,
+      "profile": {
+        "id": "claude-current",
+        "label": "o200k × 1.5 (Claude-current prior)",
+        "band": "±20%"
+      },
+      "totals": {
+        "always": {
+          "est": 236,
+          "low": 189,
+          "high": 283,
+          "measuredItems": 2,
+          "unmeasuredItems": 1
+        },
+        "conditional": {
+          "est": 0,
+          "low": 0,
+          "high": 0,
+          "measuredItems": 0,
+          "unmeasuredItems": 0
+        },
+        "deferred": {
+          "est": 9600,
+          "low": 7680,
+          "high": 11520,
+          "measuredItems": 1,
+          "unmeasuredItems": 0
+        },
+        "on-demand": {
+          "est": 0,
+          "low": 0,
+          "high": 0,
+          "measuredItems": 0,
+          "unmeasuredItems": 0
+        },
+        "unknown": {
+          "est": 0,
+          "low": 0,
+          "high": 0,
+          "measuredItems": 0,
+          "unmeasuredItems": 0
+        }
+      },
+      "percentOfWindowAlways": 0.11800000000000001,
+      "alwaysIsLowerBound": true,
+      "savings": null,
+      "grade": {
+        "letter": "B",
+        "score": 100,
+        "provisional": true,
+        "cappedAt": "B",
+        "reasons": [
+          "capped at B: 1 always-loaded item could not be measured, so a top grade cannot be certified"
+        ]
+      },
+      "coverage": {
+        "agent": "claude-code",
+        "alwaysMeasuredItems": 2,
+        "alwaysUnmeasuredItems": 1,
+        "alwaysFraction": 0.6666666666666666,
+        "measuredKinds": {
+          "mcp-server": 1,
+          "instructions": 1
+        },
+        "unmeasuredKinds": {
+          "mcp-server": 1
+        },
+        "mcpServers": 2
+      },
+      "installedButNothingFound": false,
+      "offenders": [
+        {
+          "label": "MCP \"playwright\" (tool names)",
+          "path": "./.mcp.json",
+          "kind": "mcp-server",
+          "loadMode": "always",
+          "tokens": 225
+        },
+        {
+          "label": "./CLAUDE.md",
+          "path": "./CLAUDE.md",
+          "kind": "instructions",
+          "loadMode": "always",
+          "tokens": 11
+        }
+      ],
+      "mcpServers": [
+        {
+          "name": "mystery",
+          "source": "./.mcp.json",
+          "scope": "project",
+          "transport": "stdio",
+          "measured": false
+        },
+        {
+          "name": "playwright",
+          "source": "./.mcp.json",
+          "scope": "project",
+          "transport": "stdio",
+          "measured": true
+        }
+      ],
+      "unmeasuredBanner": [
+        "built-in system prompt and built-in tools",
+        "claude.ai connectors (not on disk)",
+        "hook output"
+      ],
+      "items": [
+        {
+          "id": "claude-code:2",
+          "kind": "mcp-server",
+          "scope": "project",
+          "loadMode": "always",
+          "label": "MCP \"playwright\" (tool names)",
+          "path": "./.mcp.json",
+          "tokens": {
+            "est": 225,
+            "low": 180,
+            "high": 270
+          },
+          "unmeasured": false,
+          "chars": 0,
+          "lines": 0,
+          "confidence": "assumed",
+          "evidence": {
+            "docUrl": "https://code.claude.com/docs/en/mcp",
+            "verifiedAt": "2026-10-25"
+          },
+          "notes": [
+            "tool search assumed ON (default): names always, schemas deferred",
+            "project-scope server: Claude Code asks for approval before loading",
+            "catalog: measured 2026-01-01 (FIXTURE DATA, not a real measurement) vfixture, 21 tools; your version may differ",
+            "tool names only (tool search)"
+          ]
+        },
+        {
+          "id": "claude-code:1",
+          "kind": "instructions",
+          "scope": "project",
+          "loadMode": "always",
+          "label": "./CLAUDE.md",
+          "path": "./CLAUDE.md",
+          "tokens": {
+            "est": 11,
+            "low": 9,
+            "high": 13
+          },
+          "unmeasured": false,
+          "chars": 24,
+          "lines": 3,
+          "confidence": "documented",
+          "evidence": {
+            "docUrl": "https://code.claude.com/docs/en/memory",
+            "verifiedAt": "2026-10-25"
+          },
+          "notes": []
+        },
+        {
+          "id": "claude-code:4",
+          "kind": "mcp-server",
+          "scope": "project",
+          "loadMode": "always",
+          "label": "MCP server \"mystery\"",
+          "path": "./.mcp.json",
+          "tokens": null,
+          "unmeasured": true,
+          "unmeasuredReason": "no local tool-list cache or catalog entry; run is static (no server was started)",
+          "chars": 0,
+          "lines": 0,
+          "confidence": "assumed",
+          "evidence": {
+            "docUrl": "https://code.claude.com/docs/en/mcp",
+            "verifiedAt": "2026-10-25"
+          },
+          "notes": [
+            "tool search assumed ON (default): names always, schemas deferred",
+            "project-scope server: Claude Code asks for approval before loading",
+            "transport: stdio"
+          ]
+        },
+        {
+          "id": "claude-code:3",
+          "kind": "mcp-server",
+          "scope": "project",
+          "loadMode": "deferred",
+          "label": "MCP \"playwright\" (schemas)",
+          "path": "./.mcp.json",
+          "tokens": {
+            "est": 9600,
+            "low": 7680,
+            "high": 11520
+          },
+          "unmeasured": false,
+          "chars": 0,
+          "lines": 0,
+          "confidence": "assumed",
+          "evidence": {
+            "docUrl": "https://code.claude.com/docs/en/mcp",
+            "verifiedAt": "2026-10-25"
+          },
+          "notes": [
+            "tool search assumed ON (default): names always, schemas deferred",
+            "project-scope server: Claude Code asks for approval before loading",
+            "catalog: measured 2026-01-01 (FIXTURE DATA, not a real measurement) vfixture, 21 tools; your version may differ",
+            "schemas fetched on demand (tool search)"
+          ]
+        }
+      ]
+    }
+  ],
+  "excluded": [],
+  "findings": [
+    {
+      "id": "F5",
+      "severity": "info",
+      "agent": "claude-code",
+      "message": "Claude Code: 1 always-loaded item is unmeasured (MCP servers); the always-on total is a lower bound (\"at least\")",
+      "paths": [],
+      "confidence": "needs-your-call",
+      "fix": "If a server is unused, disable or remove it in the agent's own settings. prehello never edits MCP configs."
+    }
+  ],
+  "warnings": [],
+  "notMeasurable": [
+    "the agent's built-in system prompt and built-in tool definitions",
+    "server-side / org rules, Cursor User & Team Rules, claude.ai connectors",
+    "MCP servers whose tools are only known at runtime (no server is started by default)",
+    "files outside the scanned locations; anything the agent injects dynamically (hooks, memory/RAG plugins)"
+  ],
+  "partial": null
+}

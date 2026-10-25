@@ -1,0 +1,30 @@
+{
+  "mcpServers": {
+    "github": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@example/github-mcp"
+      ],
+      "env": {
+        "GITHUB_TOKEN": "FIXTURE_NOT_A_REAL_TOKEN"
+      }
+    },
+    "playwright": {
+      "command": "npx",
+      "args": [
+        "@playwright/mcp@latest"
+      ]
+    }
+  },
+  "projects": {
+    "__PROJECT__": {
+      "mcpServers": {
+        "local-db": {
+          "type": "http",
+          "url": "https://db.example.invalid/mcp"
+        }
+      }
+    }
+  }
+}

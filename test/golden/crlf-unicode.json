@@ -1,0 +1,141 @@
+{
+  "schemaVersion": 1,
+  "tool": {
+    "name": "prehello",
+    "version": "0.1.0"
+  },
+  "generatedAt": "2026-10-24T12:00:00.000Z",
+  "redacted": "paths-shortened (~ and ./ prefixes); server and file names kept",
+  "scan": {
+    "cwd": ".",
+    "window": 200000,
+    "tokenizer": {
+      "method": "bpe-o200k",
+      "note": "o200k BPE (gpt-tokenizer, bundled) with per-family scaling"
+    },
+    "claudeProfile": "current"
+  },
+  "agents": [
+    {
+      "id": "claude-code",
+      "name": "Claude Code",
+      "detected": true,
+      "detectedBy": [
+        "config dir"
+      ],
+      "presentInRepoOnly": false,
+      "profile": {
+        "id": "claude-current",
+        "label": "o200k × 1.5 (Claude-current prior)",
+        "band": "±20%"
+      },
+      "totals": {
+        "always": {
+          "est": 72,
+          "low": 58,
+          "high": 86,
+          "measuredItems": 1,
+          "unmeasuredItems": 0
+        },
+        "conditional": {
+          "est": 0,
+          "low": 0,
+          "high": 0,
+          "measuredItems": 0,
+          "unmeasuredItems": 0
+        },
+        "deferred": {
+          "est": 0,
+          "low": 0,
+          "high": 0,
+          "measuredItems": 0,
+          "unmeasuredItems": 0
+        },
+        "on-demand": {
+          "est": 0,
+          "low": 0,
+          "high": 0,
+          "measuredItems": 0,
+          "unmeasuredItems": 0
+        },
+        "unknown": {
+          "est": 0,
+          "low": 0,
+          "high": 0,
+          "measuredItems": 0,
+          "unmeasuredItems": 0
+        }
+      },
+      "percentOfWindowAlways": 0.036000000000000004,
+      "alwaysIsLowerBound": false,
+      "savings": null,
+      "grade": {
+        "letter": "A",
+        "score": 100,
+        "provisional": false,
+        "reasons": []
+      },
+      "coverage": {
+        "agent": "claude-code",
+        "alwaysMeasuredItems": 1,
+        "alwaysUnmeasuredItems": 0,
+        "alwaysFraction": 1,
+        "measuredKinds": {
+          "instructions": 1
+        },
+        "unmeasuredKinds": {},
+        "mcpServers": 0
+      },
+      "installedButNothingFound": false,
+      "offenders": [
+        {
+          "label": "./CLAUDE.md",
+          "path": "./CLAUDE.md",
+          "kind": "instructions",
+          "loadMode": "always",
+          "tokens": 72
+        }
+      ],
+      "mcpServers": [],
+      "unmeasuredBanner": [
+        "built-in system prompt and built-in tools",
+        "claude.ai connectors (not on disk)",
+        "hook output"
+      ],
+      "items": [
+        {
+          "id": "claude-code:1",
+          "kind": "instructions",
+          "scope": "project",
+          "loadMode": "always",
+          "label": "./CLAUDE.md",
+          "path": "./CLAUDE.md",
+          "tokens": {
+            "est": 72,
+            "low": 58,
+            "high": 86
+          },
+          "unmeasured": false,
+          "chars": 142,
+          "lines": 9,
+          "confidence": "documented",
+          "evidence": {
+            "docUrl": "https://code.claude.com/docs/en/memory",
+            "verifiedAt": "2026-10-25"
+          },
+          "notes": []
+        }
+      ]
+    }
+  ],
+  "excluded": [],
+  "findings": [],
+  "warnings": [],
+  "notMeasurable": [
+    "the agent's built-in system prompt and built-in tool definitions",
+    "server-side / org rules, Cursor User & Team Rules, claude.ai connectors",
+    "MCP servers whose tools are only known at runtime (no server is started by default)",
+    "files outside the scanned locations; anything the agent injects dynamically (hooks, memory/RAG plugins)"
+  ],
+  "partial": null
+}

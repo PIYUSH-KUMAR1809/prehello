@@ -1,0 +1,1295 @@
+{
+  "schemaVersion": 1,
+  "tool": {
+    "name": "prehello",
+    "version": "0.1.0"
+  },
+  "generatedAt": "2026-10-24T12:00:00.000Z",
+  "redacted": "paths-shortened (~ and ./ prefixes); server and file names kept",
+  "scan": {
+    "cwd": ".",
+    "window": 200000,
+    "tokenizer": {
+      "method": "bpe-o200k",
+      "note": "o200k BPE (gpt-tokenizer, bundled) with per-family scaling"
+    },
+    "claudeProfile": "current"
+  },
+  "agents": [
+    {
+      "id": "claude-code",
+      "name": "Claude Code",
+      "detected": true,
+      "detectedBy": [
+        "config dir",
+        "~/.claude.json"
+      ],
+      "presentInRepoOnly": false,
+      "profile": {
+        "id": "claude-current",
+        "label": "o200k × 1.5 (Claude-current prior)",
+        "band": "±20%"
+      },
+      "totals": {
+        "always": {
+          "est": 1674,
+          "low": 1339,
+          "high": 2009,
+          "measuredItems": 6,
+          "unmeasuredItems": 4
+        },
+        "conditional": {
+          "est": 386,
+          "low": 309,
+          "high": 463,
+          "measuredItems": 2,
+          "unmeasuredItems": 0
+        },
+        "deferred": {
+          "est": 1278,
+          "low": 1023,
+          "high": 1533,
+          "measuredItems": 2,
+          "unmeasuredItems": 0
+        },
+        "on-demand": {
+          "est": 0,
+          "low": 0,
+          "high": 0,
+          "measuredItems": 0,
+          "unmeasuredItems": 0
+        },
+        "unknown": {
+          "est": 0,
+          "low": 0,
+          "high": 0,
+          "measuredItems": 0,
+          "unmeasuredItems": 0
+        }
+      },
+      "percentOfWindowAlways": 0.8370000000000001,
+      "alwaysIsLowerBound": true,
+      "savings": null,
+      "grade": {
+        "letter": "B",
+        "score": 92,
+        "provisional": true,
+        "cappedAt": "B",
+        "reasons": [
+          "1 ignored file(s) (−3)",
+          "1 duplicate pair(s) (−5)",
+          "capped at B: 4 always-loaded items could not be measured, so a top grade cannot be certified"
+        ]
+      },
+      "coverage": {
+        "agent": "claude-code",
+        "alwaysMeasuredItems": 6,
+        "alwaysUnmeasuredItems": 4,
+        "alwaysFraction": 0.6,
+        "measuredKinds": {
+          "instructions": 2,
+          "rule": 1,
+          "skills-listing": 2,
+          "subagents": 1
+        },
+        "unmeasuredKinds": {
+          "mcp-server": 4
+        },
+        "mcpServers": 4
+      },
+      "installedButNothingFound": false,
+      "offenders": [
+        {
+          "label": "./CLAUDE.md",
+          "path": "./CLAUDE.md",
+          "kind": "instructions",
+          "loadMode": "always",
+          "tokens": 999
+        },
+        {
+          "label": "~/.claude/CLAUDE.md",
+          "path": "~/.claude/CLAUDE.md",
+          "kind": "instructions",
+          "loadMode": "always",
+          "tokens": 261
+        },
+        {
+          "label": "./.claude/rules/style.md",
+          "path": "./.claude/rules/style.md",
+          "kind": "rule",
+          "loadMode": "always",
+          "tokens": 248
+        },
+        {
+          "label": "skill \"db-migrate\"",
+          "path": "~/.claude/skills",
+          "kind": "skills-listing",
+          "loadMode": "always",
+          "tokens": 75,
+          "note": "inside Skills listing (3 user skills)"
+        },
+        {
+          "label": "skill \"code-review\"",
+          "path": "~/.claude/skills",
+          "kind": "skills-listing",
+          "loadMode": "always",
+          "tokens": 35,
+          "note": "inside Skills listing (3 user skills)"
+        },
+        {
+          "label": "skill \"release-notes\"",
+          "path": "~/.claude/skills",
+          "kind": "skills-listing",
+          "loadMode": "always",
+          "tokens": 26,
+          "note": "inside Skills listing (3 user skills)"
+        },
+        {
+          "label": "skill \"deploy\"",
+          "path": "./.claude/skills",
+          "kind": "skills-listing",
+          "loadMode": "always",
+          "tokens": 20,
+          "note": "inside Skills listing (1 project skill)"
+        },
+        {
+          "label": "Subagents listing (1 user)",
+          "path": "~/.claude/agents",
+          "kind": "subagents",
+          "loadMode": "always",
+          "tokens": 11
+        }
+      ],
+      "mcpServers": [
+        {
+          "name": "github",
+          "source": "~/.claude.json",
+          "scope": "user",
+          "transport": "stdio",
+          "measured": false
+        },
+        {
+          "name": "local-db",
+          "source": "~/.claude.json",
+          "scope": "local",
+          "transport": "http",
+          "measured": false
+        },
+        {
+          "name": "playwright",
+          "source": "~/.claude.json",
+          "scope": "user",
+          "transport": "stdio",
+          "measured": false
+        },
+        {
+          "name": "sentry",
+          "source": "./.mcp.json",
+          "scope": "project",
+          "transport": "sse",
+          "measured": false
+        }
+      ],
+      "unmeasuredBanner": [
+        "built-in system prompt and built-in tools",
+        "claude.ai connectors (not on disk)",
+        "hook output"
+      ],
+      "items": [
+        {
+          "id": "claude-code:2",
+          "kind": "instructions",
+          "scope": "project",
+          "loadMode": "always",
+          "label": "./CLAUDE.md",
+          "path": "./CLAUDE.md",
+          "tokens": {
+            "est": 999,
+            "low": 799,
+            "high": 1199
+          },
+          "unmeasured": false,
+          "chars": 3703,
+          "lines": 39,
+          "confidence": "documented",
+          "evidence": {
+            "docUrl": "https://code.claude.com/docs/en/memory",
+            "verifiedAt": "2026-10-25"
+          },
+          "notes": []
+        },
+        {
+          "id": "claude-code:1",
+          "kind": "instructions",
+          "scope": "user",
+          "loadMode": "always",
+          "label": "~/.claude/CLAUDE.md",
+          "path": "~/.claude/CLAUDE.md",
+          "tokens": {
+            "est": 261,
+            "low": 209,
+            "high": 313
+          },
+          "unmeasured": false,
+          "chars": 939,
+          "lines": 15,
+          "confidence": "documented",
+          "evidence": {
+            "docUrl": "https://code.claude.com/docs/en/memory",
+            "verifiedAt": "2026-10-25"
+          },
+          "notes": []
+        },
+        {
+          "id": "claude-code:5",
+          "kind": "rule",
+          "scope": "project",
+          "loadMode": "always",
+          "label": "./.claude/rules/style.md",
+          "path": "./.claude/rules/style.md",
+          "tokens": {
+            "est": 248,
+            "low": 198,
+            "high": 298
+          },
+          "unmeasured": false,
+          "chars": 918,
+          "lines": 15,
+          "confidence": "documented",
+          "evidence": {
+            "docUrl": "https://code.claude.com/docs/en/memory",
+            "verifiedAt": "2026-10-25"
+          },
+          "notes": []
+        },
+        {
+          "id": "claude-code:6",
+          "kind": "skills-listing",
+          "scope": "user",
+          "loadMode": "always",
+          "label": "Skills listing (3 user skills)",
+          "path": "~/.claude/skills",
+          "tokens": {
+            "est": 135,
+            "low": 108,
+            "high": 162
+          },
+          "unmeasured": false,
+          "chars": 455,
+          "lines": 0,
+          "breakdown": [
+            {
+              "label": "db-migrate",
+              "tokens": 75
+            },
+            {
+              "label": "code-review",
+              "tokens": 35
+            },
+            {
+              "label": "release-notes",
+              "tokens": 26
+            }
+          ],
+          "parts": [
+            {
+              "name": "3 user skills",
+              "tokens": 135,
+              "count": 3
+            }
+          ],
+          "confidence": "documented",
+          "evidence": {
+            "docUrl": "https://code.claude.com/docs/en/skills",
+            "verifiedAt": "2026-10-25"
+          },
+          "notes": [
+            "name + description + when_to_use, combined cap 1536 chars per skill"
+          ]
+        },
+        {
+          "id": "claude-code:8",
+          "kind": "skills-listing",
+          "scope": "project",
+          "loadMode": "always",
+          "label": "Skills listing (1 project skill)",
+          "path": "./.claude/skills",
+          "tokens": {
+            "est": 20,
+            "low": 16,
+            "high": 24
+          },
+          "unmeasured": false,
+          "chars": 62,
+          "lines": 0,
+          "breakdown": [
+            {
+              "label": "deploy",
+              "tokens": 20
+            }
+          ],
+          "parts": [
+            {
+              "name": "1 project skill",
+              "tokens": 20,
+              "count": 1
+            }
+          ],
+          "confidence": "documented",
+          "evidence": {
+            "docUrl": "https://code.claude.com/docs/en/skills",
+            "verifiedAt": "2026-10-25"
+          },
+          "notes": [
+            "name + description + when_to_use, combined cap 1536 chars per skill"
+          ]
+        },
+        {
+          "id": "claude-code:10",
+          "kind": "subagents",
+          "scope": "user",
+          "loadMode": "always",
+          "label": "Subagents listing (1 user)",
+          "path": "~/.claude/agents",
+          "tokens": {
+            "est": 11,
+            "low": 9,
+            "high": 13
+          },
+          "unmeasured": false,
+          "chars": 33,
+          "lines": 0,
+          "confidence": "assumed",
+          "evidence": {
+            "docUrl": "https://code.claude.com/docs/en/memory",
+            "verifiedAt": "2026-10-25"
+          },
+          "notes": [
+            "/context lists subagents; how much of each is injected is unverified (name + description assumed)"
+          ]
+        },
+        {
+          "id": "claude-code:13",
+          "kind": "mcp-server",
+          "scope": "user",
+          "loadMode": "always",
+          "label": "MCP server \"github\"",
+          "path": "~/.claude.json",
+          "tokens": null,
+          "unmeasured": true,
+          "unmeasuredReason": "no local tool-list cache or catalog entry; run is static (no server was started)",
+          "chars": 0,
+          "lines": 0,
+          "confidence": "assumed",
+          "evidence": {
+            "docUrl": "https://code.claude.com/docs/en/mcp",
+            "verifiedAt": "2026-10-25"
+          },
+          "notes": [
+            "tool search assumed ON (default): names always, schemas deferred",
+            "transport: stdio"
+          ]
+        },
+        {
+          "id": "claude-code:12",
+          "kind": "mcp-server",
+          "scope": "local",
+          "loadMode": "always",
+          "label": "MCP server \"local-db\"",
+          "path": "~/.claude.json",
+          "tokens": null,
+          "unmeasured": true,
+          "unmeasuredReason": "no local tool-list cache or catalog entry; run is static (no server was started)",
+          "chars": 0,
+          "lines": 0,
+          "confidence": "assumed",
+          "evidence": {
+            "docUrl": "https://code.claude.com/docs/en/mcp",
+            "verifiedAt": "2026-10-25"
+          },
+          "notes": [
+            "tool search assumed ON (default): names always, schemas deferred",
+            "transport: http"
+          ]
+        },
+        {
+          "id": "claude-code:14",
+          "kind": "mcp-server",
+          "scope": "user",
+          "loadMode": "always",
+          "label": "MCP server \"playwright\"",
+          "path": "~/.claude.json",
+          "tokens": null,
+          "unmeasured": true,
+          "unmeasuredReason": "no local tool-list cache or catalog entry; run is static (no server was started)",
+          "chars": 0,
+          "lines": 0,
+          "confidence": "assumed",
+          "evidence": {
+            "docUrl": "https://code.claude.com/docs/en/mcp",
+            "verifiedAt": "2026-10-25"
+          },
+          "notes": [
+            "tool search assumed ON (default): names always, schemas deferred",
+            "transport: stdio"
+          ]
+        },
+        {
+          "id": "claude-code:11",
+          "kind": "mcp-server",
+          "scope": "project",
+          "loadMode": "always",
+          "label": "MCP server \"sentry\"",
+          "path": "./.mcp.json",
+          "tokens": null,
+          "unmeasured": true,
+          "unmeasuredReason": "no local tool-list cache or catalog entry; run is static (no server was started)",
+          "chars": 0,
+          "lines": 0,
+          "confidence": "assumed",
+          "evidence": {
+            "docUrl": "https://code.claude.com/docs/en/mcp",
+            "verifiedAt": "2026-10-25"
+          },
+          "notes": [
+            "tool search assumed ON (default): names always, schemas deferred",
+            "project-scope server: Claude Code asks for approval before loading",
+            "transport: sse"
+          ]
+        },
+        {
+          "id": "claude-code:4",
+          "kind": "rule",
+          "scope": "project",
+          "loadMode": "conditional",
+          "label": "./.claude/rules/frontend.md",
+          "path": "./.claude/rules/frontend.md",
+          "tokens": {
+            "est": 255,
+            "low": 204,
+            "high": 306
+          },
+          "unmeasured": false,
+          "chars": 912,
+          "lines": 21,
+          "confidence": "documented",
+          "evidence": {
+            "docUrl": "https://code.claude.com/docs/en/memory",
+            "verifiedAt": "2026-10-25"
+          },
+          "notes": [
+            "path-scoped (paths: 2 patterns) → conditional"
+          ]
+        },
+        {
+          "id": "claude-code:3",
+          "kind": "instructions",
+          "scope": "nested",
+          "loadMode": "conditional",
+          "label": "./packages/web/CLAUDE.md",
+          "path": "./packages/web/CLAUDE.md",
+          "tokens": {
+            "est": 131,
+            "low": 105,
+            "high": 157
+          },
+          "unmeasured": false,
+          "chars": 464,
+          "lines": 8,
+          "confidence": "documented",
+          "evidence": {
+            "docUrl": "https://code.claude.com/docs/en/memory",
+            "verifiedAt": "2026-10-25"
+          },
+          "notes": [
+            "loaded when Claude works in this subdirectory (not in /context at start)"
+          ]
+        },
+        {
+          "id": "claude-code:7",
+          "kind": "skill-body",
+          "scope": "user",
+          "loadMode": "deferred",
+          "label": "Skill bodies (3 user)",
+          "path": "~/.claude/skills",
+          "tokens": {
+            "est": 1146,
+            "low": 917,
+            "high": 1375
+          },
+          "unmeasured": false,
+          "chars": 4130,
+          "lines": 0,
+          "confidence": "documented",
+          "evidence": {
+            "docUrl": "https://code.claude.com/docs/en/skills",
+            "verifiedAt": "2026-10-25"
+          },
+          "notes": [
+            "loaded only when a skill is used; supporting files in the skill folder are not counted"
+          ]
+        },
+        {
+          "id": "claude-code:9",
+          "kind": "skill-body",
+          "scope": "project",
+          "loadMode": "deferred",
+          "label": "Skill bodies (1 project)",
+          "path": "./.claude/skills",
+          "tokens": {
+            "est": 132,
+            "low": 106,
+            "high": 158
+          },
+          "unmeasured": false,
+          "chars": 472,
+          "lines": 0,
+          "confidence": "documented",
+          "evidence": {
+            "docUrl": "https://code.claude.com/docs/en/skills",
+            "verifiedAt": "2026-10-25"
+          },
+          "notes": [
+            "loaded only when a skill is used; supporting files in the skill folder are not counted"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cursor",
+      "name": "Cursor",
+      "detected": true,
+      "detectedBy": [
+        "~/.cursor"
+      ],
+      "presentInRepoOnly": false,
+      "profile": {
+        "id": "cursor-mixed",
+        "label": "o200k; model unknown, so midpoint of GPT-like (×1.0) and Claude-like (×1.5) priors",
+        "band": "wide: GPT-like −3% to Claude-like +20%"
+      },
+      "totals": {
+        "always": {
+          "est": 764,
+          "low": 593,
+          "high": 1100,
+          "measuredItems": 5,
+          "unmeasuredItems": 2
+        },
+        "conditional": {
+          "est": 106,
+          "low": 82,
+          "high": 153,
+          "measuredItems": 1,
+          "unmeasuredItems": 0
+        },
+        "deferred": {
+          "est": 1278,
+          "low": 991,
+          "high": 1839,
+          "measuredItems": 3,
+          "unmeasuredItems": 0
+        },
+        "on-demand": {
+          "est": 113,
+          "low": 87,
+          "high": 162,
+          "measuredItems": 1,
+          "unmeasuredItems": 0
+        },
+        "unknown": {
+          "est": 0,
+          "low": 0,
+          "high": 0,
+          "measuredItems": 0,
+          "unmeasuredItems": 0
+        }
+      },
+      "percentOfWindowAlways": 0.382,
+      "alwaysIsLowerBound": true,
+      "savings": null,
+      "grade": {
+        "letter": "B",
+        "score": 92,
+        "provisional": true,
+        "cappedAt": "B",
+        "reasons": [
+          "1 ignored file(s) (−3)",
+          "1 duplicate pair(s) (−5)",
+          "capped at B: 2 always-loaded items could not be measured, so a top grade cannot be certified"
+        ]
+      },
+      "coverage": {
+        "agent": "cursor",
+        "alwaysMeasuredItems": 5,
+        "alwaysUnmeasuredItems": 2,
+        "alwaysFraction": 0.7142857142857143,
+        "measuredKinds": {
+          "instructions": 1,
+          "skills-listing": 2,
+          "rule": 1,
+          "rule-description": 1
+        },
+        "unmeasuredKinds": {
+          "mcp-server": 2
+        },
+        "mcpServers": 2
+      },
+      "installedButNothingFound": false,
+      "offenders": [
+        {
+          "label": "AGENTS.md",
+          "path": "./AGENTS.md",
+          "kind": "instructions",
+          "loadMode": "always",
+          "tokens": 525
+        },
+        {
+          "label": "./.cursor/rules/always.mdc",
+          "path": "./.cursor/rules/always.mdc",
+          "kind": "rule",
+          "loadMode": "always",
+          "tokens": 104
+        },
+        {
+          "label": "skill \"db-migrate\"",
+          "path": "~/.claude/skills",
+          "kind": "skills-listing",
+          "loadMode": "always",
+          "tokens": 61,
+          "note": "inside Skills listing (3 user (.claude) skills)"
+        },
+        {
+          "label": "skill \"code-review\"",
+          "path": "~/.claude/skills",
+          "kind": "skills-listing",
+          "loadMode": "always",
+          "tokens": 28,
+          "note": "inside Skills listing (3 user (.claude) skills)"
+        },
+        {
+          "label": "skill \"release-notes\"",
+          "path": "~/.claude/skills",
+          "kind": "skills-listing",
+          "loadMode": "always",
+          "tokens": 20,
+          "note": "inside Skills listing (3 user (.claude) skills)"
+        },
+        {
+          "label": "skill \"deploy\"",
+          "path": "./.claude/skills",
+          "kind": "skills-listing",
+          "loadMode": "always",
+          "tokens": 15,
+          "note": "inside Skills listing (1 project (.claude) skill)"
+        },
+        {
+          "label": "./.cursor/rules/api-design.mdc (description)",
+          "path": "./.cursor/rules/api-design.mdc",
+          "kind": "rule-description",
+          "loadMode": "always",
+          "tokens": 11
+        }
+      ],
+      "mcpServers": [
+        {
+          "name": "fetch",
+          "source": "~/.cursor/mcp.json",
+          "scope": "user",
+          "transport": "stdio",
+          "measured": false
+        },
+        {
+          "name": "filesystem",
+          "source": "~/.cursor/mcp.json",
+          "scope": "user",
+          "transport": "stdio",
+          "measured": false
+        }
+      ],
+      "unmeasuredBanner": [
+        "User Rules and Team Rules (stored in Cursor, not on disk; paste them with --paste-user-rules to count them)",
+        "built-in system prompt and tools"
+      ],
+      "items": [
+        {
+          "id": "cursor:20",
+          "kind": "instructions",
+          "scope": "project",
+          "loadMode": "always",
+          "label": "AGENTS.md",
+          "path": "./AGENTS.md",
+          "tokens": {
+            "est": 525,
+            "low": 407,
+            "high": 756
+          },
+          "unmeasured": false,
+          "chars": 2314,
+          "lines": 36,
+          "confidence": "documented",
+          "evidence": {
+            "docUrl": "https://cursor.com/docs/rules",
+            "verifiedAt": "2026-10-25"
+          },
+          "notes": []
+        },
+        {
+          "id": "cursor:23",
+          "kind": "skills-listing",
+          "scope": "user",
+          "loadMode": "always",
+          "label": "Skills listing (3 user (.claude) skills)",
+          "path": "~/.claude/skills",
+          "tokens": {
+            "est": 109,
+            "low": 84,
+            "high": 157
+          },
+          "unmeasured": false,
+          "chars": 449,
+          "lines": 0,
+          "breakdown": [
+            {
+              "label": "db-migrate",
+              "tokens": 61
+            },
+            {
+              "label": "code-review",
+              "tokens": 28
+            },
+            {
+              "label": "release-notes",
+              "tokens": 20
+            }
+          ],
+          "parts": [
+            {
+              "name": "3 user (.claude) skills",
+              "tokens": 109,
+              "count": 3
+            }
+          ],
+          "confidence": "documented",
+          "evidence": {
+            "docUrl": "https://cursor.com/docs/skills",
+            "verifiedAt": "2026-10-25"
+          },
+          "notes": [
+            "Cursor lists each skill's name + description (exact injection format and token cost unverified; counted as name: description)",
+            "also read by Cursor for compatibility (documented)"
+          ]
+        },
+        {
+          "id": "cursor:15",
+          "kind": "rule",
+          "scope": "project",
+          "loadMode": "always",
+          "label": "./.cursor/rules/always.mdc",
+          "path": "./.cursor/rules/always.mdc",
+          "tokens": {
+            "est": 104,
+            "low": 81,
+            "high": 149
+          },
+          "unmeasured": false,
+          "chars": 461,
+          "lines": 10,
+          "confidence": "documented",
+          "evidence": {
+            "docUrl": "https://cursor.com/docs/rules",
+            "verifiedAt": "2026-10-25"
+          },
+          "notes": [
+            "alwaysApply: true"
+          ]
+        },
+        {
+          "id": "cursor:21",
+          "kind": "skills-listing",
+          "scope": "project",
+          "loadMode": "always",
+          "label": "Skills listing (1 project (.claude) skill)",
+          "path": "./.claude/skills",
+          "tokens": {
+            "est": 15,
+            "low": 12,
+            "high": 22
+          },
+          "unmeasured": false,
+          "chars": 60,
+          "lines": 0,
+          "breakdown": [
+            {
+              "label": "deploy",
+              "tokens": 15
+            }
+          ],
+          "parts": [
+            {
+              "name": "1 project (.claude) skill",
+              "tokens": 15,
+              "count": 1
+            }
+          ],
+          "confidence": "documented",
+          "evidence": {
+            "docUrl": "https://cursor.com/docs/skills",
+            "verifiedAt": "2026-10-25"
+          },
+          "notes": [
+            "Cursor lists each skill's name + description (exact injection format and token cost unverified; counted as name: description)",
+            "also read by Cursor for compatibility (documented)"
+          ]
+        },
+        {
+          "id": "cursor:16",
+          "kind": "rule-description",
+          "scope": "project",
+          "loadMode": "always",
+          "label": "./.cursor/rules/api-design.mdc (description)",
+          "path": "./.cursor/rules/api-design.mdc",
+          "tokens": {
+            "est": 11,
+            "low": 9,
+            "high": 16
+          },
+          "unmeasured": false,
+          "chars": 47,
+          "lines": 0,
+          "confidence": "assumed",
+          "evidence": {
+            "docUrl": "https://cursor.com/docs/rules",
+            "verifiedAt": "2026-10-25"
+          },
+          "notes": [
+            "description is visible so the agent can decide to fetch the rule; exact injection unverified"
+          ]
+        },
+        {
+          "id": "cursor:26",
+          "kind": "mcp-server",
+          "scope": "user",
+          "loadMode": "always",
+          "label": "MCP server \"fetch\"",
+          "path": "~/.cursor/mcp.json",
+          "tokens": null,
+          "unmeasured": true,
+          "unmeasuredReason": "no local tool-list cache or catalog entry; run is static (no server was started)",
+          "chars": 0,
+          "lines": 0,
+          "confidence": "assumed",
+          "evidence": {
+            "docUrl": "https://cursor.com/blog/dynamic-context-discovery",
+            "verifiedAt": "2026-10-25"
+          },
+          "notes": [
+            "Cursor keeps only tool names in static context; descriptions are fetched on demand (documented in Cursor's 'Dynamic context discovery' post). Name count is unmeasured without a catalog entry.",
+            "transport: stdio"
+          ]
+        },
+        {
+          "id": "cursor:25",
+          "kind": "mcp-server",
+          "scope": "user",
+          "loadMode": "always",
+          "label": "MCP server \"filesystem\"",
+          "path": "~/.cursor/mcp.json",
+          "tokens": null,
+          "unmeasured": true,
+          "unmeasuredReason": "no local tool-list cache or catalog entry; run is static (no server was started)",
+          "chars": 0,
+          "lines": 0,
+          "confidence": "assumed",
+          "evidence": {
+            "docUrl": "https://cursor.com/blog/dynamic-context-discovery",
+            "verifiedAt": "2026-10-25"
+          },
+          "notes": [
+            "Cursor keeps only tool names in static context; descriptions are fetched on demand (documented in Cursor's 'Dynamic context discovery' post). Name count is unmeasured without a catalog entry.",
+            "transport: stdio"
+          ]
+        },
+        {
+          "id": "cursor:19",
+          "kind": "rule",
+          "scope": "project",
+          "loadMode": "conditional",
+          "label": "./.cursor/rules/tests.mdc",
+          "path": "./.cursor/rules/tests.mdc",
+          "tokens": {
+            "est": 106,
+            "low": 82,
+            "high": 153
+          },
+          "unmeasured": false,
+          "chars": 458,
+          "lines": 0,
+          "confidence": "documented",
+          "evidence": {
+            "docUrl": "https://cursor.com/docs/rules",
+            "verifiedAt": "2026-10-25"
+          },
+          "notes": [
+            "globs: 2 patterns"
+          ]
+        },
+        {
+          "id": "cursor:24",
+          "kind": "skill-body",
+          "scope": "user",
+          "loadMode": "deferred",
+          "label": "Skill bodies (3 user (.claude))",
+          "path": "~/.claude/skills",
+          "tokens": {
+            "est": 955,
+            "low": 741,
+            "high": 1375
+          },
+          "unmeasured": false,
+          "chars": 4130,
+          "lines": 0,
+          "confidence": "documented",
+          "evidence": {
+            "docUrl": "https://cursor.com/docs/skills",
+            "verifiedAt": "2026-10-25"
+          },
+          "notes": [
+            "loaded only when a skill is used; supporting files in the skill folder are not counted"
+          ]
+        },
+        {
+          "id": "cursor:17",
+          "kind": "rule-body",
+          "scope": "project",
+          "loadMode": "deferred",
+          "label": "./.cursor/rules/api-design.mdc (body)",
+          "path": "./.cursor/rules/api-design.mdc",
+          "tokens": {
+            "est": 213,
+            "low": 165,
+            "high": 306
+          },
+          "unmeasured": false,
+          "chars": 916,
+          "lines": 0,
+          "confidence": "assumed",
+          "evidence": {
+            "docUrl": "https://cursor.com/docs/rules",
+            "verifiedAt": "2026-10-25"
+          },
+          "notes": [
+            "fetched only if the agent decides it is relevant"
+          ]
+        },
+        {
+          "id": "cursor:22",
+          "kind": "skill-body",
+          "scope": "project",
+          "loadMode": "deferred",
+          "label": "Skill bodies (1 project (.claude))",
+          "path": "./.claude/skills",
+          "tokens": {
+            "est": 110,
+            "low": 85,
+            "high": 158
+          },
+          "unmeasured": false,
+          "chars": 472,
+          "lines": 0,
+          "confidence": "documented",
+          "evidence": {
+            "docUrl": "https://cursor.com/docs/skills",
+            "verifiedAt": "2026-10-25"
+          },
+          "notes": [
+            "loaded only when a skill is used; supporting files in the skill folder are not counted"
+          ]
+        },
+        {
+          "id": "cursor:18",
+          "kind": "rule",
+          "scope": "project",
+          "loadMode": "on-demand",
+          "label": "./.cursor/rules/manual.mdc",
+          "path": "./.cursor/rules/manual.mdc",
+          "tokens": {
+            "est": 113,
+            "low": 87,
+            "high": 162
+          },
+          "unmeasured": false,
+          "chars": 468,
+          "lines": 0,
+          "confidence": "documented",
+          "evidence": {
+            "docUrl": "https://cursor.com/docs/rules",
+            "verifiedAt": "2026-10-25"
+          },
+          "notes": [
+            "no alwaysApply/globs/description: only via @-mention"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "codex",
+      "name": "Codex",
+      "detected": true,
+      "detectedBy": [
+        "config dir"
+      ],
+      "presentInRepoOnly": false,
+      "profile": {
+        "id": "openai-o200k",
+        "label": "o200k BPE (OpenAI-family)",
+        "band": "±3%"
+      },
+      "totals": {
+        "always": {
+          "est": 506,
+          "low": 490,
+          "high": 522,
+          "measuredItems": 2,
+          "unmeasuredItems": 1
+        },
+        "conditional": {
+          "est": 0,
+          "low": 0,
+          "high": 0,
+          "measuredItems": 0,
+          "unmeasuredItems": 0
+        },
+        "deferred": {
+          "est": 0,
+          "low": 0,
+          "high": 0,
+          "measuredItems": 0,
+          "unmeasuredItems": 0
+        },
+        "on-demand": {
+          "est": 0,
+          "low": 0,
+          "high": 0,
+          "measuredItems": 0,
+          "unmeasuredItems": 0
+        },
+        "unknown": {
+          "est": 0,
+          "low": 0,
+          "high": 0,
+          "measuredItems": 0,
+          "unmeasuredItems": 0
+        }
+      },
+      "percentOfWindowAlways": 0.253,
+      "alwaysIsLowerBound": true,
+      "savings": null,
+      "grade": {
+        "letter": "B",
+        "score": 95,
+        "provisional": true,
+        "cappedAt": "B",
+        "reasons": [
+          "1 duplicate pair(s) (−5)",
+          "capped at B: 1 always-loaded item could not be measured, so a top grade cannot be certified"
+        ]
+      },
+      "coverage": {
+        "agent": "codex",
+        "alwaysMeasuredItems": 2,
+        "alwaysUnmeasuredItems": 1,
+        "alwaysFraction": 0.6666666666666666,
+        "measuredKinds": {
+          "instructions": 2
+        },
+        "unmeasuredKinds": {
+          "mcp-server": 1
+        },
+        "mcpServers": 1
+      },
+      "installedButNothingFound": false,
+      "offenders": [
+        {
+          "label": "./AGENTS.md",
+          "path": "./AGENTS.md",
+          "kind": "instructions",
+          "loadMode": "always",
+          "tokens": 420
+        },
+        {
+          "label": "~/.codex/AGENTS.md",
+          "path": "~/.codex/AGENTS.md",
+          "kind": "instructions",
+          "loadMode": "always",
+          "tokens": 86
+        }
+      ],
+      "mcpServers": [
+        {
+          "name": "docs",
+          "source": "~/.codex/config.toml",
+          "scope": "user",
+          "transport": "stdio",
+          "measured": false
+        }
+      ],
+      "unmeasuredBanner": [
+        "built-in system prompt and tools",
+        "Codex bundled system skills (~/.codex/skills/.system, hidden dirs are skipped)",
+        "server-side / org instructions"
+      ],
+      "items": [
+        {
+          "id": "codex:28",
+          "kind": "instructions",
+          "scope": "project",
+          "loadMode": "always",
+          "label": "./AGENTS.md",
+          "path": "./AGENTS.md",
+          "tokens": {
+            "est": 420,
+            "low": 407,
+            "high": 433
+          },
+          "unmeasured": false,
+          "chars": 2314,
+          "lines": 36,
+          "confidence": "documented",
+          "evidence": {
+            "docUrl": "https://learn.chatgpt.com/docs/agent-configuration/agents-md",
+            "verifiedAt": "2026-10-25"
+          },
+          "notes": []
+        },
+        {
+          "id": "codex:27",
+          "kind": "instructions",
+          "scope": "user",
+          "loadMode": "always",
+          "label": "~/.codex/AGENTS.md",
+          "path": "~/.codex/AGENTS.md",
+          "tokens": {
+            "est": 86,
+            "low": 83,
+            "high": 89
+          },
+          "unmeasured": false,
+          "chars": 454,
+          "lines": 8,
+          "confidence": "documented",
+          "evidence": {
+            "docUrl": "https://learn.chatgpt.com/docs/agent-configuration/agents-md",
+            "verifiedAt": "2026-10-25"
+          },
+          "notes": []
+        },
+        {
+          "id": "codex:29",
+          "kind": "mcp-server",
+          "scope": "user",
+          "loadMode": "always",
+          "label": "MCP server \"docs\"",
+          "path": "~/.codex/config.toml",
+          "tokens": null,
+          "unmeasured": true,
+          "unmeasuredReason": "no local tool-list cache or catalog entry; run is static (no server was started)",
+          "chars": 0,
+          "lines": 0,
+          "confidence": "assumed",
+          "evidence": {
+            "docUrl": "https://learn.chatgpt.com/docs/extend/mcp?surface=cli",
+            "verifiedAt": "2026-10-25"
+          },
+          "notes": [
+            "Codex MCP schema loading modelled as upfront (unverified)",
+            "transport: stdio"
+          ]
+        }
+      ]
+    }
+  ],
+  "excluded": [
+    {
+      "agent": "claude-code",
+      "path": "./AGENTS.md",
+      "reason": "ignored by Claude Code: a CLAUDE.md exists in this directory tree (default instructionFiles = claude-md-or-agents-md)"
+    },
+    {
+      "agent": "cursor",
+      "path": "./.cursor/rules/ignored.md",
+      "reason": "plain .md in .cursor/rules is ignored by Cursor (only .mdc is loaded)"
+    }
+  ],
+  "findings": [
+    {
+      "id": "F11",
+      "severity": "warn",
+      "agent": "cursor",
+      "message": "./.cursor/rules/ignored.md is ignored by Cursor: only .mdc files in .cursor/rules are loaded",
+      "paths": [
+        "./.cursor/rules/ignored.md"
+      ],
+      "confidence": "high",
+      "fix": "Rename it to .mdc (and add frontmatter) if you intend Cursor to use it."
+    },
+    {
+      "id": "F2",
+      "severity": "warn",
+      "agent": "all",
+      "message": "./CLAUDE.md and ./AGENTS.md are ~93% duplicate text (loaded by different agents)",
+      "paths": [
+        "./CLAUDE.md",
+        "./AGENTS.md"
+      ],
+      "confidence": "high",
+      "fix": "Different agents read these files, so do not delete either. To stop them drifting apart, make one the source of truth (for example, a CLAUDE.md that contains just `@AGENTS.md`, or a symlink). This saves no tokens."
+    },
+    {
+      "id": "F7",
+      "severity": "warn",
+      "agent": "claude-code",
+      "message": "Claude Code ignores ./AGENTS.md: a CLAUDE.md exists in this directory tree (Cursor and Codex still load it)",
+      "paths": [
+        "./AGENTS.md"
+      ],
+      "confidence": "high",
+      "fix": "Add `@AGENTS.md` to CLAUDE.md, or set the AGENTS.md plugin option instructionFiles to claude-md-and-agents-md."
+    },
+    {
+      "id": "F5",
+      "severity": "info",
+      "agent": "claude-code",
+      "message": "Claude Code: 4 always-loaded items are unmeasured (MCP servers); the always-on total is a lower bound (\"at least\")",
+      "paths": [],
+      "confidence": "needs-your-call",
+      "fix": "If a server is unused, disable or remove it in the agent's own settings. prehello never edits MCP configs."
+    },
+    {
+      "id": "F5",
+      "severity": "info",
+      "agent": "codex",
+      "message": "Codex: 1 always-loaded item is unmeasured (MCP servers); the always-on total is a lower bound (\"at least\")",
+      "paths": [],
+      "confidence": "needs-your-call",
+      "fix": "If a server is unused, disable or remove it in the agent's own settings. prehello never edits MCP configs."
+    },
+    {
+      "id": "F5",
+      "severity": "info",
+      "agent": "cursor",
+      "message": "Cursor: 2 always-loaded items are unmeasured (MCP servers); the always-on total is a lower bound (\"at least\")",
+      "paths": [],
+      "confidence": "needs-your-call",
+      "fix": "If a server is unused, disable or remove it in the agent's own settings. prehello never edits MCP configs."
+    }
+  ],
+  "warnings": [],
+  "notMeasurable": [
+    "the agent's built-in system prompt and built-in tool definitions",
+    "server-side / org rules, Cursor User & Team Rules, claude.ai connectors",
+    "MCP servers whose tools are only known at runtime (no server is started by default)",
+    "files outside the scanned locations; anything the agent injects dynamically (hooks, memory/RAG plugins)"
+  ],
+  "partial": null
+}

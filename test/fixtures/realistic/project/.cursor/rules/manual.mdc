@@ -1,0 +1,12 @@
+---
+alwaysApply: false
+---
+
+# Manual rule
+
+## Notes
+
+Do not mock the database in integration tests; use the disposable container. Do not mock the database in integration tests; use the disposable container. Keep React components under two hundred lines and extract hooks early. Feature flags are read through the flags service and default to off.
+
+- When adding a dependency, explain the alternative you rejected in the PR.
+- Feature flags are read through the flags service and default to off.

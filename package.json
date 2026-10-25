@@ -1,0 +1,69 @@
+{
+  "name": "prehello",
+  "version": "0.1.0",
+  "description": "See what your coding agent (Claude Code, Cursor, Codex) loads before you say hello, and what you could cut. Local-only, read-only, no API key.",
+  "license": "MIT",
+  "author": "Piyush Kumar",
+  "homepage": "https://github.com/PIYUSH-KUMAR1809/prehello#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PIYUSH-KUMAR1809/prehello.git"
+  },
+  "bugs": {
+    "url": "https://github.com/PIYUSH-KUMAR1809/prehello/issues"
+  },
+  "private": true,
+  "bin": {
+    "prehello": "dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "assets",
+    "spec",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md",
+    "THIRD_PARTY_NOTICES.md"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "clean": "node -e \"require('fs').rmSync('dist',{recursive:true,force:true})\"",
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "npm run build && vitest run",
+    "prepack": "npm run clean && npm run build",
+    "prehello": "node dist/cli.js"
+  },
+  "keywords": [
+    "claude-code",
+    "cursor",
+    "codex",
+    "agents-md",
+    "ai-agents",
+    "context-window",
+    "tokens",
+    "token-counter",
+    "mcp",
+    "sarif",
+    "cli",
+    "developer-tools"
+  ],
+  "dependencies": {
+    "gpt-tokenizer": "^4.1.0",
+    "picomatch": "^4.0.7",
+    "smol-toml": "^1.9.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.43",
+    "@types/picomatch": "^4.0.3",
+    "ajv": "^8.20.0",
+    "ajv-formats": "^3.0.1",
+    "typescript": "^5.9.3",
+    "vitest": "^3.2.7"
+  },
+  "optionalDependencies": {
+    "@resvg/resvg-wasm": "^2.6.2"
+  }
+}

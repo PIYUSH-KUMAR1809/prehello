@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "servers": [
+    {
+      "package": "@playwright/mcp",
+      "tools": 21,
+      "nameTokens": 150,
+      "schemaTokens": 6400,
+      "measuredAt": "2026-01-01 (FIXTURE DATA, not a real measurement)",
+      "version": "fixture"
+    }
+  ]
+}

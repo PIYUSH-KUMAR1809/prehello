@@ -1,0 +1,12 @@
+---
+alwaysApply: true
+---
+
+# Always rule
+
+## Policy
+
+Never commit generated files under dist or build directories. When adding a dependency, explain the alternative you rejected in the PR. Prefer small, focused functions and name them after what they return. Public functions carry doc comments describing units and failure modes.
+
+- API handlers validate input with the schema library and return typed errors.
+- Database migrations must be reversible and reviewed by a second engineer.

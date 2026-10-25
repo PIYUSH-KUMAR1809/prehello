@@ -1,0 +1,5 @@
+---
+alwaysApply: true
+---
+
+Keep React components under two hundred lines and extract hooks early. Database migrations must be reversible and reviewed by a second engineer. Database migrations must be reversible and reviewed by a second engineer. Use the shared logger instead of console.log in application code. Public functions carry doc comments describing units and failure modes. Feature flags are read through the flags service and default to off.

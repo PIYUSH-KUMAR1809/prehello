@@ -1,0 +1,256 @@
+{
+  "schemaVersion": 1,
+  "tool": {
+    "name": "prehello",
+    "version": "0.1.0"
+  },
+  "generatedAt": "2026-10-24T12:00:00.000Z",
+  "redacted": "paths-shortened (~ and ./ prefixes); server and file names kept",
+  "scan": {
+    "cwd": "./apps/web",
+    "window": 200000,
+    "tokenizer": {
+      "method": "bpe-o200k",
+      "note": "o200k BPE (gpt-tokenizer, bundled) with per-family scaling"
+    },
+    "claudeProfile": "current"
+  },
+  "agents": [
+    {
+      "id": "claude-code",
+      "name": "Claude Code",
+      "detected": true,
+      "detectedBy": [
+        "config dir"
+      ],
+      "presentInRepoOnly": false,
+      "profile": {
+        "id": "claude-current",
+        "label": "o200k × 1.5 (Claude-current prior)",
+        "band": "±20%"
+      },
+      "totals": {
+        "always": {
+          "est": 408,
+          "low": 327,
+          "high": 489,
+          "measuredItems": 4,
+          "unmeasuredItems": 0
+        },
+        "conditional": {
+          "est": 134,
+          "low": 107,
+          "high": 161,
+          "measuredItems": 1,
+          "unmeasuredItems": 0
+        },
+        "deferred": {
+          "est": 0,
+          "low": 0,
+          "high": 0,
+          "measuredItems": 0,
+          "unmeasuredItems": 0
+        },
+        "on-demand": {
+          "est": 0,
+          "low": 0,
+          "high": 0,
+          "measuredItems": 0,
+          "unmeasuredItems": 0
+        },
+        "unknown": {
+          "est": 0,
+          "low": 0,
+          "high": 0,
+          "measuredItems": 0,
+          "unmeasuredItems": 0
+        }
+      },
+      "percentOfWindowAlways": 0.20400000000000001,
+      "alwaysIsLowerBound": false,
+      "savings": null,
+      "grade": {
+        "letter": "A",
+        "score": 100,
+        "provisional": false,
+        "reasons": []
+      },
+      "coverage": {
+        "agent": "claude-code",
+        "alwaysMeasuredItems": 4,
+        "alwaysUnmeasuredItems": 0,
+        "alwaysFraction": 1,
+        "measuredKinds": {
+          "instructions": 4
+        },
+        "unmeasuredKinds": {},
+        "mcpServers": 0
+      },
+      "installedButNothingFound": false,
+      "offenders": [
+        {
+          "label": "../../CLAUDE.md",
+          "path": "./CLAUDE.md",
+          "kind": "instructions",
+          "loadMode": "always",
+          "tokens": 137
+        },
+        {
+          "label": "./.claude/CLAUDE.md",
+          "path": "./apps/web/.claude/CLAUDE.md",
+          "kind": "instructions",
+          "loadMode": "always",
+          "tokens": 134
+        },
+        {
+          "label": "../CLAUDE.md",
+          "path": "./apps/CLAUDE.md",
+          "kind": "instructions",
+          "loadMode": "always",
+          "tokens": 126
+        },
+        {
+          "label": "./CLAUDE.local.md",
+          "path": "./apps/web/CLAUDE.local.md",
+          "kind": "instructions",
+          "loadMode": "always",
+          "tokens": 11
+        }
+      ],
+      "mcpServers": [],
+      "unmeasuredBanner": [
+        "built-in system prompt and built-in tools",
+        "claude.ai connectors (not on disk)",
+        "hook output"
+      ],
+      "items": [
+        {
+          "id": "claude-code:1",
+          "kind": "instructions",
+          "scope": "ancestor",
+          "loadMode": "always",
+          "label": "../../CLAUDE.md",
+          "path": "./CLAUDE.md",
+          "tokens": {
+            "est": 137,
+            "low": 110,
+            "high": 164
+          },
+          "unmeasured": false,
+          "chars": 462,
+          "lines": 8,
+          "confidence": "documented",
+          "evidence": {
+            "docUrl": "https://code.claude.com/docs/en/memory",
+            "verifiedAt": "2026-10-25"
+          },
+          "notes": [
+            "ancestor directory (loaded at launch, root→cwd)"
+          ]
+        },
+        {
+          "id": "claude-code:3",
+          "kind": "instructions",
+          "scope": "project",
+          "loadMode": "always",
+          "label": "./.claude/CLAUDE.md",
+          "path": "./apps/web/.claude/CLAUDE.md",
+          "tokens": {
+            "est": 134,
+            "low": 107,
+            "high": 161
+          },
+          "unmeasured": false,
+          "chars": 469,
+          "lines": 8,
+          "confidence": "documented",
+          "evidence": {
+            "docUrl": "https://code.claude.com/docs/en/memory",
+            "verifiedAt": "2026-10-25"
+          },
+          "notes": []
+        },
+        {
+          "id": "claude-code:2",
+          "kind": "instructions",
+          "scope": "ancestor",
+          "loadMode": "always",
+          "label": "../CLAUDE.md",
+          "path": "./apps/CLAUDE.md",
+          "tokens": {
+            "est": 126,
+            "low": 101,
+            "high": 151
+          },
+          "unmeasured": false,
+          "chars": 465,
+          "lines": 8,
+          "confidence": "documented",
+          "evidence": {
+            "docUrl": "https://code.claude.com/docs/en/memory",
+            "verifiedAt": "2026-10-25"
+          },
+          "notes": [
+            "ancestor directory (loaded at launch, root→cwd)"
+          ]
+        },
+        {
+          "id": "claude-code:4",
+          "kind": "instructions",
+          "scope": "local",
+          "loadMode": "always",
+          "label": "./CLAUDE.local.md",
+          "path": "./apps/web/CLAUDE.local.md",
+          "tokens": {
+            "est": 11,
+            "low": 9,
+            "high": 13
+          },
+          "unmeasured": false,
+          "chars": 25,
+          "lines": 3,
+          "confidence": "documented",
+          "evidence": {
+            "docUrl": "https://code.claude.com/docs/en/memory",
+            "verifiedAt": "2026-10-25"
+          },
+          "notes": []
+        },
+        {
+          "id": "claude-code:5",
+          "kind": "instructions",
+          "scope": "nested",
+          "loadMode": "conditional",
+          "label": "./src/CLAUDE.md",
+          "path": "./apps/web/src/CLAUDE.md",
+          "tokens": {
+            "est": 134,
+            "low": 107,
+            "high": 161
+          },
+          "unmeasured": false,
+          "chars": 464,
+          "lines": 8,
+          "confidence": "documented",
+          "evidence": {
+            "docUrl": "https://code.claude.com/docs/en/memory",
+            "verifiedAt": "2026-10-25"
+          },
+          "notes": [
+            "loaded when Claude works in this subdirectory (not in /context at start)"
+          ]
+        }
+      ]
+    }
+  ],
+  "excluded": [],
+  "findings": [],
+  "warnings": [],
+  "notMeasurable": [
+    "the agent's built-in system prompt and built-in tool definitions",
+    "server-side / org rules, Cursor User & Team Rules, claude.ai connectors",
+    "MCP servers whose tools are only known at runtime (no server is started by default)",
+    "files outside the scanned locations; anything the agent injects dynamically (hooks, memory/RAG plugins)"
+  ],
+  "partial": null
+}

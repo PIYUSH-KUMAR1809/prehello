@@ -1,0 +1,15 @@
+{
+  "agent": "cursor",
+  "verifiedAt": "2026-10-25",
+  "verifiedNote": "Rule modes, skill locations (native + compat dirs), skill frontmatter (paths/globs, disable-model-invocation), plugin manifest/default component dirs, and lazy MCP loading (tool names static, descriptions on demand) are from Cursor's docs and blog (fetched 2026-10-25). UNVERIFIED (marked assumed): how Cursor injects agent-requested rule descriptions and the skills listing, ~/.cursor/skills-cursor (observed on a real Mac only), the plugin cache/marketplace on-disk layout and install state, and whether nested .cursor/rules apply (docs and forum disagree).",
+  "docs": {
+    "rules": "https://cursor.com/docs/rules",
+    "mcp": "https://cursor.com/docs/mcp",
+    "skills": "https://cursor.com/docs/skills",
+    "plugins": "https://cursor.com/docs/plugins",
+    "mcpLazy": "https://cursor.com/blog/dynamic-context-discovery"
+  },
+  "caps": {
+    "ruleGuidelineLines": 500
+  }
+}

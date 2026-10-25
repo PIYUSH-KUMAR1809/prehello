@@ -1,0 +1,189 @@
+{
+  "schemaVersion": 1,
+  "tool": {
+    "name": "prehello",
+    "version": "0.1.0"
+  },
+  "generatedAt": "2026-10-24T12:00:00.000Z",
+  "redacted": "paths-shortened (~ and ./ prefixes); server and file names kept",
+  "scan": {
+    "cwd": ".",
+    "window": 200000,
+    "tokenizer": {
+      "method": "bpe-o200k",
+      "note": "o200k BPE (gpt-tokenizer, bundled) with per-family scaling"
+    },
+    "claudeProfile": "current"
+  },
+  "agents": [
+    {
+      "id": "claude-code",
+      "name": "Claude Code",
+      "detected": true,
+      "detectedBy": [
+        "config dir"
+      ],
+      "presentInRepoOnly": false,
+      "profile": {
+        "id": "claude-current",
+        "label": "o200k × 1.5 (Claude-current prior)",
+        "band": "±20%"
+      },
+      "totals": {
+        "always": {
+          "est": 7480,
+          "low": 5984,
+          "high": 8976,
+          "measuredItems": 2,
+          "unmeasuredItems": 0
+        },
+        "conditional": {
+          "est": 0,
+          "low": 0,
+          "high": 0,
+          "measuredItems": 0,
+          "unmeasuredItems": 0
+        },
+        "deferred": {
+          "est": 0,
+          "low": 0,
+          "high": 0,
+          "measuredItems": 0,
+          "unmeasuredItems": 0
+        },
+        "on-demand": {
+          "est": 0,
+          "low": 0,
+          "high": 0,
+          "measuredItems": 0,
+          "unmeasuredItems": 0
+        },
+        "unknown": {
+          "est": 0,
+          "low": 0,
+          "high": 0,
+          "measuredItems": 0,
+          "unmeasuredItems": 0
+        }
+      },
+      "percentOfWindowAlways": 3.74,
+      "alwaysIsLowerBound": false,
+      "savings": null,
+      "grade": {
+        "letter": "A",
+        "score": 90,
+        "provisional": false,
+        "reasons": [
+          "always-on is ~3.7% of the window (−5)",
+          "1 silent truncation(s) (−5)"
+        ]
+      },
+      "coverage": {
+        "agent": "claude-code",
+        "alwaysMeasuredItems": 2,
+        "alwaysUnmeasuredItems": 0,
+        "alwaysFraction": 1,
+        "measuredKinds": {
+          "memory": 1,
+          "instructions": 1
+        },
+        "unmeasuredKinds": {},
+        "mcpServers": 0
+      },
+      "installedButNothingFound": false,
+      "offenders": [
+        {
+          "label": "MEMORY.md (auto memory)",
+          "path": "~/.claude/projects/<SLUG>/memory/MEMORY.md",
+          "kind": "memory",
+          "loadMode": "always",
+          "tokens": 7469
+        },
+        {
+          "label": "./CLAUDE.md",
+          "path": "./CLAUDE.md",
+          "kind": "instructions",
+          "loadMode": "always",
+          "tokens": 11
+        }
+      ],
+      "mcpServers": [],
+      "unmeasuredBanner": [
+        "built-in system prompt and built-in tools",
+        "claude.ai connectors (not on disk)",
+        "hook output"
+      ],
+      "items": [
+        {
+          "id": "claude-code:2",
+          "kind": "memory",
+          "scope": "user",
+          "loadMode": "always",
+          "label": "MEMORY.md (auto memory)",
+          "path": "~/.claude/projects/<SLUG>/memory/MEMORY.md",
+          "tokens": {
+            "est": 7469,
+            "low": 5975,
+            "high": 8963
+          },
+          "unmeasured": false,
+          "chars": 20262,
+          "lines": 260,
+          "confidence": "documented",
+          "evidence": {
+            "docUrl": "https://code.claude.com/docs/en/memory",
+            "verifiedAt": "2026-10-25"
+          },
+          "notes": [
+            "memory dir derived from project path (derivation assumed)",
+            "truncated: only first 200 of 261 lines are loaded"
+          ]
+        },
+        {
+          "id": "claude-code:1",
+          "kind": "instructions",
+          "scope": "project",
+          "loadMode": "always",
+          "label": "./CLAUDE.md",
+          "path": "./CLAUDE.md",
+          "tokens": {
+            "est": 11,
+            "low": 9,
+            "high": 13
+          },
+          "unmeasured": false,
+          "chars": 24,
+          "lines": 3,
+          "confidence": "documented",
+          "evidence": {
+            "docUrl": "https://code.claude.com/docs/en/memory",
+            "verifiedAt": "2026-10-25"
+          },
+          "notes": []
+        }
+      ]
+    }
+  ],
+  "excluded": [],
+  "findings": [
+    {
+      "id": "F8",
+      "severity": "warn",
+      "agent": "claude-code",
+      "message": "MEMORY.md exceeds the load cap (truncated: only first 200 of 261 lines are loaded); the rest is silently dropped",
+      "paths": [
+        "~/.claude/projects/<SLUG>/memory/MEMORY.md"
+      ],
+      "confidence": "high",
+      "fix": "Move detail into topic files and keep MEMORY.md as a short index."
+    }
+  ],
+  "warnings": [],
+  "notMeasurable": [
+    "the agent's built-in system prompt and built-in tool definitions",
+    "server-side / org rules, Cursor User & Team Rules, claude.ai connectors",
+    "MCP servers whose tools are only known at runtime (no server is started by default)",
+    "files outside the scanned locations; anything the agent injects dynamically (hooks, memory/RAG plugins)"
+  ],
+  "partial": null
+}

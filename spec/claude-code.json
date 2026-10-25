@@ -1,0 +1,22 @@
+{
+  "agent": "claude-code",
+  "verifiedAt": "2026-10-25",
+  "verifiedNote": "Skills (locations, combined 1,536-char description cap, disable-model-invocation, skillOverrides, nested lazy loading, commands merged into skills, claude.ai synced skills) and plugin install records (installed_plugins.json with installPath, enabledPlugins, plugins cache layout) are from Claude Code docs (fetched 2026-10-25). The 1% skill listing budget is documented but its unit (tokens vs characters) is unclear. managed-mcp.json is documented by name; its location inside the managed directory is assumed. Not re-verified against a real install.",
+  "docs": {
+    "memory": "https://code.claude.com/docs/en/memory",
+    "mcp": "https://code.claude.com/docs/en/mcp",
+    "skills": "https://code.claude.com/docs/en/skills",
+    "plugins": "https://code.claude.com/docs/en/plugins/loading"
+  },
+  "caps": {
+    "instructionFileGuidelineLines": 200,
+    "memoryMaxLines": 200,
+    "memoryMaxBytes": 25600,
+    "skillDescriptionMaxChars": 1536,
+    "skillListingBudgetFractionOfWindow": 0.01,
+    "importMaxDepth": 4
+  },
+  "minVersions": {
+    "agentsMdFallback": "2.1.277"
+  }
+}

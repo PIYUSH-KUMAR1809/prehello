@@ -1,0 +1,13 @@
+---
+globs: "**/*.test.ts, **/*.spec.ts"
+alwaysApply: false
+---
+
+# Testing rule
+
+## Policy
+
+Keep React components under two hundred lines and extract hooks early. Keep React components under two hundred lines and extract hooks early. Prefer small, focused functions and name them after what they return. Database migrations must be reversible and reviewed by a second engineer.
+
+- Feature flags are read through the flags service and default to off.
+- Prefer small, focused functions and name them after what they return.

@@ -1,0 +1,339 @@
+{
+  "schemaVersion": 1,
+  "tool": {
+    "name": "prehello",
+    "version": "0.1.0"
+  },
+  "generatedAt": "2026-10-24T12:00:00.000Z",
+  "redacted": "paths-shortened (~ and ./ prefixes); server and file names kept",
+  "scan": {
+    "cwd": ".",
+    "window": 200000,
+    "tokenizer": {
+      "method": "bpe-o200k",
+      "note": "o200k BPE (gpt-tokenizer, bundled) with per-family scaling"
+    },
+    "claudeProfile": "current"
+  },
+  "agents": [
+    {
+      "id": "claude-code",
+      "name": "Claude Code",
+      "detected": true,
+      "detectedBy": [
+        "config dir",
+        "~/.claude.json"
+      ],
+      "presentInRepoOnly": false,
+      "profile": {
+        "id": "claude-current",
+        "label": "o200k × 1.5 (Claude-current prior)",
+        "band": "±20%"
+      },
+      "totals": {
+        "always": {
+          "est": 266,
+          "low": 213,
+          "high": 319,
+          "measuredItems": 2,
+          "unmeasuredItems": 1
+        },
+        "conditional": {
+          "est": 0,
+          "low": 0,
+          "high": 0,
+          "measuredItems": 0,
+          "unmeasuredItems": 0
+        },
+        "deferred": {
+          "est": 0,
+          "low": 0,
+          "high": 0,
+          "measuredItems": 0,
+          "unmeasuredItems": 0
+        },
+        "on-demand": {
+          "est": 0,
+          "low": 0,
+          "high": 0,
+          "measuredItems": 0,
+          "unmeasuredItems": 0
+        },
+        "unknown": {
+          "est": 0,
+          "low": 0,
+          "high": 0,
+          "measuredItems": 0,
+          "unmeasuredItems": 0
+        }
+      },
+      "percentOfWindowAlways": 0.133,
+      "alwaysIsLowerBound": true,
+      "savings": null,
+      "grade": {
+        "letter": "B",
+        "score": 100,
+        "provisional": true,
+        "cappedAt": "B",
+        "reasons": [
+          "capped at B: 1 always-loaded item could not be measured, so a top grade cannot be certified"
+        ]
+      },
+      "coverage": {
+        "agent": "claude-code",
+        "alwaysMeasuredItems": 2,
+        "alwaysUnmeasuredItems": 1,
+        "alwaysFraction": 0.6666666666666666,
+        "measuredKinds": {
+          "instructions": 2
+        },
+        "unmeasuredKinds": {
+          "mcp-server": 1
+        },
+        "mcpServers": 1
+      },
+      "installedButNothingFound": false,
+      "offenders": [
+        {
+          "label": "~/.claude/CLAUDE.md",
+          "path": "~/.claude/CLAUDE.md",
+          "kind": "instructions",
+          "loadMode": "always",
+          "tokens": 141
+        },
+        {
+          "label": "./CLAUDE.md",
+          "path": "./CLAUDE.md",
+          "kind": "instructions",
+          "loadMode": "always",
+          "tokens": 125
+        }
+      ],
+      "mcpServers": [
+        {
+          "name": "canary-server-name-zeta",
+          "source": "~/.claude.json",
+          "scope": "user",
+          "transport": "stdio",
+          "measured": false
+        }
+      ],
+      "unmeasuredBanner": [
+        "built-in system prompt and built-in tools",
+        "claude.ai connectors (not on disk)",
+        "hook output"
+      ],
+      "items": [
+        {
+          "id": "claude-code:1",
+          "kind": "instructions",
+          "scope": "user",
+          "loadMode": "always",
+          "label": "~/.claude/CLAUDE.md",
+          "path": "~/.claude/CLAUDE.md",
+          "tokens": {
+            "est": 141,
+            "low": 113,
+            "high": 169
+          },
+          "unmeasured": false,
+          "chars": 456,
+          "lines": 4,
+          "confidence": "documented",
+          "evidence": {
+            "docUrl": "https://code.claude.com/docs/en/memory",
+            "verifiedAt": "2026-10-25"
+          },
+          "notes": []
+        },
+        {
+          "id": "claude-code:2",
+          "kind": "instructions",
+          "scope": "project",
+          "loadMode": "always",
+          "label": "./CLAUDE.md",
+          "path": "./CLAUDE.md",
+          "tokens": {
+            "est": 125,
+            "low": 100,
+            "high": 150
+          },
+          "unmeasured": false,
+          "chars": 453,
+          "lines": 3,
+          "confidence": "documented",
+          "evidence": {
+            "docUrl": "https://code.claude.com/docs/en/memory",
+            "verifiedAt": "2026-10-25"
+          },
+          "notes": []
+        },
+        {
+          "id": "claude-code:3",
+          "kind": "mcp-server",
+          "scope": "user",
+          "loadMode": "always",
+          "label": "MCP server \"canary-server-name-zeta\"",
+          "path": "~/.claude.json",
+          "tokens": null,
+          "unmeasured": true,
+          "unmeasuredReason": "no local tool-list cache or catalog entry; run is static (no server was started)",
+          "chars": 0,
+          "lines": 0,
+          "confidence": "assumed",
+          "evidence": {
+            "docUrl": "https://code.claude.com/docs/en/mcp",
+            "verifiedAt": "2026-10-25"
+          },
+          "notes": [
+            "tool search assumed ON (default): names always, schemas deferred",
+            "transport: stdio"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cursor",
+      "name": "Cursor",
+      "detected": true,
+      "detectedBy": [
+        "~/.cursor"
+      ],
+      "presentInRepoOnly": false,
+      "profile": {
+        "id": "cursor-mixed",
+        "label": "o200k; model unknown, so midpoint of GPT-like (×1.0) and Claude-like (×1.5) priors",
+        "band": "wide: GPT-like −3% to Claude-like +20%"
+      },
+      "totals": {
+        "always": {
+          "est": 91,
+          "low": 71,
+          "high": 131,
+          "measuredItems": 1,
+          "unmeasuredItems": 0
+        },
+        "conditional": {
+          "est": 0,
+          "low": 0,
+          "high": 0,
+          "measuredItems": 0,
+          "unmeasuredItems": 0
+        },
+        "deferred": {
+          "est": 0,
+          "low": 0,
+          "high": 0,
+          "measuredItems": 0,
+          "unmeasuredItems": 0
+        },
+        "on-demand": {
+          "est": 0,
+          "low": 0,
+          "high": 0,
+          "measuredItems": 0,
+          "unmeasuredItems": 0
+        },
+        "unknown": {
+          "est": 0,
+          "low": 0,
+          "high": 0,
+          "measuredItems": 0,
+          "unmeasuredItems": 0
+        }
+      },
+      "percentOfWindowAlways": 0.0455,
+      "alwaysIsLowerBound": false,
+      "savings": null,
+      "grade": {
+        "letter": "A",
+        "score": 100,
+        "provisional": false,
+        "reasons": []
+      },
+      "coverage": {
+        "agent": "cursor",
+        "alwaysMeasuredItems": 1,
+        "alwaysUnmeasuredItems": 0,
+        "alwaysFraction": 1,
+        "measuredKinds": {
+          "rule": 1
+        },
+        "unmeasuredKinds": {},
+        "mcpServers": 0
+      },
+      "installedButNothingFound": false,
+      "offenders": [
+        {
+          "label": "./.cursor/rules/canary-rule-name-gamma.mdc",
+          "path": "./.cursor/rules/canary-rule-name-gamma.mdc",
+          "kind": "rule",
+          "loadMode": "always",
+          "tokens": 91
+        }
+      ],
+      "mcpServers": [],
+      "unmeasuredBanner": [
+        "User Rules and Team Rules (stored in Cursor, not on disk; paste them with --paste-user-rules to count them)",
+        "built-in system prompt and tools"
+      ],
+      "items": [
+        {
+          "id": "cursor:4",
+          "kind": "rule",
+          "scope": "project",
+          "loadMode": "always",
+          "label": "./.cursor/rules/canary-rule-name-gamma.mdc",
+          "path": "./.cursor/rules/canary-rule-name-gamma.mdc",
+          "tokens": {
+            "est": 91,
+            "low": 71,
+            "high": 131
+          },
+          "unmeasured": false,
+          "chars": 427,
+          "lines": 3,
+          "confidence": "documented",
+          "evidence": {
+            "docUrl": "https://cursor.com/docs/rules",
+            "verifiedAt": "2026-10-25"
+          },
+          "notes": [
+            "alwaysApply: true"
+          ]
+        }
+      ]
+    }
+  ],
+  "excluded": [],
+  "findings": [
+    {
+      "id": "F9",
+      "severity": "warn",
+      "agent": "all",
+      "message": "Possible secret on line 4 of ~/.claude/CLAUDE.md (value not shown)",
+      "paths": [
+        "~/.claude/CLAUDE.md"
+      ],
+      "confidence": "medium",
+      "fix": "Remove the secret from the instruction file and rotate it; agents send this file to a model provider."
+    },
+    {
+      "id": "F5",
+      "severity": "info",
+      "agent": "claude-code",
+      "message": "Claude Code: 1 always-loaded item is unmeasured (MCP servers); the always-on total is a lower bound (\"at least\")",
+      "paths": [],
+      "confidence": "needs-your-call",
+      "fix": "If a server is unused, disable or remove it in the agent's own settings. prehello never edits MCP configs."
+    }
+  ],
+  "warnings": [],
+  "notMeasurable": [
+    "the agent's built-in system prompt and built-in tool definitions",
+    "server-side / org rules, Cursor User & Team Rules, claude.ai connectors",
+    "MCP servers whose tools are only known at runtime (no server is started by default)",
+    "files outside the scanned locations; anything the agent injects dynamically (hooks, memory/RAG plugins)"
+  ],
+  "partial": null
+}

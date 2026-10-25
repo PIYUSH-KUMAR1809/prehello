@@ -1,0 +1,14 @@
+{
+  "agent": "codex",
+  "verifiedAt": "2026-10-25",
+  "verifiedNote": "AGENTS.md discovery, the 32 KiB default, skills locations (.agents/skills cwd\u2192repo root, ~/.agents/skills, /etc/codex/skills), the name+description+path listing and [[skills.config]] disabling are from OpenAI's docs (fetched 2026-10-25). ASSUMED: project .codex/config.toml MCP, MCP schema loading (modelled upfront), ~/.codex/skills as a legacy skills path. Token accuracy was never validated.",
+  "docs": {
+    "agentsMd": "https://learn.chatgpt.com/docs/agent-configuration/agents-md",
+    "mcp": "https://learn.chatgpt.com/docs/extend/mcp?surface=cli",
+    "skills": "https://learn.chatgpt.com/docs/build-skills",
+    "config": "https://learn.chatgpt.com/docs/config-file/config-reference"
+  },
+  "caps": {
+    "projectDocMaxBytesDefault": 32768
+  }
+}

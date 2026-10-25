@@ -1,0 +1,35 @@
+prehello 0.1.0 · ./apps/web + user config · window 200k
+Token counts are ESTIMATES (o200k BPE with per-agent scaling priors), shown with ~. Not exact for
+any model.
+
+Before your first message: Claude Code ~408 tokens
+
+Measured vs. not measured (always-on items)
+  Claude Code  measured 4 of 4 (100%): 4 instruction files
+
+Top offenders (always on, estimates)
+   1. ../../CLAUDE.md                                    137    34%  ████████████
+   2. .claude/CLAUDE.md                                  134    33%  ███████████▌
+   3. ../CLAUDE.md                                       126    31%  ███████████
+   4. CLAUDE.local.md                                     11   2.7%  ▌
+
+── Claude Code ────────────────────────────────────────────────────────────────────────────  Grade A
+   estimate model: o200k × 1.5 (Claude-current prior); band ±20%
+ALWAYS ON before hello   ~408 tokens (327–489)  ≈ 0.2% of 200k
+   ../../CLAUDE.md            137     34%  ████████████████████
+   .claude/CLAUDE.md          134     33%  ███████████████████▌
+   ../CLAUDE.md               126     31%  ██████████████████
+   CLAUDE.local.md             11    2.7%  █▌
+     · ../../CLAUDE.md: ancestor directory (loaded at launch, root→cwd)
+     · ../CLAUDE.md: ancestor directory (loaded at launch, root→cwd)
+CONDITIONAL (path/dir triggers)   ~134 tokens (107–161)
+   src/CLAUDE.md          134    100%  ████████████████████
+     · src/CLAUDE.md: loaded when Claude works in this subdirectory (not in /context at start)
+   not measurable from disk: built-in system prompt and built-in tools · claude.ai connectors (not
+      on disk) · hook output
+
+Never measured: the agent's built-in system prompt and built-in tool definitions; server-side / org
+rules, Cursor User & Team Rules, claude.ai connectors; MCP servers whose tools are only known at
+runtime (no server is started by default); files outside the scanned locations; anything the agent
+injects dynamically (hooks, memory/RAG plugins).
+Context Grade (Claude Code): A — heuristic, not a standard. See: prehello explain grade

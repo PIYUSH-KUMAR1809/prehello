@@ -1,0 +1,29 @@
+prehello 0.1.0 · this folder + user config · window 200k
+Token counts are ESTIMATES (o200k BPE with per-agent scaling priors), shown with ~. Not exact for
+any model.
+
+Before your first message: Codex ~5.8k tokens
+
+Measured vs. not measured (always-on items)
+  Codex  measured 1 of 1 (100%): 1 instruction file
+
+── Codex ──────────────────────────────────────────────────────────────────────────────────  Grade A
+   estimate model: o200k BPE (OpenAI-family); band ±3%
+ALWAYS ON before hello   ~5.8k tokens (5.6k–6k)  ≈ 2.9% of 200k
+   AGENTS.md        5,779    100%  ████████████████████
+     · AGENTS.md: truncated at project_doc_max_bytes: 32768/71942 bytes loaded
+   not measurable from disk: built-in system prompt and tools · Codex bundled system skills
+      (~/.codex/skills/.system, hidden dirs are skipped) · server-side / org instructions
+
+Findings (1)
+ ⚠ ./AGENTS.md is truncated by Codex at project_doc_max_bytes (32768 B): only the first 32768 of
+   71942 bytes load
+
+Not loaded / ignored (1)
+   codex: ./sub/AGENTS.md — below the launch directory (Codex reads AGENTS.md root→cwd only)
+
+Never measured: the agent's built-in system prompt and built-in tool definitions; server-side / org
+rules, Cursor User & Team Rules, claude.ai connectors; MCP servers whose tools are only known at
+runtime (no server is started by default); files outside the scanned locations; anything the agent
+injects dynamically (hooks, memory/RAG plugins).
+Context Grade (Codex): A — heuristic, not a standard. See: prehello explain grade

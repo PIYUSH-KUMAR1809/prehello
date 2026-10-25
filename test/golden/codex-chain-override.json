@@ -1,0 +1,239 @@
+{
+  "schemaVersion": 1,
+  "tool": {
+    "name": "prehello",
+    "version": "0.1.0"
+  },
+  "generatedAt": "2026-10-24T12:00:00.000Z",
+  "redacted": "paths-shortened (~ and ./ prefixes); server and file names kept",
+  "scan": {
+    "cwd": "./services/api/handlers",
+    "window": 200000,
+    "tokenizer": {
+      "method": "bpe-o200k",
+      "note": "o200k BPE (gpt-tokenizer, bundled) with per-family scaling"
+    },
+    "claudeProfile": "current"
+  },
+  "agents": [
+    {
+      "id": "codex",
+      "name": "Codex",
+      "detected": true,
+      "detectedBy": [
+        "--agent"
+      ],
+      "presentInRepoOnly": false,
+      "profile": {
+        "id": "openai-o200k",
+        "label": "o200k BPE (OpenAI-family)",
+        "band": "±3%"
+      },
+      "totals": {
+        "always": {
+          "est": 257,
+          "low": 249,
+          "high": 265,
+          "measuredItems": 4,
+          "unmeasuredItems": 0
+        },
+        "conditional": {
+          "est": 0,
+          "low": 0,
+          "high": 0,
+          "measuredItems": 0,
+          "unmeasuredItems": 0
+        },
+        "deferred": {
+          "est": 0,
+          "low": 0,
+          "high": 0,
+          "measuredItems": 0,
+          "unmeasuredItems": 0
+        },
+        "on-demand": {
+          "est": 0,
+          "low": 0,
+          "high": 0,
+          "measuredItems": 0,
+          "unmeasuredItems": 0
+        },
+        "unknown": {
+          "est": 0,
+          "low": 0,
+          "high": 0,
+          "measuredItems": 0,
+          "unmeasuredItems": 0
+        }
+      },
+      "percentOfWindowAlways": 0.1285,
+      "alwaysIsLowerBound": false,
+      "savings": null,
+      "grade": {
+        "letter": "A",
+        "score": 100,
+        "provisional": false,
+        "reasons": []
+      },
+      "coverage": {
+        "agent": "codex",
+        "alwaysMeasuredItems": 4,
+        "alwaysUnmeasuredItems": 0,
+        "alwaysFraction": 1,
+        "measuredKinds": {
+          "instructions": 4
+        },
+        "unmeasuredKinds": {},
+        "mcpServers": 0
+      },
+      "installedButNothingFound": false,
+      "offenders": [
+        {
+          "label": "../../../AGENTS.md",
+          "path": "./AGENTS.md",
+          "kind": "instructions",
+          "loadMode": "always",
+          "tokens": 84
+        },
+        {
+          "label": "./TEAM_GUIDE.md",
+          "path": "./services/api/handlers/TEAM_GUIDE.md",
+          "kind": "instructions",
+          "loadMode": "always",
+          "tokens": 84
+        },
+        {
+          "label": "../AGENTS.override.md",
+          "path": "./services/api/AGENTS.override.md",
+          "kind": "instructions",
+          "loadMode": "always",
+          "tokens": 81
+        },
+        {
+          "label": "~/.codex/AGENTS.override.md",
+          "path": "~/.codex/AGENTS.override.md",
+          "kind": "instructions",
+          "loadMode": "always",
+          "tokens": 8
+        }
+      ],
+      "mcpServers": [],
+      "unmeasuredBanner": [
+        "built-in system prompt and tools",
+        "Codex bundled system skills (~/.codex/skills/.system, hidden dirs are skipped)",
+        "server-side / org instructions"
+      ],
+      "items": [
+        {
+          "id": "codex:2",
+          "kind": "instructions",
+          "scope": "ancestor",
+          "loadMode": "always",
+          "label": "../../../AGENTS.md",
+          "path": "./AGENTS.md",
+          "tokens": {
+            "est": 84,
+            "low": 81,
+            "high": 87
+          },
+          "unmeasured": false,
+          "chars": 467,
+          "lines": 8,
+          "confidence": "documented",
+          "evidence": {
+            "docUrl": "https://learn.chatgpt.com/docs/agent-configuration/agents-md",
+            "verifiedAt": "2026-10-25"
+          },
+          "notes": []
+        },
+        {
+          "id": "codex:4",
+          "kind": "instructions",
+          "scope": "project",
+          "loadMode": "always",
+          "label": "./TEAM_GUIDE.md",
+          "path": "./services/api/handlers/TEAM_GUIDE.md",
+          "tokens": {
+            "est": 84,
+            "low": 81,
+            "high": 87
+          },
+          "unmeasured": false,
+          "chars": 466,
+          "lines": 8,
+          "confidence": "documented",
+          "evidence": {
+            "docUrl": "https://learn.chatgpt.com/docs/agent-configuration/agents-md",
+            "verifiedAt": "2026-10-25"
+          },
+          "notes": []
+        },
+        {
+          "id": "codex:3",
+          "kind": "instructions",
+          "scope": "ancestor",
+          "loadMode": "always",
+          "label": "../AGENTS.override.md",
+          "path": "./services/api/AGENTS.override.md",
+          "tokens": {
+            "est": 81,
+            "low": 79,
+            "high": 83
+          },
+          "unmeasured": false,
+          "chars": 471,
+          "lines": 8,
+          "confidence": "documented",
+          "evidence": {
+            "docUrl": "https://learn.chatgpt.com/docs/agent-configuration/agents-md",
+            "verifiedAt": "2026-10-25"
+          },
+          "notes": []
+        },
+        {
+          "id": "codex:1",
+          "kind": "instructions",
+          "scope": "user",
+          "loadMode": "always",
+          "label": "~/.codex/AGENTS.override.md",
+          "path": "~/.codex/AGENTS.override.md",
+          "tokens": {
+            "est": 8,
+            "low": 8,
+            "high": 8
+          },
+          "unmeasured": false,
+          "chars": 42,
+          "lines": 3,
+          "confidence": "documented",
+          "evidence": {
+            "docUrl": "https://learn.chatgpt.com/docs/agent-configuration/agents-md",
+            "verifiedAt": "2026-10-25"
+          },
+          "notes": []
+        }
+      ]
+    }
+  ],
+  "excluded": [
+    {
+      "agent": "codex",
+      "path": "~/.codex/AGENTS.md",
+      "reason": "shadowed by AGENTS.override.md in the same directory (Codex reads only one)"
+    },
+    {
+      "agent": "codex",
+      "path": "./services/api/AGENTS.md",
+      "reason": "shadowed by AGENTS.override.md in the same directory (Codex reads at most one file per directory)"
+    }
+  ],
+  "findings": [],
+  "warnings": [],
+  "notMeasurable": [
+    "the agent's built-in system prompt and built-in tool definitions",
+    "server-side / org rules, Cursor User & Team Rules, claude.ai connectors",
+    "MCP servers whose tools are only known at runtime (no server is started by default)",
+    "files outside the scanned locations; anything the agent injects dynamically (hooks, memory/RAG plugins)"
+  ],
+  "partial": null
+}
