@@ -6,6 +6,7 @@ import { Report } from "../../src/model";
 import { toJson } from "../../src/render/json";
 import { renderTerminal } from "../../src/render/terminal";
 import { mkTmp, CAN_SYMLINK } from "./tmp";
+import { winView } from "./winsep";
 
 export const FIXTURE_SRC = path.join(__dirname, "..", "fixtures");
 const created: string[] = [];
@@ -64,7 +65,7 @@ export function cleanup(): void {
 }
 
 export function runScan(m: Mat, extra: Partial<Parameters<typeof scan>[0]> = {}): Report {
-  return scan({
+  return winView(scan({
     cwd: m.project,
     home: m.home,
     env: { HOME: m.home, PATH: "" },
@@ -78,7 +79,7 @@ export function runScan(m: Mat, extra: Partial<Parameters<typeof scan>[0]> = {})
     claudeProfile: "current",
     now: new Date("2026-10-24T12:00:00Z"),
     ...extra,
-  });
+  }), m.root);
 }
 
 export function normalize(s: string, m: Mat): string {

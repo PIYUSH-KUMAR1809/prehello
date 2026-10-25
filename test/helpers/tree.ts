@@ -1,3 +1,4 @@
+import { winView } from "./winsep";
 import fs from "node:fs";
 import path from "node:path";
 import { scan } from "../../src/scan";
@@ -63,7 +64,7 @@ export function skillMd(name: string, description: string, body = "Do the thing.
 }
 
 export function scanWorld(w: World, extra: Partial<Parameters<typeof scan>[0]> = {}): Report {
-  return scan({
+  return winView(scan({
     cwd: w.project,
     home: w.home,
     env: { HOME: w.home, PATH: "" },
@@ -77,7 +78,7 @@ export function scanWorld(w: World, extra: Partial<Parameters<typeof scan>[0]> =
     claudeProfile: "current",
     now: new Date("2026-10-25T12:00:00Z"),
     ...extra,
-  });
+  }), w.root);
 }
 
 export function agentOf(r: Report, id: string): AgentReport {

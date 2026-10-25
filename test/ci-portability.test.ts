@@ -2,7 +2,8 @@ import { describe, it, expect, afterAll } from "vitest";
 import fs from "node:fs";
 import path from "node:path";
 import { materialize, cleanup, runScan, terminalOf, jsonOf, substituteProject } from "./helpers/fixtures";
-import { mkTmp, canonical, leakForms, CAN_SYMLINK } from "./helpers/tmp";
+import { mkTmp, canonical, leakForms, posix, fsPath, CAN_SYMLINK } from "./helpers/tmp";
+import { winViewForced, real } from "./helpers/winsep";
 
 afterAll(cleanup);
 
@@ -33,13 +34,25 @@ describe("test helpers: temp dirs and fixtures are canonical and escaped", () =>
     expect(() => JSON.parse(tpl.replaceAll("__PROJECT__", "C:\\Users\\x"))).toThrow();
   });
 
-  it("leakForms covers the native, forward-slash and JSON-escaped spellings", () => {
-    const forms = leakForms("/tmp");
-    expect(forms).toContain("/tmp");
-    // synthetic Windows-style path: the three spellings differ and are all produced
-    const win = "C:\\Users\\me";
-    const spelled = [win, win.replace(/\\/g, "/"), win.replace(/\\/g, "\\\\")];
-    expect(new Set(spelled).size).toBe(3);
+  it("leakForms covers the native, forward-slash and JSON-escaped spellings, and never touches the disk for a path that does not exist", () => {
+    // a Windows-style path that exists on no runner: only string handling may be involved
+    const forms = leakForms("C:\\Users\\me");
+    expect(forms).toEqual(expect.arrayContaining(["C:\\Users\\me", "C:/Users/me", "C:\\\\Users\\\\me"]));
+    expect(posix("a\\b/c")).toBe("a/b/c");
+  });
+
+  it("path.win32 shapes: posix() gives the forward-slash spelling the tests compare with, and the simulated Windows view round-trips", () => {
+    const w = path.win32;
+    expect(posix(w.join("C:\\Users\\me", "proj", "CLAUDE.md"))).toBe("C:/Users/me/proj/CLAUDE.md");
+    expect(posix(w.relative("C:\\Users\\me", "C:\\Users\\me\\proj\\a.md"))).toBe("proj/a.md");
+    // the PREHELLO_SIM_WINSEP view: backslashed strings under the root, pristine object recoverable, other strings untouched
+    const root = "/tmp/x";
+    const orig = { agents: [{ items: [{ path: "/tmp/x/project/CLAUDE.md", label: "a/b" }] }] };
+    const v = winViewForced(orig, root);
+    expect(v.agents[0].items[0].path).toBe("\\tmp\\x\\project\\CLAUDE.md");
+    expect(v.agents[0].items[0].label).toBe("a/b");
+    expect(real(v)).toBe(orig);
+    expect(fsPath(v.agents[0].items[0].path)).toBe(path.sep === "/" ? "/tmp/x/project/CLAUDE.md" : v.agents[0].items[0].path);
   });
 
   it("symlink fixtures are stored as plain marker files and materialised as links only where links are allowed", () => {

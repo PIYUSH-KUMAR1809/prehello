@@ -38,6 +38,11 @@ jobs:
         env:
           # one reproducible clock for every machine
           TZ: UTC
+      - name: Windows-shape simulations (8.3 short temp paths, backslash report paths) on Linux
+        if: runner.os == 'Linux' && matrix.node == 20
+        run: PREHELLO_SIM_SHORTPATH=1 PREHELLO_SIM_WINSEP=1 npm test
+        env:
+          TZ: UTC
       - name: Install smoke test (pack, install without the optional PNG engine, PNG message, then with it)
         run: node scripts/smoke-install.mjs
       - name: Windows PowerShell smoke (cmd shim + redirection)

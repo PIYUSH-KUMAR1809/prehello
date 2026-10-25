@@ -2,14 +2,14 @@ import { describe, it, expect, afterAll } from "vitest";
 import fs from "node:fs";
 import path from "node:path";
 import { materialize, cleanup, runScan, terminalOf, jsonOf, golden, Mat } from "./helpers/fixtures";
-import { CAN_SYMLINK } from "./helpers/tmp";
+import { CAN_SYMLINK, posix } from "./helpers/tmp";
 import { AgentId, Report, LoadMode } from "../src/model";
 import { makeCounter } from "../src/tokens/counter";
 
 afterAll(cleanup);
 
 const agent = (r: Report, id: AgentId) => r.agents.find((a) => a.id === id);
-const rel = (m: Mat, p: string) => path.relative(m.root, p).split(path.sep).join("/");
+const rel = (m: Mat, p: string) => path.posix.relative(posix(m.root), posix(p));
 const itemsOf = (r: Report, id: AgentId, mode?: LoadMode) => (agent(r, id)?.items ?? []).filter((i) => !mode || i.loadMode === mode);
 const paths = (m: Mat, r: Report, id: AgentId, mode?: LoadMode) => itemsOf(r, id, mode).map((i) => rel(m, i.path));
 
@@ -23,10 +23,10 @@ describe("claude-code adapter", () => {
     expect(always).toContain("project/CLAUDE.md");
     expect(always).toContain("home/.claude/CLAUDE.md");
     expect(always).not.toContain("project/AGENTS.md");
-    const claudeMd = itemsOf(r, "claude-code", "always").find((i) => i.path.endsWith("project/CLAUDE.md"))!;
+    const claudeMd = itemsOf(r, "claude-code", "always").find((i) => posix(i.path).endsWith("project/CLAUDE.md"))!;
     expect(claudeMd.detail).toMatch(/@import/);
     expect(claudeMd.confidence).toBe("documented");
-    expect(r.excluded.some((e) => e.agent === "claude-code" && e.path.endsWith("project/AGENTS.md"))).toBe(true);
+    expect(r.excluded.some((e) => e.agent === "claude-code" && posix(e.path).endsWith("project/AGENTS.md"))).toBe(true);
     expect(r.findings.some((f) => f.id === "F7")).toBe(true);
     // path-scoped rule is conditional, unscoped rule is always
     expect(itemsOf(r, "claude-code", "conditional").some((i) => i.kind === "rule")).toBe(true);
@@ -146,7 +146,7 @@ describe("codex adapter", () => {
     const it0 = itemsOf(r, "codex", "always")[0];
     expect(it0.notes.join(" ")).toMatch(/32768\/\d+ bytes/);
     expect(r.findings.some((f) => f.id === "F12")).toBe(true);
-    expect(r.excluded.some((e) => e.agent === "codex" && /sub\/AGENTS\.md$/.test(e.path))).toBe(true);
+    expect(r.excluded.some((e) => e.agent === "codex" && /sub\/AGENTS\.md$/.test(posix(e.path)))).toBe(true);
     // tokens measured only for the loaded 32 KiB prefix
     expect(it0.chars).toBeLessThanOrEqual(32768);
   });
@@ -160,7 +160,7 @@ describe("codex adapter", () => {
     expect(got).not.toContain("project/services/api/AGENTS.md");
     expect(got).toContain("project/services/api/handlers/TEAM_GUIDE.md");
     expect(got).toContain("home/.codex/AGENTS.override.md");
-    expect(r.excluded.some((e) => e.path.endsWith("services/api/AGENTS.md") && /shadowed/.test(e.reason))).toBe(true);
+    expect(r.excluded.some((e) => posix(e.path).endsWith("services/api/AGENTS.md") && /shadowed/.test(e.reason))).toBe(true);
   });
 });
 

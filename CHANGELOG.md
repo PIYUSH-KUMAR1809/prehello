@@ -7,6 +7,10 @@ All notable changes are listed here. The format follows [Keep a Changelog](https
 ### Fixed
 - Windows: `autoMemoryDirectory` set as `~\...` is expanded like `~/...`.
 
+### Changed (tests, CI and tooling; second Windows CI run)
+- Tests compared raw Report paths (native: backslashes on Windows) with forward-slash literals (`endsWith("project/CLAUDE.md")`), and a JSON dump with an unescaped path; they now compare normalised values (`posix()` in `test/helpers/tmp.ts`). `leakForms`/`canonical` no longer touch the disk for made-up paths.
+- New opt-in simulation `PREHELLO_SIM_WINSEP=1` (`test/helpers/winsep.ts`): tests see a Report whose paths use backslashes while the renderers still get the pristine one. It reproduces the failures of the second run on Linux; CI runs it (together with `PREHELLO_SIM_SHORTPATH=1`) on ubuntu / Node 20.
+
 ### Changed (tests, CI and tooling; found by the first CI run on Windows, macOS and Linux)
 - Tests use canonical temp directories (`test/helpers/tmp.ts`). On Windows the runner's temp dir is an 8.3 short path (`C:\Users\RUNNER~1\...`) while prehello, correctly, reports the real one; comparing the two caused most Windows failures (goldens, memory slugs, SARIF, adapters). An opt-in simulation (`PREHELLO_SIM_SHORTPATH=1`) reproduces this on any OS.
 - Fixture `.claude.json` files get their `__PROJECT__` placeholder JSON-escaped (a raw `C:\Users\x` made the file invalid JSON).

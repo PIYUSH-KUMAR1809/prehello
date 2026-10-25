@@ -7,7 +7,7 @@ import { onPath } from "../src/fs-safe";
 import { Ctx } from "../src/context";
 import { makeCounter } from "../src/tokens/counter";
 import { cmp, sanitize } from "../src/util/fmt";
-import { mkTmp } from "./helpers/tmp";
+import { mkTmp, posix, fsPath } from "./helpers/tmp";
 
 afterAll(cleanupWorlds);
 
@@ -50,7 +50,7 @@ describe("case-insensitive filesystems (APFS / NTFS), simulated", () => {
     const inst = a.items.filter((i) => i.kind === "instructions");
     // one file per directory: pkg override beats pkg agents.md (same file on a case-insensitive FS is still ONE directory entry each)
     expect(inst.length).toBe(2);
-    expect(new Set(inst.map((i) => fs.realpathSync(i.path))).size).toBe(2);
+    expect(new Set(inst.map((i) => fs.realpathSync(fsPath(i.path)))).size).toBe(2);
   });
 
   it("a wrongly-cased cwd / home / ceiling is canonicalised: git root and ceiling still work, nothing above the ceiling leaks in", () => {
@@ -59,10 +59,11 @@ describe("case-insensitive filesystems (APFS / NTFS), simulated", () => {
     put(w.project, { "CLAUDE.md": "project rules\n".repeat(10), "AGENTS.md": "agents\n", "pkg/CLAUDE.md": "pkg rules\n".repeat(10) });
     undo = installCaseInsensitiveFs();
     const r = scanWorld(w, { cwd: shout(path.join(w.project, "pkg")), home: shout(w.home), ceiling: shout(w.project), agents: ["claude-code", "codex"] });
-    const dump = JSON.stringify(r.agents.flatMap((a) => a.items.map((i) => i.path)));
-    expect(dump).toContain(path.join(w.project, "CLAUDE.md"));
-    expect(dump).not.toContain(path.join(w.root, "CLAUDE.md"));
-    expect(dump).toContain(path.join(w.project, "pkg", "CLAUDE.md"));
+    // compare path values, not a JSON dump: JSON escapes the backslashes of a Windows path
+    const got = r.agents.flatMap((a) => a.items.map((i) => posix(i.path)));
+    expect(got).toContain(posix(path.join(w.project, "CLAUDE.md")));
+    expect(got).not.toContain(posix(path.join(w.root, "CLAUDE.md")));
+    expect(got).toContain(posix(path.join(w.project, "pkg", "CLAUDE.md")));
   });
 
   it("CLAUDE.md and claude.md named differently in one dir on a case-sensitive fs are two files; on a case-insensitive fs a probe for either resolves to ONE item", () => {

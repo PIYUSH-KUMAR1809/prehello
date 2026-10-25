@@ -3,7 +3,19 @@ import os from "node:os";
 import path from "node:path";
 
 /** The canonical temp directory. Windows: os.tmpdir() is often an 8.3 short path (C:\Users\RUNNER~1\...) and only the NATIVE realpath expands it. */
-export const canonical = (p: string): string => fs.realpathSync.native(p);
+export const canonical = (p: string): string => {
+  try {
+    return fs.realpathSync.native(p);
+  } catch {
+    return p; // a path that does not exist (a made-up Windows path in a unit test) has no other spelling
+  }
+};
+
+/** Forward-slash spelling of a path as the host spells it (Report item paths are native: backslashes on Windows; display paths are always "/"). */
+export const posix = (p: string): string => p.replace(/\\/g, "/");
+
+/** A Report path as something fs can open (undoes the PREHELLO_SIM_WINSEP backslash view on POSIX hosts; identity on Windows). */
+export const fsPath = (p: string): string => (path.sep === "/" ? posix(p) : p);
 
 /** A fresh temp directory whose path is the canonical one (what prehello reports), never an alias (8.3 short name, macOS /var -> /private/var). */
 export function mkTmp(prefix: string): string {
