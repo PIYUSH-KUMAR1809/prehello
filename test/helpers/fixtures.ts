@@ -1,14 +1,15 @@
 import fs from "node:fs";
-import os from "node:os";
 import path from "node:path";
 import crypto from "node:crypto";
 import { scan } from "../../src/scan";
 import { Report } from "../../src/model";
 import { toJson } from "../../src/render/json";
 import { renderTerminal } from "../../src/render/terminal";
+import { mkTmp, CAN_SYMLINK } from "./tmp";
 
 export const FIXTURE_SRC = path.join(__dirname, "..", "fixtures");
 const created: string[] = [];
+const SYMLINK_SUFFIX = ".__SYMLINK__";
 
 export interface Mat {
   root: string;
@@ -16,9 +17,17 @@ export interface Mat {
   project: string;
 }
 
+/**
+ * Put a project path into JSON text. The placeholder sits inside a JSON string, so the path must be JSON-escaped: a Windows path
+ * (C:\\Users\\x) written raw makes the file invalid JSON (the first Windows CI run lost the "github" MCP server and got exit code 3 from it).
+ */
+export function substituteProject(jsonText: string, project: string): string {
+  return jsonText.replaceAll("__PROJECT__", JSON.stringify(project).slice(1, -1));
+}
+
 /** Copy fixtures/<name> to a fresh temp dir, substituting machine-specific placeholders. */
 export function materialize(name: string): Mat {
-  const base = fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(), "prehello-fx-")));
+  const base = mkTmp("prehello-fx-");
   created.push(base);
   const root = path.join(base, name);
   fs.cpSync(path.join(FIXTURE_SRC, name), root, { recursive: true, verbatimSymlinks: true });
@@ -37,7 +46,13 @@ export function materialize(name: string): Mat {
         fs.renameSync(p, path.join(d, slug));
         walk(path.join(d, slug));
       } else if (e.isDirectory()) walk(p);
-      else if (e.isFile() && e.name === ".claude.json") fs.writeFileSync(p, fs.readFileSync(p, "utf8").replaceAll("__PROJECT__", project));
+      else if (e.isFile() && e.name.endsWith(SYMLINK_SUFFIX)) {
+        // Symlinks are stored as "<name>.__SYMLINK__" text files holding the link target: a Windows checkout (core.symlinks=false) or an
+        // archive tool cannot flatten them. Without symlink privilege the fixture simply has no link (tests that need it skip).
+        const target = fs.readFileSync(p, "utf8").trim();
+        fs.rmSync(p);
+        if (CAN_SYMLINK) fs.symlinkSync(target, p.slice(0, -SYMLINK_SUFFIX.length));
+      } else if (e.isFile() && e.name === ".claude.json") fs.writeFileSync(p, substituteProject(fs.readFileSync(p, "utf8"), project));
     }
   };
   walk(root);
@@ -68,7 +83,9 @@ export function runScan(m: Mat, extra: Partial<Parameters<typeof scan>[0]> = {})
 
 export function normalize(s: string, m: Mat): string {
   const slug = m.project.replace(/[^A-Za-z0-9]/g, "-");
-  return s.split(slug).join("<SLUG>").split(path.dirname(m.root)).join("<TMP>");
+  const tmp = path.dirname(m.root);
+  // prehello prints forward slashes on every OS, so a Windows temp dir shows up as C:/Users/.../Temp: replace that spelling too
+  return s.split(slug).join("<SLUG>").split(tmp).join("<TMP>").split(tmp.replace(/\\/g, "/")).join("<TMP>");
 }
 
 export function terminalOf(r: Report, m: Mat, verbose = false): string {

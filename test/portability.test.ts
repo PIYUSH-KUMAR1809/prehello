@@ -7,13 +7,14 @@ import { onPath } from "../src/fs-safe";
 import { Ctx } from "../src/context";
 import { makeCounter } from "../src/tokens/counter";
 import { cmp, sanitize } from "../src/util/fmt";
+import { mkTmp } from "./helpers/tmp";
 
 afterAll(cleanupWorlds);
 
 // Real macOS (APFS) and Windows hosts are case-insensitive already; assertions that
 // assume a case-sensitive host filesystem only apply when the host really is one.
 const hostCaseInsensitive = (() => {
-  const d = fs.mkdtempSync(path.join(require("node:os").tmpdir(), "prehello-ci-"));
+  const d = mkTmp("prehello-ci-");
   try {
     fs.writeFileSync(path.join(d, "a.txt"), "x");
     return fs.existsSync(path.join(d, "A.TXT"));
@@ -28,7 +29,8 @@ afterEach(() => {
 });
 
 describe("case-insensitive filesystems (APFS / NTFS), simulated", () => {
-  it("the simulation itself behaves like a case-insensitive fs (sanity)", () => {
+  // the simulator (casefold.ts) emulates NTFS/APFS on a case-sensitive host: on a real Windows host there is nothing to simulate
+  it.skipIf(process.platform === "win32")("the simulation itself behaves like a case-insensitive fs (sanity)", () => {
     const w = world();
     put(w.project, { "readme.md": "x" });
     expect(fs.existsSync(path.join(w.project, "README.MD"))).toBe(hostCaseInsensitive);
@@ -91,7 +93,8 @@ describe("Windows / POSIX differences that can be tested on any OS", () => {
     expect(onPath("claude", bin, { platform: "win32", pathExt: ".COM;.EXE;.CMD" })).toBe(true);
     expect(onPath("claude", bin, { platform: "win32", pathExt: ".EXE" })).toBe(false);
     expect(onPath("codex", path.join(w.root, "bin2"), { platform: "win32", pathExt: ".EXE" })).toBe(hostCaseInsensitive); // true on a case-insensitive host fs (macOS/NTFS)
-    expect(onPath("cursor", path.join(w.root, "bin3"), { platform: "linux" })).toBe(true);
+    // a POSIX PATH is split on ":", which would cut a Windows drive letter in two: only meaningful on a POSIX host
+    if (process.platform !== "win32") expect(onPath("cursor", path.join(w.root, "bin3"), { platform: "linux" })).toBe(true);
     expect(onPath("claude", `${path.join(w.root, "nope")};${bin}`, { platform: "win32" })).toBe(true); // ';' delimiter
     expect(onPath("claude", undefined, { platform: "win32" })).toBe(false);
   });

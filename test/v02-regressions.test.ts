@@ -10,6 +10,7 @@ import { renderCard, pickCardAgent, buildHeadline, assertHeadline, CARD_FONT } f
 import { savingsOf } from "../src/analyze/savings";
 import { safeWrite, looksLikePrehelloOutput, SafeWriteError } from "../src/safe-write";
 import { MAX_FILE_BYTES, MAX_WALK_ENTRIES } from "../src/fs-safe";
+import { mkTmp, CAN_SYMLINK } from "./helpers/tmp";
 
 afterAll(cleanupWorlds);
 
@@ -203,11 +204,11 @@ describe("(e) --json=/--card= write safety", () => {
   const setup = () => {
     const w = world();
     put(w.project, { "CLAUDE.md": "# hi\n" + "word ".repeat(100) });
-    const out = fs.mkdtempSync(path.join(os.tmpdir(), "prehello-out-"));
+    const out = mkTmp("prehello-out-");
     return { w, out };
   };
   const run = (w: World, args: string[], allow: string[]) => runCli([w.project, "--ceiling", w.root, "--agent", "claude-code", ...args], { home: w.home, cwd: w.project, allowWrite: allow });
-  it("refuses to write through a symlink (dangling or not), --force or not, and leaves the target untouched", () => {
+  it.skipIf(!CAN_SYMLINK)("refuses to write through a symlink (dangling or not), --force or not, and leaves the target untouched", () => {
     const { w, out } = setup();
     const target = path.join(out, "victim.txt");
     fs.writeFileSync(target, "precious");
@@ -263,8 +264,8 @@ describe("(e) --json=/--card= write safety", () => {
     expect(run(w, [`--json=${f}`], [f]).status).toBe(0);
     expect(() => JSON.parse(fs.readFileSync(f, "utf8"))).not.toThrow();
   });
-  it("unit: safeWrite never follows a link swapped in for a fresh name, and looksLikePrehelloOutput is strict", () => {
-    const out = fs.mkdtempSync(path.join(os.tmpdir(), "prehello-out-"));
+  it.skipIf(!CAN_SYMLINK)("unit: safeWrite never follows a link swapped in for a fresh name, and looksLikePrehelloOutput is strict", () => {
+    const out = mkTmp("prehello-out-");
     const target = path.join(out, "t");
     fs.writeFileSync(target, "keep");
     const link = path.join(out, "l.json");

@@ -1,14 +1,14 @@
 import { describe, it, expect, afterAll } from "vitest";
 import fs from "node:fs";
-import os from "node:os";
 import path from "node:path";
 import { runCli } from "./helpers/run-cli";
 import { fmtTok, sanitize } from "../src/util/fmt";
+import { mkTmp } from "./helpers/tmp";
 
 const dirs: string[] = [];
 afterAll(() => dirs.forEach((d) => fs.rmSync(d, { recursive: true, force: true })));
 function tree(files: Record<string, string>) {
-  const base = fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(), "prehello-rv-")));
+  const base = mkTmp("prehello-rv-");
   dirs.push(base);
   const home = path.join(base, "home");
   const project = path.join(base, "project");

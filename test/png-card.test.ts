@@ -1,6 +1,5 @@
 import { describe, it, expect, afterAll } from "vitest";
 import fs from "node:fs";
-import os from "node:os";
 import path from "node:path";
 import { materialize, runScan, cleanup, golden } from "./helpers/fixtures";
 import { world, cleanupWorlds, put, scanWorld, skillMd } from "./helpers/tree";
@@ -9,13 +8,14 @@ import { renderCard, pickCardAgent, buildHeadline, assertHeadline, MIN_CUT_HEADL
 import { svgToPng, loadEngine, tagPng, toFontSafeText, PngUnavailableError, PNG_FONT_FAMILY, PNG_CHAR_EM, PNG_MAGIC, FONT_DIR, PNG_UNAVAILABLE_MESSAGE } from "../src/render/png";
 import { looksLikePrehelloOutput } from "../src/safe-write";
 import type { AgentReport } from "../src/model";
+import { mkTmp, CAN_SYMLINK } from "./helpers/tmp";
 
 afterAll(() => {
   cleanup();
   cleanupWorlds();
 });
 
-const tmpDir = () => fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(), "prehello-png-"))); // realpath: macOS /var -> /private/var
+const tmpDir = () => mkTmp("prehello-png-"); // realpath: macOS /var -> /private/var
 
 /** Parses a PNG into its chunks and checks every CRC. */
 function chunks(buf: Buffer): Array<{ type: string; data: Buffer }> {
@@ -205,7 +205,7 @@ describe("PNG card export", () => {
     expect(run(["--card=x.gif"]).stderr).toMatch(/must end in \.svg or \.png/);
     expect(run(["--card-format", "png"]).stderr).toMatch(/needs --card/);
   });
-  it("re-running over its own PNG works without --force; a foreign file is refused; --force overrides; symlinks are never followed", () => {
+  it.skipIf(!CAN_SYMLINK)("re-running over its own PNG works without --force; a foreign file is refused; --force overrides; symlinks are never followed", () => {
     const w = pluginWorld();
     const out = tmpDir();
     const f = path.join(out, "c.png");

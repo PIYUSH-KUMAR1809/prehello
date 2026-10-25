@@ -1,17 +1,17 @@
 import { describe, it, expect, afterAll } from "vitest";
 import fs from "node:fs";
-import os from "node:os";
 import path from "node:path";
 import { spawnSync } from "node:child_process";
 import { materialize, cleanup, treeHash } from "./helpers/fixtures";
 import { runCli, ROOT } from "./helpers/run-cli";
+import { mkTmp, CAN_SYMLINK } from "./helpers/tmp";
 
 afterAll(cleanup);
 
 const SCENARIOS = ["realistic", "monorepo-ancestors", "codex-32k-truncate", "symlink-escape", "binary-garbage", "privacy-canary", "claude-memory-over-200", "mcp-catalog", "empty-machine", "repo-only"];
 
 describe("read-only proof", () => {
-  for (const name of SCENARIOS) {
+  for (const name of SCENARIOS.filter((n) => n !== "symlink-escape" || CAN_SYMLINK)) {
     it(`${name}: no filesystem write API is called; tree hash unchanged (terminal, --json, --fix, --verbose)`, () => {
       const m = materialize(name);
       const before = treeHash(m.root);
@@ -26,14 +26,17 @@ describe("read-only proof", () => {
   }
 
   it("the guard itself works: it blocks writes, reads pass (sanity check of the proof)", () => {
-    const d = fs.mkdtempSync(path.join(os.tmpdir(), "prehello-guardsanity-"));
+    const d = mkTmp("prehello-guardsanity-");
     const log = path.join(d, "log");
     fs.writeFileSync(log, "");
+    // the temp dir goes into the child script as a JSON string literal: a raw Windows path (C:\Users\...) is a syntax error there
+    const D = JSON.stringify(d);
     const code = `
-      const fs=require('fs');
+      const fs=require('fs'), path=require('path');
+      const D=${D}, at=(n)=>path.join(D,n);
       const out=[];
-      for (const f of [()=>fs.writeFileSync('${d}/x','1'), ()=>fs.mkdirSync('${d}/y'), ()=>fs.openSync('${d}/z','w'), ()=>fs.rmSync('${d}/log'), ()=>fs.promises.writeFile('${d}/p','1')]) { try { f(); out.push('NOT-BLOCKED'); } catch(e){ out.push('blocked'); } }
-      fs.readFileSync('${d}/log','utf8'); fs.readdirSync('${d}');
+      for (const f of [()=>fs.writeFileSync(at('x'),'1'), ()=>fs.mkdirSync(at('y')), ()=>fs.openSync(at('z'),'w'), ()=>fs.rmSync(at('log')), ()=>fs.promises.writeFile(at('p'),'1')]) { try { f(); out.push('NOT-BLOCKED'); } catch(e){ out.push('blocked'); } }
+      fs.readFileSync(at('log'),'utf8'); fs.readdirSync(D);
       console.log(out.join(','));`;
     const res = spawnSync(process.execPath, ["-r", path.join(__dirname, "helpers", "guard.cjs"), "-e", code], { env: { PREHELLO_GUARD_LOG: log, PATH: "" }, encoding: "utf8" });
     expect(res.stdout.trim()).toBe("blocked,blocked,blocked,blocked,blocked");
@@ -44,7 +47,7 @@ describe("read-only proof", () => {
 
   it("only explicitly requested outputs are written (--json=file, --card=file) and nothing else", () => {
     const m = materialize("realistic");
-    const out = fs.mkdtempSync(path.join(os.tmpdir(), "prehello-out-"));
+    const out = mkTmp("prehello-out-");
     const jsonFile = path.join(out, "r.json");
     const card = path.join(out, "c.svg");
     const res = runCli([m.project, `--json=${jsonFile}`, `--card=${card}`, "--ceiling", m.root, "--managed-dir", path.join(m.root, "none")], { home: m.home, cwd: m.project, allowWrite: [jsonFile, card] });
@@ -79,7 +82,7 @@ describe("no-network proof", () => {
   });
 
   it("the network guard itself works (sanity check of the proof)", () => {
-    const d = fs.mkdtempSync(path.join(os.tmpdir(), "prehello-netsanity-"));
+    const d = mkTmp("prehello-netsanity-");
     const log = path.join(d, "log");
     fs.writeFileSync(log, "");
     const code = `
@@ -116,7 +119,7 @@ describe("no-network proof", () => {
   it("static: only src/safe-write.ts (the explicit --json=/--card= outputs, via symlink-safe open) uses filesystem write APIs", () => {
     const writers = /\b(writeFile|writeFileSync|appendFile|appendFileSync|createWriteStream|mkdirSync|mkdir|rmSync|rm|rmdirSync|unlinkSync|unlink|renameSync|rename|copyFileSync|copyFile|symlinkSync|chmodSync|truncateSync|ftruncateSync|writeSync|utimesSync)\s*\(|\bO_(WRONLY|RDWR|CREAT|APPEND|TRUNC)\b/;
     const walk = (d: string): string[] => fs.readdirSync(d, { withFileTypes: true }).flatMap((e) => (e.isDirectory() ? walk(path.join(d, e.name)) : e.name.endsWith(".ts") ? [path.join(d, e.name)] : []));
-    const offenders = walk(path.join(ROOT, "src")).filter((f) => writers.test(fs.readFileSync(f, "utf8"))).map((f) => path.relative(ROOT, f));
+    const offenders = walk(path.join(ROOT, "src")).filter((f) => writers.test(fs.readFileSync(f, "utf8"))).map((f) => path.relative(ROOT, f).split(path.sep).join("/"));
     expect(offenders).toEqual(["src/safe-write.ts"]);
   });
 
@@ -145,7 +148,7 @@ describe("resource limits", () => {
     expect(res.guardLog).toBe("");
   });
 
-  it("a symlink loop and a directory with thousands of entries do not hang the scan", () => {
+  it.skipIf(!CAN_SYMLINK)("a symlink loop and a directory with thousands of entries do not hang the scan", () => {
     const m = materialize("empty-machine");
     fs.symlinkSync(".", path.join(m.project, "loop"));
     const big = path.join(m.project, "packages");

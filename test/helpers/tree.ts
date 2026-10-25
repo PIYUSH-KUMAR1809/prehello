@@ -1,8 +1,8 @@
 import fs from "node:fs";
-import os from "node:os";
 import path from "node:path";
 import { scan } from "../../src/scan";
 import { Report, AgentReport } from "../../src/model";
+import { mkTmp } from "./tmp";
 
 /** A hermetic temp world: <root>/home, <root>/project (with a .git marker), <root>/sysroot (never created). */
 export interface World {
@@ -14,7 +14,7 @@ export interface World {
 const worlds: string[] = [];
 
 export function world(opts: { git?: boolean } = {}): World {
-  const root = fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(), "prehello-w-")));
+  const root = mkTmp("prehello-w-");
   worlds.push(root);
   const w = { root, home: path.join(root, "home"), project: path.join(root, "project"), sysroot: path.join(root, "sysroot") };
   fs.mkdirSync(w.home, { recursive: true });
@@ -28,7 +28,7 @@ export function world(opts: { git?: boolean } = {}): World {
 export function cleanupWorlds(): void {
   for (const d of worlds.splice(0)) {
     try {
-      chmodTree(d);
+      if (process.platform !== "win32") chmodTree(d); // chmod does nothing useful on Windows, and walking thousands of files there is slow
     } catch {
       /* ignore */
     }

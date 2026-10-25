@@ -1,7 +1,7 @@
 import { spawnSync, SpawnSyncReturns } from "node:child_process";
 import fs from "node:fs";
-import os from "node:os";
 import path from "node:path";
+import { mkTmp } from "./tmp";
 
 export const ROOT = path.resolve(__dirname, "..", "..");
 export const CLI = path.join(ROOT, "dist", "cli.js");
@@ -17,7 +17,7 @@ export interface RunOpts {
 }
 
 export function runCli(args: string[], o: RunOpts): SpawnSyncReturns<string> & { guardLog: string } {
-  const log = path.join(fs.mkdtempSync(path.join(os.tmpdir(), "prehello-guardlog-")), "log");
+  const log = path.join(mkTmp("prehello-guardlog-"), "log");
   fs.writeFileSync(log, "");
   // Hermetic by construction: machine-wide locations (/Applications, /etc, /Library/...) are re-rooted under a
   // directory that does not exist, so a developer's real Cursor.app / managed Claude settings can never leak into a test.

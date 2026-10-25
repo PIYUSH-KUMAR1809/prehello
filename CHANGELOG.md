@@ -4,6 +4,18 @@ All notable changes are listed here. The format follows [Keep a Changelog](https
 
 ## Unreleased
 
+### Fixed
+- Windows: `autoMemoryDirectory` set as `~\...` is expanded like `~/...`.
+
+### Changed (tests, CI and tooling; found by the first CI run on Windows, macOS and Linux)
+- Tests use canonical temp directories (`test/helpers/tmp.ts`). On Windows the runner's temp dir is an 8.3 short path (`C:\Users\RUNNER~1\...`) while prehello, correctly, reports the real one; comparing the two caused most Windows failures (goldens, memory slugs, SARIF, adapters). An opt-in simulation (`PREHELLO_SIM_SHORTPATH=1`) reproduces this on any OS.
+- Fixture `.claude.json` files get their `__PROJECT__` placeholder JSON-escaped (a raw `C:\Users\x` made the file invalid JSON).
+- Symlink fixtures are stored as `<name>.__SYMLINK__` marker files and linked at run time; tests that need symlinks skip where the OS refuses them.
+- The case-insensitive-filesystem simulator handles drive roots; POSIX-only assertions are skipped on Windows; hostile-file-name test no longer needs an ESC file name on Windows; guard scripts embed paths as JSON strings.
+- Added `test/ci-portability.test.ts` (canonical temp dirs, JSON escaping, symlink markers, no backslash/drive/temp paths in terminal and `--json` output).
+- `scripts/smoke-install.mjs` removes `node_modules/@resvg` after install when newer npm versions install the optional engine despite `--omit=optional`, so the "engine absent" scenario is real.
+- CI: `actions/checkout@v5`, `actions/setup-node@v5`; the Windows PowerShell smoke step checks every exit code and uses a unique work directory.
+
 ## 0.1.0 (not yet published)
 
 First version.

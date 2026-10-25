@@ -267,7 +267,7 @@ export function discoverClaude(ctx: Ctx): AdapterResult {
   // 7. auto memory
   const slugBase = ctx.gitRoot ?? ctx.cwd;
   const slug = slugBase.replace(/[^A-Za-z0-9]/g, "-");
-  const memDir = settings.autoMemoryDirectory ? settings.autoMemoryDirectory.replace(/^~(?=\/|$)/, ctx.home) : path.join(configDir(ctx), "projects", slug, "memory");
+  const memDir = settings.autoMemoryDirectory ? settings.autoMemoryDirectory.replace(/^~(?=[\\/]|$)/, ctx.home) : path.join(configDir(ctx), "projects", slug, "memory");
   const memFile = path.join(memDir, "MEMORY.md");
   if (isFile(memFile)) {
     const it = loadInstruction(ctx, memFile, {

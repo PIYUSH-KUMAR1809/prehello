@@ -7,6 +7,7 @@ import { runCli } from "./helpers/run-cli";
 import { renderCard, buildHeadline, assertHeadline, pickCardAgent, THEMES } from "../src/render/card";
 import { renderFix } from "../src/render/fix";
 import { AgentReport, Report } from "../src/model";
+import { mkTmp, leakForms } from "./helpers/tmp";
 
 afterAll(cleanup);
 
@@ -55,9 +56,7 @@ describe("privacy", () => {
         continue;
       }
       for (const n of NAMES) expect(svg).not.toContain(n);
-      expect(svg).not.toContain(m.home);
-      expect(svg).not.toContain(m.root);
-      expect(svg).not.toContain(os.tmpdir());
+      for (const bad of [...leakForms(m.home), ...leakForms(m.root), ...leakForms(os.tmpdir())]) expect(svg, bad).not.toContain(bad);
       expect(svg).not.toMatch(/\/(home|Users)\//);
     }
   });
@@ -81,7 +80,7 @@ describe("privacy", () => {
 
   it("CLI end-to-end: --card output and --json --redact on the canary fixture", () => {
     const { m } = load();
-    const out = fs.mkdtempSync(path.join(os.tmpdir(), "prehello-card-"));
+    const out = mkTmp("prehello-card-");
     const card = path.join(out, "c.svg");
     const jf = path.join(out, "j.json");
     const res = runCli([m.project, `--card=${card}`, `--json=${jf}`, "--redact", "--ceiling", m.root, "--managed-dir", path.join(m.root, "none")], { home: m.home, cwd: m.project, allowWrite: [card, jf] });
@@ -99,7 +98,8 @@ describe("privacy", () => {
   it("hostile file names cannot inject terminal escapes", () => {
     const m = materialize("empty-machine");
     fs.mkdirSync(path.join(m.project, ".cursor", "rules"), { recursive: true });
-    const evil = "evil\u001b[31m\u202Ename.mdc";
+    // Windows file names cannot contain control characters (ESC): there only the bidi override is possible
+    const evil = process.platform === "win32" ? "evil\u202Ename.mdc" : "evil\u001b[31m\u202Ename.mdc";
     fs.writeFileSync(path.join(m.project, ".cursor", "rules", evil), "---\nalwaysApply: true\n---\nhello there\n");
     const r = runScan(m, { agents: ["cursor"] });
     const t = terminalOf(r, m, true) + jsonOf(r, m);

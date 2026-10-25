@@ -12,8 +12,11 @@ const realLstat = fs.lstatSync.bind(fs);
 
 export function foldPath(p: string): string {
   if (!path.isAbsolute(p)) return p;
-  const parts = path.normalize(p).split(path.sep).filter(Boolean);
-  let cur: string = path.sep;
+  // start from the real root ("/" or "C:\\"): seeding with a bare separator doubles the drive on Windows ("D:\\D:\\a\\...")
+  const norm = path.normalize(p);
+  const root = path.parse(norm).root;
+  const parts = norm.slice(root.length).split(path.sep).filter(Boolean);
+  let cur: string = root;
   for (const part of parts) {
     let actual = part;
     try {

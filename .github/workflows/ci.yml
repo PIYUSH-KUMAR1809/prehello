@@ -27,8 +27,8 @@ jobs:
       run:
         shell: bash
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
         with:
           node-version: ${{ matrix.node }}
           cache: npm
@@ -44,15 +44,28 @@ jobs:
         if: runner.os == 'Windows'
         shell: pwsh
         run: |
-          npm pack --pack-destination $env:RUNNER_TEMP | Out-Null
-          $tgz = Get-ChildItem $env:RUNNER_TEMP -Filter prehello-*.tgz | Select-Object -First 1
-          $d = Join-Path $env:RUNNER_TEMP 'ps-smoke'
-          New-Item -ItemType Directory -Force $d | Out-Null
-          Set-Location $d
-          npm init -y | Out-Null
-          npm install $tgz.FullName --no-audit --no-fund
-          npx prehello --version
-          npx prehello --markdown=report.md
+          # Native commands do not stop a pwsh script when they fail: check every exit code ourselves.
+          $ErrorActionPreference = 'Stop'
+          function Run-Native([scriptblock]$cmd, [int[]]$ok = @(0)) {
+            & $cmd
+            if ($ok -notcontains $LASTEXITCODE) { throw "exit code $LASTEXITCODE from: $cmd" }
+          }
+          $work = Join-Path $env:RUNNER_TEMP ("ps-smoke-" + [guid]::NewGuid().ToString('N'))
+          New-Item -ItemType Directory -Force $work | Out-Null
+          $packed = npm pack --pack-destination $work --silent
+          if ($LASTEXITCODE -ne 0) { throw 'npm pack failed' }
+          $tgz = Join-Path $work (($packed | Select-Object -Last 1).Trim())
+          if (-not (Test-Path -LiteralPath $tgz)) { throw "tarball not found: $tgz" }
+          $app = Join-Path $work 'app'
+          New-Item -ItemType Directory -Force $app | Out-Null
+          Set-Location $app
+          Run-Native { npm init -y | Out-Null }
+          Run-Native { npm install $tgz --no-audit --no-fund }
+          # exit 3 = the report has warnings (the runner's real home may trigger some): fine here, a crash is not
+          Run-Native { npx --no-install prehello --version }
+          Run-Native { npx --no-install prehello --markdown=report.md } @(0, 3)
           if (-not (Test-Path report.md)) { throw 'report.md not written' }
-          npx prehello --json=report.json
+          Run-Native { npx --no-install prehello --json=report.json } @(0, 3)
           if (-not (Test-Path report.json)) { throw 'report.json not written' }
+          $null = Get-Content report.json -Raw | ConvertFrom-Json
+          Write-Host 'PowerShell smoke ok'

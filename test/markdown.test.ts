@@ -6,6 +6,7 @@ import { materialize, cleanup, runScan, golden, Mat } from "./helpers/fixtures";
 import { runCli } from "./helpers/run-cli";
 import { renderMarkdown, mdCode, MarkdownOpts } from "../src/render/markdown";
 import { Report } from "../src/model";
+import { mkTmp, CAN_SYMLINK, leakForms } from "./helpers/tmp";
 
 afterAll(cleanup);
 
@@ -72,7 +73,7 @@ describe("markdown privacy", () => {
     it(`canary fixture, ${label}: no contents, secrets, env values, paths or home`, () => {
       const { m, text } = md("privacy-canary", o);
       for (const c of CANARIES) expect(text).not.toContain(c);
-      for (const s of [m.home, m.root, os.tmpdir(), "/home/", "/Users/", "CLAUDE.md:"]) expect(text, s).not.toContain(s);
+      for (const s of [...leakForms(m.home), ...leakForms(m.root), ...leakForms(os.tmpdir()), "/home/", "/Users/", "CLAUDE.md:"]) expect(text, s).not.toContain(s);
       expect(text).not.toMatch(/[A-Za-z]:\\/);
       if (o && "anonymize" in o) for (const n of NAMES) expect(text).not.toContain(n);
     });
@@ -186,7 +187,7 @@ describe("markdown CLI", () => {
   });
   it("--json=<file> --markdown (stdout) work together: stdout is only markdown", () => {
     const m = materialize("plugin-heavy");
-    const out = fs.mkdtempSync(path.join(os.tmpdir(), "prehello-mdj-"));
+    const out = mkTmp("prehello-mdj-");
     const jf = path.join(out, "j.json");
     const res = runCli(args(m, ["--markdown", `--json=${jf}`]), { home: m.home, cwd: m.project, allowWrite: [jf] });
     expect(res.status).toBe(0);
@@ -202,7 +203,7 @@ describe("markdown CLI", () => {
   });
   it("--markdown=<file>: the terminal report still prints, the file has the marker and the same body", () => {
     const m = materialize("plugin-heavy");
-    const out = fs.mkdtempSync(path.join(os.tmpdir(), "prehello-mdf-"));
+    const out = mkTmp("prehello-mdf-");
     const f = path.join(out, "report.md");
     const res = runCli(args(m, [`--markdown=${f}`]), { home: m.home, cwd: m.project, allowWrite: [f] });
     expect(res.status).toBe(0);
@@ -223,9 +224,9 @@ describe("markdown CLI", () => {
     expect(fs.readFileSync(foreign, "utf8")).toContain("## prehello report");
     fs.rmSync(out, { recursive: true, force: true });
   });
-  it("--markdown=<file> never follows a symlink and never overwrites a scanned context file", () => {
+  it.skipIf(!CAN_SYMLINK)("--markdown=<file> never follows a symlink and never overwrites a scanned context file", () => {
     const m = materialize("plugin-heavy");
-    const out = fs.mkdtempSync(path.join(os.tmpdir(), "prehello-mds-"));
+    const out = mkTmp("prehello-mds-");
     const victim = path.join(out, "victim.md");
     fs.writeFileSync(victim, "precious\n");
     const link = path.join(out, "link.md");

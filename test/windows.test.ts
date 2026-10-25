@@ -4,7 +4,6 @@
  */
 import { describe, it, expect, afterAll } from "vitest";
 import fs from "node:fs";
-import os from "node:os";
 import path from "node:path";
 import { world, cleanupWorlds, put, scanWorld, agentOf } from "./helpers/tree";
 import { decodeUserText, hasWindowsStream, isInsideWith, isWinAbsolute, isWindowsReservedName, makeGlobMatcher, resolveHomeDir, toAscii, toPosix, unicodeSupported } from "../src/platform";
@@ -14,6 +13,7 @@ import { loadCatalog } from "../src/mcp/catalog";
 import { renderMarkdown } from "../src/render/markdown";
 import { renderTerminal } from "../src/render/terminal";
 import { detectInstallKind, pngUnavailableMessage } from "../src/render/png";
+import { mkTmp } from "./helpers/tmp";
 
 afterAll(cleanupWorlds);
 const W = path.win32;
@@ -94,7 +94,7 @@ describe("globs (claudeMdExcludes) on Windows", () => {
 });
 
 describe("safe-write file-name rules for win32", () => {
-  const dir = () => fs.mkdtempSync(path.join(os.tmpdir(), "prehello-win-"));
+  const dir = () => mkTmp("prehello-win-");
   it("refuses device names and streams before touching the disk", () => {
     const d = dir();
     for (const name of ["nul.md", "CON.svg", "report.md:stream"]) {
@@ -138,7 +138,7 @@ describe("user-supplied text files: BOM, UTF-16, CRLF", () => {
     expect(decodeUserText(Buffer.from(txt))).toBe(txt);
   });
   it("--mcp-catalog files saved by Windows PowerShell 5 / Notepad (BOM, UTF-16) load", () => {
-    const d = fs.mkdtempSync(path.join(os.tmpdir(), "prehello-cat-"));
+    const d = mkTmp("prehello-cat-");
     const json = JSON.stringify({ servers: [{ name: "x", tools: 3, nameTokens: 10, schemaTokens: 100, measuredAt: "2026-01-01" }] }, null, 2).replace(/\n/g, "\r\n");
     const files: Record<string, Buffer> = {
       "bom.json": Buffer.from("\ufeff" + json),

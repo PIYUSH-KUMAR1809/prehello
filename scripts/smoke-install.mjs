@@ -2,7 +2,7 @@
 /**
  * Install smoke test, the same on Linux, macOS and Windows:
  *   node scripts/smoke-install.mjs
- * 1. npm pack, install the tarball into a clean project WITHOUT optional dependencies  -> prehello runs, --markdown works,
+ * 1. npm pack, install the tarball into a clean project WITHOUT the optional PNG engine -> prehello runs, --markdown works,
  *    --card=x.png prints the install options and exits 1 (never a stack trace), --card=x.svg works;
  * 2. install the optional PNG engine into that project                                -> --card=x.png writes a real PNG.
  * Needs network (npm registry) for the three runtime dependencies. Exits non-zero on the first failed check.
@@ -14,7 +14,8 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const tmp = fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(), "prehello-smoke-")));
+// native realpath: on Windows only it expands 8.3 short names (RUNNER~1), which the "no paths in the output" checks compare against
+const tmp = fs.realpathSync.native(fs.mkdtempSync(path.join(os.tmpdir(), "prehello-smoke-")));
 const win = process.platform === "win32";
 let failed = 0;
 const check = (ok, what, detail = "") => {
@@ -38,7 +39,15 @@ const cli = (args) => run(win ? `"${bin}"` : bin, [...args, "--cwd", path.join(p
 
 let r = run("npm", ["install", tgz, "--omit=optional", "--no-audit", "--no-fund"], proj);
 check(r.status === 0, "npm install <tarball> --omit=optional", r.stderr);
-check(!fs.existsSync(path.join(proj, "node_modules", "@resvg")), "optional PNG engine is absent");
+// Newer npm versions (the ones on GitHub's macOS and Ubuntu runners) still install optionalDependencies of a tarball given on the
+// command line even with --omit=optional. What this script needs is the scenario "the engine is not there", so make that true:
+// remove it if npm installed it, and say so. The engine is installed again explicitly in step 2.
+const engineDir = path.join(proj, "node_modules", "@resvg");
+if (fs.existsSync(engineDir)) {
+  console.log("note  npm installed the optional PNG engine despite --omit=optional; removing node_modules/@resvg to simulate its absence");
+  fs.rmSync(engineDir, { recursive: true, force: true });
+}
+check(!fs.existsSync(engineDir), "optional PNG engine is absent");
 
 r = cli(["--version"]);
 check(r.status === 0 && /\d+\.\d+\.\d+/.test(r.stdout), "--version", r.stdout + r.stderr);

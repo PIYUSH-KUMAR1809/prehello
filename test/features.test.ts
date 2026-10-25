@@ -107,7 +107,7 @@ describe("skills and plugins: Claude Code and Codex", () => {
     put(w.home, {
       ".agents/skills/home-skill/SKILL.md": skillMd("home-skill", "in home"),
       ".agents/skills/off-skill/SKILL.md": skillMd("off-skill", "disabled one"),
-      ".codex/config.toml": `[[skills.config]]\npath = "${path.join(w.home, ".agents/skills/off-skill/SKILL.md")}"\nenabled = false\n`,
+      ".codex/config.toml": `[[skills.config]]\npath = ${JSON.stringify(path.join(w.home, ".agents/skills/off-skill/SKILL.md"))}\nenabled = false\n`,
     });
     const r = scanWorld(w, { cwd: path.join(w.project, "pkg", "sub") });
     const a = agentOf(r, "codex");

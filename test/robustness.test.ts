@@ -1,4 +1,5 @@
 import { describe, it, expect, afterAll } from "vitest";
+import { CAN_SYMLINK } from "./helpers/tmp";
 import fs from "node:fs";
 import path from "node:path";
 import { world, cleanupWorlds, put, skillMd, scanWorld } from "./helpers/tree";
@@ -144,7 +145,7 @@ describe("fuzz: random weird trees never crash, never write, never mis-state num
 });
 
 describe("hostile filesystem shapes", () => {
-  it("symlink loops, self-links and links out of the project do not hang, escape or crash", () => {
+  it.skipIf(!CAN_SYMLINK)("symlink loops, self-links and links out of the project do not hang, escape or crash", () => {
     const w = world();
     put(w.project, { "CLAUDE.md": { link: "CLAUDE.md" }, "AGENTS.md": { link: "/etc/hostname" }, ".claude/rules": { link: ".." }, ".cursor/rules": { link: "../.cursor" }, ".claude/skills/loop": { link: "." } });
     fs.mkdirSync(path.join(w.project, "a", "b"), { recursive: true });

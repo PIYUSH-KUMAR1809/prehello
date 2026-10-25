@@ -9,6 +9,7 @@ import { runCli } from "./helpers/run-cli";
 import { renderSarif, sarifText, RULES, SarifOpts } from "../src/render/sarif";
 import { toJson } from "../src/render/json";
 import { Report } from "../src/model";
+import { mkTmp, CAN_SYMLINK, leakForms } from "./helpers/tmp";
 
 afterAll(cleanup);
 
@@ -105,7 +106,7 @@ describe("sarif: locations", () => {
     const uris = locs.map((l: any) => l.physicalLocation?.artifactLocation.uri).filter(Boolean);
     expect(uris).toEqual(expect.arrayContaining(["CLAUDE.md", "AGENTS.md", ".cursor/rules/ignored.md"]));
     const all = JSON.stringify(doc);
-    for (const bad of [m.root, m.home, m.project, os.tmpdir(), "/home/", "/Users/", "~/", "..", "file:///"]) expect(all, bad).not.toContain(bad);
+    for (const bad of [...leakForms(m.root), ...leakForms(m.home), ...leakForms(m.project), ...leakForms(os.tmpdir()), "/home/", "/Users/", "~/", "..", "file:///"]) expect(all, bad).not.toContain(bad);
     for (const u of uris) {
       expect(u).not.toMatch(/^\/|^[A-Za-z]:|\\|%2F|\.\.\//i);
     }
@@ -156,7 +157,7 @@ describe("sarif: locations", () => {
     expect(JSON.stringify(doc)).not.toContain("physicalLocation");
     expect(doc.runs[0].properties.prehello.fileLocations).toBe(false);
   });
-  it("a symlink inside the project that points outside is not a project location", () => {
+  it.skipIf(!CAN_SYMLINK)("a symlink inside the project that points outside is not a project location", () => {
     const m = materialize("empty-machine");
     const outside = path.join(m.root, "outside.md");
     fs.writeFileSync(outside, "word ".repeat(3000));
@@ -344,7 +345,7 @@ describe("sarif CLI", () => {
   });
   it("a file for each: --sarif=<file> with --json (stdout) or --markdown (stdout) works and stdout stays pure", () => {
     const m = materialize("plugin-heavy");
-    const out = fs.mkdtempSync(path.join(os.tmpdir(), "prehello-sf-"));
+    const out = mkTmp("prehello-sf-");
     const sf = path.join(out, "r.sarif");
     const a = runCli(args(m, ["--json", `--sarif=${sf}`]), { home: m.home, cwd: m.project, allowWrite: [sf] });
     expect(a.status).toBe(0);
@@ -358,7 +359,7 @@ describe("sarif CLI", () => {
   });
   it("--sarif=<file>: terminal report still prints; .sarif.json works; own file is replaced, foreign file is refused without --force", () => {
     const m = materialize("plugin-heavy");
-    const out = fs.mkdtempSync(path.join(os.tmpdir(), "prehello-sf-"));
+    const out = mkTmp("prehello-sf-");
     const f = path.join(out, "report.sarif.json");
     const res = runCli(args(m, [`--sarif=${f}`]), { home: m.home, cwd: m.project, allowWrite: [f] });
     expect(res.status).toBe(0);
@@ -379,9 +380,9 @@ describe("sarif CLI", () => {
     expect(JSON.parse(fs.readFileSync(foreign, "utf8")).version).toBe("2.1.0");
     fs.rmSync(out, { recursive: true, force: true });
   });
-  it("--sarif=<file> never follows a symlink and never overwrites a scanned context file", () => {
+  it.skipIf(!CAN_SYMLINK)("--sarif=<file> never follows a symlink and never overwrites a scanned context file", () => {
     const m = materialize("plugin-heavy");
-    const out = fs.mkdtempSync(path.join(os.tmpdir(), "prehello-ss-"));
+    const out = mkTmp("prehello-ss-");
     const victim = path.join(out, "victim.sarif");
     fs.writeFileSync(victim, "precious\n");
     const link = path.join(out, "link.sarif");

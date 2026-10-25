@@ -1,6 +1,5 @@
 import { describe, it, expect, afterAll } from "vitest";
 import fs from "node:fs";
-import os from "node:os";
 import path from "node:path";
 import { golden } from "./helpers/fixtures";
 import { world, cleanupWorlds, put, scanWorld, skillMd, World } from "./helpers/tree";
@@ -9,6 +8,7 @@ import { renderCard, pickCardAgent } from "../src/render/card";
 import { cardTiles, cutCandidates } from "../src/analyze/savings";
 import { fmtTok } from "../src/util/fmt";
 import type { AgentReport, Item, Report } from "../src/model";
+import { mkTmp } from "./helpers/tmp";
 
 afterAll(cleanupWorlds);
 
@@ -280,7 +280,7 @@ describe("cardTiles unit", () => {
 });
 
 describe("CLI", () => {
-  const tmp = () => fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(), "prehello-cg-")));
+  const tmp = () => mkTmp("prehello-cg-");
   it("--card-anonymize is wired; without it plugin names are on the card", () => {
     const w = macLikeCursor();
     const out = tmp();

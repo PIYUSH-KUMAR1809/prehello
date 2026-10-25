@@ -2,6 +2,7 @@ import { describe, it, expect, afterAll } from "vitest";
 import fs from "node:fs";
 import path from "node:path";
 import { materialize, cleanup, runScan, terminalOf, jsonOf, golden, Mat } from "./helpers/fixtures";
+import { CAN_SYMLINK } from "./helpers/tmp";
 import { AgentId, Report, LoadMode } from "../src/model";
 import { makeCounter } from "../src/tokens/counter";
 
@@ -185,7 +186,7 @@ describe("detection and edge fixtures", () => {
     expect(agent(forced, "claude-code")!.totals.always.est).toBeGreaterThan(0);
   });
 
-  it("symlink-escape: symlink leaving the project is skipped and its target is never read", () => {
+  it.skipIf(!CAN_SYMLINK)("symlink-escape: symlink leaving the project is skipped and its target is never read", () => {
     const m = materialize("symlink-escape");
     const r = runScan(m);
     expect(r.warnings.join(" ")).toMatch(/symlink points outside/);
@@ -237,7 +238,7 @@ describe("goldens (fixture HOME + project; deterministic)", () => {
     ["plugin-heavy", { agents: ["cursor"] }],
   ];
   for (const [name, o] of cases) {
-    it(`${name}: terminal + json match goldens`, () => {
+    it.skipIf(name === "symlink-escape" && !CAN_SYMLINK)(`${name}: terminal + json match goldens`, () => {
       const m = materialize(name);
       const r = runScan(m, {
         ...(o.cwdRel ? { cwd: path.join(m.project, o.cwdRel) } : {}),

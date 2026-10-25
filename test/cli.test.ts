@@ -1,9 +1,9 @@
 import { describe, it, expect, afterAll } from "vitest";
 import fs from "node:fs";
-import os from "node:os";
 import path from "node:path";
 import { materialize, cleanup } from "./helpers/fixtures";
 import { runCli } from "./helpers/run-cli";
+import { mkTmp } from "./helpers/tmp";
 
 afterAll(cleanup);
 
@@ -11,7 +11,7 @@ const base = (m: { root: string }) => ["--ceiling", m.root, "--managed-dir", pat
 
 describe("cli", () => {
   it("--version, --help, explain grade, --about-specs", () => {
-    const home = fs.mkdtempSync(path.join(os.tmpdir(), "prehello-h-"));
+    const home = mkTmp("prehello-h-");
     expect(runCli(["--version"], { home }).stdout.trim()).toBe("0.1.0");
     const help = runCli(["--help"], { home }).stdout;
     expect(help).toMatch(/what your coding agent loads before you say hello/);
@@ -26,7 +26,7 @@ describe("cli", () => {
   });
 
   it("empty home on a real (non-fixture) empty directory: exit 0, no agents, no zeros", () => {
-    const home = fs.mkdtempSync(path.join(os.tmpdir(), "prehello-empty-"));
+    const home = mkTmp("prehello-empty-");
     const proj = path.join(home, "proj");
     fs.mkdirSync(path.join(proj, ".git"), { recursive: true });
     fs.writeFileSync(path.join(proj, ".git", "HEAD"), "ref: refs/heads/main\n");
@@ -82,7 +82,7 @@ describe("cli", () => {
       [["--card-theme", "blue"], /--card-theme/],
       [[m.project + "/nope"], /not a directory/],
     ] as Array<[string[], RegExp]>) {
-      const res = runCli([...args, ...(args[0].startsWith("/") ? [] : [m.project])], { home: m.home, cwd: m.project });
+      const res = runCli([...args, ...(path.isAbsolute(args[0]) ? [] : [m.project])], { home: m.home, cwd: m.project });
       expect(res.status, args.join(" ")).toBe(1);
       expect(res.stderr).toMatch(re);
     }
@@ -117,7 +117,7 @@ describe("cli", () => {
 
   it("--card writes an SVG and --json to stdout keeps stdout pure JSON", () => {
     const m = materialize("realistic");
-    const out = fs.mkdtempSync(path.join(os.tmpdir(), "prehello-c-"));
+    const out = mkTmp("prehello-c-");
     const card = path.join(out, "x.svg");
     const res = runCli([m.project, "--json", `--card=${card}`, "--card-theme", "light", "--card-size", "square", ...base(m)], { home: m.home, cwd: m.project, allowWrite: [card] });
     expect(() => JSON.parse(res.stdout)).not.toThrow();

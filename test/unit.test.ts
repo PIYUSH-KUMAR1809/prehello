@@ -1,6 +1,5 @@
 import { describe, it, expect } from "vitest";
 import fs from "node:fs";
-import os from "node:os";
 import path from "node:path";
 import { parseFrontmatter, asList } from "../src/text/frontmatter";
 import { stripHtmlComments, splitFences } from "../src/text/comments";
@@ -10,6 +9,7 @@ import { profileFor } from "../src/tokens/families";
 import { squarify } from "../src/render/treemap";
 import { fmtTok, fmtInt, fmtPct, parseWindow, sanitize, wrap, xmlEscape } from "../src/util/fmt";
 import { findSecretLines, scrubSecrets, displayPath } from "../src/redact";
+import { mkTmp } from "./helpers/tmp";
 
 describe("frontmatter", () => {
   it("parses scalars, lists, booleans and block scalars", () => {
@@ -49,7 +49,7 @@ describe("html comments", () => {
 
 describe("@import expansion", () => {
   const mk = () => {
-    const d = fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(), "prehello-imp-")));
+    const d = mkTmp("prehello-imp-");
     return d;
   };
   const w = (f: string, t: string) => {
