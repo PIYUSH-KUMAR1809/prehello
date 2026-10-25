@@ -37,6 +37,12 @@ export function mdCode(name: string, table = false): string {
   return `${fence}${pad}${t}${pad}${fence}`;
 }
 
+/** One-line note (a count, no paths) when fixture folders holding agent files were skipped; null otherwise. */
+export function fixtureNote(r: Report): string | null {
+  const n = r.scan.fixturesSkipped;
+  return n ? `Skipped ${n} fixture folder${n > 1 ? "s" : ""} with agent files (use --include-fixtures to count them).` : null;
+}
+
 const ascii = (s: string) => s.replace(/±/g, "+/-").replace(/−/g, "-");
 const plural = (n: number, one: string, many = one + "s") => `${n} ${n === 1 ? one : many}`;
 
@@ -164,6 +170,8 @@ export function renderMarkdown(r: Report, o: MarkdownOpts): string {
       const tiles = cardTiles(top.items, o.anonymize).filter((x) => x.cut !== undefined && x.cut < cut.n);
       out.push("", `Cut first (${top.name}, estimates): ${tiles.map((x) => `${x.named ? mdCode(x.label) : x.label} ~${fmtTok(x.tokens)}`).join(", ")}`);
     }
+    const fxc = fixtureNote(r);
+    if (fxc) out.push("", fxc);
     out.push("", footer(r, shown));
     return out.join("\n") + "\n";
   }
@@ -173,6 +181,8 @@ export function renderMarkdown(r: Report, o: MarkdownOpts): string {
   const shared = r.findings.filter((f) => f.agent === "all").length;
   if (shared) out.push(`${plural(shared, "finding")} apply to more than one agent (duplicate or conflicting files); details name files, so they are left out of this report.`, "");
   if (r.warnings.length || r.partial) out.push(`**Partial results:** some sources could not be read or were skipped (or the scan hit its budget), so every total is a lower bound. Run prehello locally for details.`, "");
+  const fx = fixtureNote(r);
+  if (fx) out.push(fx, "");
   out.push(footer(r, shown));
   return out.join("\n") + "\n";
 }

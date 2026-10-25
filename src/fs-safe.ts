@@ -119,28 +119,45 @@ export interface WalkHit {
   names: string[]; // matched candidate file names/relative paths present in dir
 }
 
+export interface WalkOpts {
+  timeUp?: () => boolean;
+  /**
+   * Directories this returns true for are not descended into (and not searched for candidates); they are reported in `skipped`.
+   * `rel` is the directory's path segments below the walk root (its own name last).
+   */
+  skipDir?: (name: string, rel: string[]) => boolean;
+  /** Also look for candidates in the root itself (default: only in directories below it). */
+  includeRoot?: boolean;
+  /** Entry budget (default MAX_WALK_ENTRIES). */
+  maxEntries?: number;
+  /** Stop as soon as one directory with a candidate is found (used to probe skipped folders cheaply). */
+  stopAtFirstHit?: boolean;
+}
+
 /**
  * Bounded project walk (no symlink following, ignores build dirs, dot-dirs, ≤5k entries, depth ≤ 8).
  * Returns directories (other than root) that contain any of the candidate relative paths.
  */
-export function walkForFiles(root: string, candidates: string[], opts: { timeUp?: () => boolean } = {}): { hits: WalkHit[]; truncated: boolean; timedOut: boolean; entries: number } {
+export function walkForFiles(root: string, candidates: string[], opts: WalkOpts = {}): { hits: WalkHit[]; truncated: boolean; timedOut: boolean; entries: number; skipped: string[] } {
   const hits: WalkHit[] = [];
+  const skipped: string[] = [];
+  const maxEntries = opts.maxEntries ?? MAX_WALK_ENTRIES;
   let seen = 0;
   let truncated = false;
   let timedOut = false;
-  const visit = (dir: string, depth: number) => {
-    if (truncated || timedOut) return;
+  const visit = (dir: string, depth: number, rel: string[]) => {
+    if (truncated || timedOut || (opts.stopAtFirstHit && hits.length)) return;
     if (opts.timeUp?.()) {
       timedOut = true;
       return;
     }
     const entries = listDir(dir);
     seen += entries.length;
-    if (seen > MAX_WALK_ENTRIES) {
+    if (seen > maxEntries) {
       truncated = true;
       return;
     }
-    if (dir !== root) {
+    if (dir !== root || opts.includeRoot) {
       // a trailing "/" in a candidate means "a directory with this relative path"
       const present = candidates.filter((c) => (c.endsWith("/") ? isDir(path.join(dir, c)) : isFile(path.join(dir, c))) && !isSymlink(path.join(dir, c)));
       if (present.length) hits.push({ dir, names: present });
@@ -149,11 +166,16 @@ export function walkForFiles(root: string, candidates: string[], opts: { timeUp?
     for (const e of entries) {
       if (!e.isDirectory() || e.isSymbolicLink()) continue;
       if (IGNORE_DIRS.has(e.name) || e.name.startsWith(".")) continue;
-      visit(path.join(dir, e.name), depth + 1);
+      const childRel = [...rel, e.name];
+      if (opts.skipDir?.(e.name, childRel)) {
+        skipped.push(path.join(dir, e.name));
+        continue;
+      }
+      visit(path.join(dir, e.name), depth + 1, childRel);
     }
   };
-  visit(root, 0);
-  return { hits, truncated, timedOut, entries: Math.min(seen, MAX_WALK_ENTRIES) };
+  visit(root, 0, []);
+  return { hits, truncated, timedOut, entries: Math.min(seen, maxEntries), skipped };
 }
 
 function isSymlink(p: string): boolean {

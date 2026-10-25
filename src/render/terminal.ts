@@ -297,6 +297,11 @@ function tail(r: Report, o: TermOpts, p: ReturnType<typeof painter>, W: number, 
     if (total) out.push(p.dim(` Potential always-on savings (estimate): ~${fmtInt(total)} tokens. Run --fix for the plan; nothing is changed automatically.`));
     out.push("");
   }
+  if (r.scan.fixturesSkipped) {
+    const n = r.scan.fixturesSkipped;
+    out.push(...wrap(`ℹ Skipped ${n} fixture folder${n > 1 ? "s" : ""} with agent files (use --include-fixtures).`, W, " ", "   ").map((l) => p.dim(l)));
+    out.push("");
+  }
   if (!compact && o.verbose && r.excluded.length) {
     out.push(p.bold(`Not loaded / ignored (${r.excluded.length})`));
     for (const e of r.excluded) out.push(...wrap(`${e.agent}: ${displayPath(e.path, { cwd: o.cwd, home: o.home })} — ${sanitize(e.reason, 200)}`, W, "   ", "      "));

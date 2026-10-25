@@ -65,6 +65,10 @@ Options:
   --scan-budget-mb <n>  stop reading after n MiB in total (default 64); the report is then marked PARTIAL
   --scan-budget-ms <n>  stop walking/reading after n ms (default 20000); a safety net, so it is the one
                         limit that can vary run to run on a slow disk
+  --include-fixtures    also look inside test-fixture folders (fixtures, __fixtures__, fixture, testdata, test-data, __mocks__,
+                        __snapshots__, and snapshots/golden under test/spec/e2e folders) for nested AGENTS.md, CLAUDE.md,
+                        .cursor/rules and skills. By default they are skipped (no agent loads them) and the report says how many.
+                        Scanning a folder that is itself inside a fixtures folder never skips anything.
   --cwd <dir>           simulate launching the agent from <dir>
   --ascii               plain ASCII output (no block characters or arrows); automatic in terminals that cannot draw them
                         (Linux console, classic Windows console). PREHELLO_ASCII=1 does the same.
@@ -92,7 +96,7 @@ interface Args {
 }
 
 const VALUE_FLAGS = new Set(["agent", "window", "tokenizer", "claude-profile", "card-theme", "card-size", "card-agent", "cwd", "mcp-catalog", "ceiling", "managed-dir", "system-root", "paste-user-rules", "card-headline", "card-format", "card-scale", "png-engine", "max-tokens", "scan-budget-mb", "scan-budget-ms"]);
-const BOOL_FLAGS = new Set(["json", "card", "redact", "fix", "no-grade", "no-color", "quiet", "verbose", "about-specs", "version", "help", "no-redact", "no-bundled-catalog", "force", "card-anonymize", "anonymize", "markdown", "markdown-compact", "sarif", "ascii"]);
+const BOOL_FLAGS = new Set(["json", "card", "redact", "fix", "no-grade", "no-color", "quiet", "verbose", "about-specs", "version", "help", "no-redact", "no-bundled-catalog", "force", "card-anonymize", "anonymize", "markdown", "markdown-compact", "sarif", "ascii", "include-fixtures"]);
 
 function parseArgs(argv: string[]): Args | string {
   const flags = new Map<string, string | true>();
@@ -288,6 +292,7 @@ async function main(): Promise<void> {
     window,
     tokenizer,
     claudeProfile: cp,
+    includeFixtures: flags.has("include-fixtures"),
     agents,
     catalogPath: flags.has("mcp-catalog") ? path.resolve(String(flags.get("mcp-catalog"))) : undefined,
     now: new Date(),

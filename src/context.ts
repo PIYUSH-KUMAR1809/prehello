@@ -5,6 +5,7 @@ import { Profile, profileFor } from "./tokens/families";
 import { readTextSafe, ReadResult, findGitRoot, walkForFiles, WalkHit, realpathOrSelf, isInside, isFile, isDir, DEFAULT_MAX_SCAN_BYTES, DEFAULT_MAX_SCAN_MS, MAX_WALK_ENTRIES } from "./fs-safe";
 import { findSecretLines, displayPath } from "./redact";
 import { sanitize } from "./util/fmt";
+import { makeFixtureSkipper, rootIsInsideFixtures } from "./fixtures";
 
 export interface ScanOptions {
   cwd: string;
@@ -20,6 +21,8 @@ export interface ScanOptions {
   window: number;
   tokenizer: "auto" | "heuristic";
   claudeProfile: "current" | "legacy";
+  /** Look inside test-fixture folders (fixtures/, __fixtures__/, testdata/, ...) for nested agent files. Default: skip them. */
+  includeFixtures?: boolean;
   agents?: AgentId[]; // explicit selection => forced "in use"
   catalogPath?: string; // user-supplied MCP weights
   noBundledCatalog?: boolean; // ignore the measured weights shipped in spec/mcp-weights.json
@@ -31,7 +34,11 @@ export interface ScanOptions {
   clock?: () => number;
 }
 
-export type WalkResult = { hits: WalkHit[]; truncated: boolean; timedOut: boolean; entries: number; notAProject: boolean };
+export type WalkResult = { hits: WalkHit[]; truncated: boolean; timedOut: boolean; entries: number; notAProject: boolean; skipped: string[] };
+
+/** Entry budget for looking inside skipped fixture folders (only to count how many held agent files; nothing from them is reported). */
+const FIXTURE_PROBE_ENTRIES = 20_000;
+const FIXTURE_PROBE_TOTAL = 50_000;
 
 /** Human wording for a failed read; `verb` is "skipped" (rules, skills) or "not read" (instruction files). */
 export function readFailWhy(reason: string, verb: string): string {
@@ -70,6 +77,8 @@ export class Ctx {
   private findingKeys = new Set<string>();
   private countCache = new Map<string, number>();
   private walkCache: WalkResult | undefined;
+  /** Fixture folders skipped by the project walk that held agent files (counted, never read). */
+  fixturesSkipped = 0;
   private readonly t0: number;
   private bytesRead = 0;
   /** Set when a whole-scan budget (bytes or time) stopped reading; totals are then lower bounds. */
@@ -159,22 +168,42 @@ export class Ctx {
     return this.gitRoot && isInside(dir, this.gitRoot) ? this.gitRoot : dir;
   }
 
+  /** Skip fixture folders? Not when asked not to, and not when the scan root is itself inside one (scanning a fixture on purpose). */
+  skipFixtures(): boolean {
+    return !this.opts.includeFixtures && !rootIsInsideFixtures(this.cwd);
+  }
+
   walk(): WalkResult {
     if (!this.walkCache) {
-      const w = walkForFiles(this.cwd, WALK_CANDIDATES, { timeUp: () => this.timeUp() });
+      const skip = this.skipFixtures();
+      const w = walkForFiles(this.cwd, WALK_CANDIDATES, { timeUp: () => this.timeUp(), skipDir: skip ? makeFixtureSkipper(this.cwd) : undefined });
       const notAProject = !this.isProjectDir();
       if ((w.truncated || w.timedOut) && notAProject) {
         // Walking a home folder, a drive root or ~/Downloads: whatever CLAUDE.md/AGENTS.md files happen to sit in the first
         // 5,000 entries are random, not "your project". Reporting them would print junk token totals, so drop them.
-        this.walkCache = { ...w, hits: [], notAProject };
+        this.walkCache = { ...w, hits: [], notAProject, skipped: [] };
         this.warn(`${this.display(this.cwd) === "." ? "this folder" : this.display(this.cwd)} does not look like a project (no .git, no agent files at its top level) and holds more than ${MAX_WALK_ENTRIES} entries, so nested agent files were NOT scanned (they would be arbitrary). Run prehello on a project folder: prehello ~/code/my-project`);
       } else {
         this.walkCache = { ...w, notAProject };
         if (w.truncated) this.warn(`project walk stopped at ${MAX_WALK_ENTRIES} entries; nested files deeper in the tree may be missed`);
         if (w.timedOut) this.warn("project walk stopped at the time budget; nested files may be missed");
+        this.fixturesSkipped = this.probeFixtures(w.skipped);
       }
     }
     return this.walkCache;
+  }
+
+  /** How many skipped fixture folders hold agent files? A bounded, read-only look (names only); folders it cannot settle are not counted. */
+  private probeFixtures(dirs: string[]): number {
+    let left = FIXTURE_PROBE_TOTAL;
+    let n = 0;
+    for (const d of dirs) {
+      if (left <= 0 || this.timeUp()) break;
+      const p = walkForFiles(d, WALK_CANDIDATES, { timeUp: () => this.timeUp(), includeRoot: true, stopAtFirstHit: true, maxEntries: Math.min(left, FIXTURE_PROBE_ENTRIES) });
+      left -= p.entries;
+      if (p.hits.length) n++;
+    }
+    return n;
   }
 
   /** Cached, defensive read. Missing = silent; other failures become warnings (-> exit code 3). */

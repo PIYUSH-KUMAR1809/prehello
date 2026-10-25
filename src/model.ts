@@ -185,6 +185,8 @@ export interface Report {
     window: number;
     tokenizer: { method: "bpe-o200k" | "heuristic"; note: string };
     claudeProfile: "current" | "legacy";
+    /** Test-fixture folders (fixtures/, testdata/, ...) holding agent files that were skipped; present only when > 0. Use --include-fixtures to scan them. */
+    fixturesSkipped?: number;
   };
   agents: AgentReport[];
   excluded: Excluded[];

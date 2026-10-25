@@ -91,7 +91,7 @@ export function scan(input: ScanOptions & { noGrade?: boolean }): Report {
     schemaVersion: SCHEMA_VERSION,
     tool: { name: "prehello", version: VERSION },
     generatedAt: when.toISOString(),
-    scan: { cwd: opts.cwd, window: opts.window, tokenizer: { method: counter.method, note: counter.note }, claudeProfile: opts.claudeProfile },
+    scan: { cwd: opts.cwd, window: opts.window, tokenizer: { method: counter.method, note: counter.note }, claudeProfile: opts.claudeProfile, ...(ctx.fixturesSkipped > 0 ? { fixturesSkipped: ctx.fixturesSkipped } : {}) },
     agents,
     excluded: ctx.excluded.filter((e) => e.agent === "all" || visible.has(e.agent)),
     findings,

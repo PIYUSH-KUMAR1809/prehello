@@ -4,6 +4,11 @@ All notable changes are listed here. The format follows [Keep a Changelog](https
 
 ## Unreleased
 
+### Added
+- Test-fixture folders are skipped by the project walk by default, for every agent: `fixtures`, `__fixtures__`, `fixture`, `testdata`, `test-data`, `__mocks__`, `__snapshots__` at any depth, and `snapshots` / `golden` / `goldens` below a `test`/`tests`/`__tests__`/`spec`/`e2e`/`cypress` folder (case-insensitive, both path separators). Running prehello in a repository that keeps sample `AGENTS.md`, `.cursor/rules` or skills there (such as prehello itself) no longer lists them as conditional context. `--include-fixtures` brings them back.
+- When a skipped fixture folder held agent files, the terminal report, Markdown and SARIF (`properties.prehello.fixtureFoldersSkipped`) say how many were skipped (a count, no paths) and `--json` has `scan.fixturesSkipped` (absent when 0). Not a warning; the exit code is unchanged.
+- A scan whose root is itself inside a fixtures folder never skips anything, and the scanned project's own top-level files are never skipped.
+
 ### Fixed
 - Windows: `autoMemoryDirectory` set as `~\...` is expanded like `~/...`.
 

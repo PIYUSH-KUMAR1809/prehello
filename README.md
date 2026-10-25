@@ -92,6 +92,7 @@ whether you use it or not. That is what the cut list is for, and removing a plug
 | A budget gate in CI | `--max-tokens 16k` (exit code 2 above it) |
 | Suggestions, changing nothing | `--fix` (dry run) |
 | Count Cursor "User Rules" you paste in | `--paste-user-rules rules.txt` |
+| Also count agent files inside test-fixture folders | `--include-fixtures` (skipped by default; see [Test-fixture folders](#reference)) |
 
 `node dist/cli.js --help` lists every flag. PNG cards need the optional package `@resvg/resvg-wasm`; if it is missing, prehello prints how to install it
 and exits 1 without a stack trace, and the SVG card and everything else keep working.
@@ -118,6 +119,8 @@ runs in CI, and ranks *which plugin or skill folder* to remove.
 **Does it change my files?** No. `--fix` is a dry run that only prints suggestions.
 
 **Can I trust the Context Grade?** It is a heuristic of this tool, not a standard. It is capped at B and marked provisional when something that always loads could not be measured. `node dist/cli.js explain grade` prints the rubric. `--no-grade` hides it.
+
+**Why does it say "Skipped N fixture folders"?** A repo that tests agent tooling keeps sample `AGENTS.md`, `CLAUDE.md`, `.cursor/rules` and skills under `test/fixtures/` and similar. No agent loads those, so prehello skips such folders by default and says how many it skipped (only folders where it found agent files). `--include-fixtures` counts them; scanning a folder that is itself inside a fixtures folder never skips anything.
 
 **Does it work on Windows?** Yes. CI runs the full suite on Ubuntu, Windows and macOS with Node 18, 20 and 22. See [Platforms](#reference).
 
@@ -220,6 +223,23 @@ grade
   are collapsed and excluded from the headline, card and grade (use `--agent` to include them).
 - **Running it from a folder that is not a project** (no `.git`, no agent files, for example your home folder) and with a huge tree:
   prehello warns and does **not** print token totals for random nested files it happened to find first.
+
+</details>
+
+<details>
+<summary><b>Test-fixture folders (<code>--include-fixtures</code>)</b></summary>
+
+The project walk (nested `AGENTS.md` / `CLAUDE.md`, `.cursor/rules`, `.cursor/skills`, `.claude/skills`, `.agents/skills`) **skips test-fixture folders by default**, for every agent, so a
+repository like prehello's own does not list its sample files as "conditional" context.
+
+| Folder name (any depth below the scanned folder, any letter case) | Skipped |
+| --- | --- |
+| `fixtures`, `__fixtures__`, `fixture`, `testdata`, `test-data`, `__mocks__`, `__snapshots__` | always |
+| `snapshots`, `golden`, `goldens` | only below a `test`, `tests`, `__tests__`, `spec`, `e2e` or `cypress` folder |
+
+- **Never skipped:** the scanned project's own top-level files, files found by walking *up* from the scanned folder, user-level config, and anything when the scanned folder is itself inside such a folder (so `prehello test/fixtures/x/project` works as before).
+- **Said out loud:** when at least one skipped folder held agent files, the terminal report, Markdown (full and compact) and SARIF (`runs[0].properties.prehello.fixtureFoldersSkipped`) carry one line / one number, never a path. `--json` gets `scan.fixturesSkipped` (a count; the field is absent when it is 0, so the JSON is otherwise unchanged). It is not a warning and does not change the exit code. Folders that held no agent files are not counted; looking inside a skipped folder to count it is bounded and reads no file.
+- `--include-fixtures` turns the skip off.
 
 </details>
 
@@ -455,7 +475,7 @@ The number goes to stderr, so `--json` on stdout stays valid. Exit code 2 wins o
     for other agents it is a safety cap, not their rule. Binary files and symlinks that leave the project are skipped the same way.
   - **Scan budget:** at most **64 MiB** read in total (deterministic; `--scan-budget-mb`) and **20 s** wall clock (`--scan-budget-ms`, a safety net, the one limit that can vary on a slow disk).
     When a budget is hit the scan stops, prints one "results are PARTIAL" warning, every total becomes a lower bound, the grade is provisional, and `--json` has a non-null `partial`.
-  - The directory walk stops at 5,000 entries (depth 8) and says so.
+  - The directory walk stops at 5,000 entries (depth 8) and says so. Test-fixture folders are not walked by default (`--include-fixtures`), so they do not use up that budget.
 - These claims are tested, not just stated: a runtime guard blocks and records any filesystem write, network, DNS, `fetch` or child-process attempt
   while the CLI runs on fixtures; a source scan bans those modules from `src/` and allows write APIs in exactly one file (`src/safe-write.ts`); a network-namespace run is used when the OS allows it; and planted "canary" strings
   prove file contents never reach any output. See `test/safety.test.ts` and `test/sarif.test.ts`. (`scripts/measure-mcp.cjs` is a dev-only helper that is not part of the CLI and not in the package.)

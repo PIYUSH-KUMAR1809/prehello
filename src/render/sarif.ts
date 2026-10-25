@@ -409,6 +409,7 @@ function runProps(r: Report, shown: AgentReport[], o: SarifOpts, noFiles: boolea
       namesAnonymized: o.anonymize,
       fileLocations: !noFiles,
       partial: r.partial ?? null,
+      ...(r.scan.fixturesSkipped ? { fixtureFoldersSkipped: r.scan.fixturesSkipped } : {}),
       duplicatePairsNotListed: r.findings.reduce((n, f) => n + (f.data?.omittedPairs ?? 0), 0),
       agents: shown.map((a) => ({
         id: a.id,
