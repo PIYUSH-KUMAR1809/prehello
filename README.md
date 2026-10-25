@@ -4,6 +4,7 @@
 
 <p align="center">
   <a href="https://github.com/PIYUSH-KUMAR1809/prehello/actions/workflows/ci.yml"><img src="https://github.com/PIYUSH-KUMAR1809/prehello/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
+  <a href="https://www.npmjs.com/package/prehello"><img src="https://img.shields.io/npm/v/prehello" alt="npm version"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-green" alt="License: MIT"></a>
   <img src="https://img.shields.io/badge/node-%E2%89%A518-brightgreen" alt="Node 18 or newer">
   <img src="https://img.shields.io/badge/platform-linux%20%7C%20macos%20%7C%20windows-lightgrey" alt="Linux, macOS and Windows">
@@ -26,15 +27,25 @@ in the context window, before you type a word. **prehello** scans your repo and 
 ## Try it
 
 ```sh
+npx prehello                                   # scan the current folder plus your user-level agent config
+npx prehello ~/code/your-project               # scan a specific project
+npx prehello ~/code/your-project --card=card.png  # also write a PNG share card
+npm install -g prehello                        # or install it once and run `prehello`
+```
+
+Needs Node 18 or newer, on Linux, macOS or Windows.
+
+<details>
+<summary>Run from source instead</summary>
+
+```sh
 git clone https://github.com/PIYUSH-KUMAR1809/prehello.git
 cd prehello
 npm ci && npm run build
-node dist/cli.js ~/code/your-project                  # scan a project plus your user-level agent config
-node dist/cli.js                                      # or: scan the current folder
-node dist/cli.js ~/code/your-project --card=card.png  # also write a PNG share card
+node dist/cli.js ~/code/your-project
 ```
 
-Needs Node 18 or newer, on Linux, macOS or Windows. **npm release:** not published yet; once it is, this becomes `npx prehello`.
+</details>
 
 ## What it prints
 
@@ -150,7 +161,7 @@ linting your instructions against your code, or exact token counts.
 
 ## Reference
 
-Long-form details, collapsed. Everything here describes the current CLI. Commands below say `prehello`; from a source checkout run `node dist/cli.js` instead (after the npm release, `npx prehello`).
+Long-form details, collapsed. Everything here describes the current CLI. Commands below say `prehello`; from a source checkout run `node dist/cli.js` instead.
 
 <details>
 <summary><b>Full sample output (fixture, not a real machine)</b></summary>
@@ -377,7 +388,7 @@ symlinks out of the project, odd or secret-shaped file names, and everything whe
 No file contents, no finding or warning texts (they name user-level paths), no absolute paths and no home directory ever reach the file. GitHub code scanning shows only results that have a file
 location; results without one (user-level items, `PH003`, `PH004`, `PH011`) are kept for IDE viewers and other tools.
 
-GitHub Actions, as a non-blocking annotation (add `--max-tokens` if you also want a gate). The snippet uses `npx prehello`, which works once the package is on npm; until then build from source in the job:
+GitHub Actions, as a non-blocking annotation (add `--max-tokens` if you also want a gate). The snippet uses `npx prehello`:
 
 ```yaml
 name: prehello
@@ -498,7 +509,7 @@ prehello runs on Linux, macOS and Windows (Node ≥ 18) and prints the same numb
   Output files named like a Windows device (`NUL`, `CON`, `COM1`, ...) or containing a `:` stream marker are refused.
 - **Console.** The legacy Windows console (cmd.exe, classic PowerShell window) and the Linux virtual console cannot draw box/block glyphs, so prehello switches to plain ASCII there
   automatically; `--ascii` (or `PREHELLO_ASCII=1`) forces it. `NO_COLOR`, `--no-color` and `TERM=dumb` turn colour off. The Markdown report is ASCII already.
-- **Install.** From source it is `node dist/cli.js` on every system. Once the package is on npm, `npm install -g prehello` creates a `prehello.cmd` shim on Windows and `npx prehello` works the same everywhere. File modes are not relied on.
+- **Install.** From source it is `node dist/cli.js` on every system. `npm install -g prehello` creates a `prehello.cmd` shim on Windows and `npx prehello` works the same everywhere. File modes are not relied on.
 
 </details>
 
