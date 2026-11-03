@@ -8,12 +8,14 @@ import { profileFor } from "../src/tokens/families";
 import { expandImports } from "../src/text/imports";
 import { cleanup, materialize, runScan, Mat } from "./helpers/fixtures";
 import type { Report } from "../src/model";
+import { fsPath, posix } from "./helpers/tmp";
 
 afterAll(cleanup);
 
 const ROOT = path.join(__dirname, "..");
 const itemsOf = (r: Report, id: string) => r.agents.find((a) => a.id === id)?.items ?? [];
-const rel = (m: Mat, p: string) => path.relative(m.root, p).split(path.sep).join("/");
+// Report paths may be the PREHELLO_SIM_WINSEP backslash view; compare in forward-slash form and open via fsPath
+const rel = (m: Mat, p: string) => path.posix.relative(posix(m.root), posix(p));
 const write = (p: string, c: string) => {
   fs.mkdirSync(path.dirname(p), { recursive: true });
   fs.writeFileSync(p, c);
@@ -74,7 +76,7 @@ describe("GitHub Copilot adapter", () => {
   });
   it("identical CLAUDE.md is removed as a duplicate (documented)", () => {
     expect(by("project/CLAUDE.md")).toEqual([]);
-    expect(r.excluded.some((e) => e.agent === "github-copilot" && e.path.endsWith("CLAUDE.md") && /identical/.test(e.reason))).toBe(true);
+    expect(r.excluded.some((e) => e.agent === "github-copilot" && posix(e.path).endsWith("CLAUDE.md") && /identical/.test(e.reason))).toBe(true);
   });
   it("@imports: relative in-repo followed; absolute and ~/ not; none in GEMINI.md", () => {
     const ci = by("project/.github/copilot-instructions.md")[0];
@@ -87,11 +89,11 @@ describe("GitHub Copilot adapter", () => {
     expect(by("personal.instructions.md")[0].loadMode).toBe("conditional");
     expect(by("review.instructions.md")[0].loadMode).toBe("deferred");
     expect(by("manual.instructions.md")).toEqual([]);
-    expect(r.excluded.some((e) => e.path.endsWith("manual.instructions.md"))).toBe(true);
+    expect(r.excluded.some((e) => posix(e.path).endsWith("manual.instructions.md"))).toBe(true);
   });
   it("frontmatter is not counted in instruction bodies", () => {
     const t = by("ts.instructions.md")[0];
-    expect(t.chars).toBeLessThan(fs.readFileSync(t.path, "utf8").length);
+    expect(t.chars).toBeLessThan(fs.readFileSync(fsPath(t.path), "utf8").length);
   });
   it("prompt files are on-demand; nested AGENTS.md is conditional", () => {
     expect(by("release.prompt.md")[0].loadMode).toBe("on-demand");
@@ -103,7 +105,7 @@ describe("GitHub Copilot adapter", () => {
     const c7 = its.filter((i) => i.server?.name === "context7");
     expect(c7).toHaveLength(1);
     expect(c7[0].scope).toBe("project");
-    expect(its.find((i) => i.server?.name === "playwright")!.path.endsWith(path.join(".vscode", "mcp.json"))).toBe(true);
+    expect(posix(its.find((i) => i.server?.name === "playwright")!.path).endsWith(".vscode/mcp.json")).toBe(true);
   });
   it("AGENTS.md alone does not make Copilot or Gemini show up", () => {
     const m2 = materialize("empty-machine");
@@ -122,7 +124,7 @@ describe("GitHub Copilot adapter", () => {
     const m2 = materialize("empty-machine");
     write(path.join(m2.root, "alt", "copilot-instructions.md"), "# alt\n\nFrom COPILOT_HOME.\n");
     const r2 = runScan(m2, { env: { HOME: m2.home, PATH: "", COPILOT_HOME: path.join(m2.root, "alt") }, agents: ["github-copilot"] });
-    expect(itemsOf(r2, "github-copilot").some((i) => i.path.startsWith(path.join(m2.root, "alt")))).toBe(true);
+    expect(itemsOf(r2, "github-copilot").some((i) => posix(i.path).startsWith(posix(path.join(m2.root, "alt")) + "/"))).toBe(true);
   });
 });
 
