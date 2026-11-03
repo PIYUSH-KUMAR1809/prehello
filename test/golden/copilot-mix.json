@@ -1,0 +1,444 @@
+{
+  "schemaVersion": 1,
+  "tool": {
+    "name": "prehello",
+    "version": "0.1.0"
+  },
+  "generatedAt": "2026-10-24T12:00:00.000Z",
+  "redacted": "paths-shortened (~ and ./ prefixes); server and file names kept",
+  "scan": {
+    "cwd": ".",
+    "window": 200000,
+    "tokenizer": {
+      "method": "bpe-o200k",
+      "note": "o200k BPE (gpt-tokenizer, bundled) with per-family scaling"
+    },
+    "claudeProfile": "current"
+  },
+  "agents": [
+    {
+      "id": "github-copilot",
+      "name": "GitHub Copilot",
+      "detected": true,
+      "detectedBy": [
+        "--agent"
+      ],
+      "presentInRepoOnly": false,
+      "profile": {
+        "id": "mixed",
+        "label": "o200k; model unknown, so midpoint of GPT-like (×1.0) and Claude-like (×1.43) ratios",
+        "band": "wide: GPT-like −3% to Claude-like +15%"
+      },
+      "totals": {
+        "always": {
+          "est": 140,
+          "low": 114,
+          "high": 191,
+          "measuredItems": 4,
+          "unmeasuredItems": 2
+        },
+        "conditional": {
+          "est": 54,
+          "low": 43,
+          "high": 72,
+          "measuredItems": 3,
+          "unmeasuredItems": 0
+        },
+        "deferred": {
+          "est": 28,
+          "low": 22,
+          "high": 38,
+          "measuredItems": 1,
+          "unmeasuredItems": 0
+        },
+        "on-demand": {
+          "est": 15,
+          "low": 12,
+          "high": 20,
+          "measuredItems": 1,
+          "unmeasuredItems": 0
+        },
+        "unknown": {
+          "est": 0,
+          "low": 0,
+          "high": 0,
+          "measuredItems": 0,
+          "unmeasuredItems": 0
+        }
+      },
+      "percentOfWindowAlways": 0.06999999999999999,
+      "alwaysIsLowerBound": true,
+      "savings": null,
+      "grade": {
+        "letter": "B",
+        "score": 100,
+        "provisional": true,
+        "cappedAt": "B",
+        "reasons": [
+          "capped at B: 2 always-loaded items could not be measured, so a top grade cannot be certified"
+        ]
+      },
+      "coverage": {
+        "agent": "github-copilot",
+        "alwaysMeasuredItems": 4,
+        "alwaysUnmeasuredItems": 2,
+        "alwaysFraction": 0.6666666666666666,
+        "measuredKinds": {
+          "instructions": 4
+        },
+        "unmeasuredKinds": {
+          "mcp-server": 2
+        },
+        "mcpServers": 2
+      },
+      "installedButNothingFound": false,
+      "offenders": [
+        {
+          "label": "./.github/copilot-instructions.md",
+          "path": "./.github/copilot-instructions.md",
+          "kind": "instructions",
+          "loadMode": "always",
+          "tokens": 92
+        },
+        {
+          "label": "./AGENTS.md",
+          "path": "./AGENTS.md",
+          "kind": "instructions",
+          "loadMode": "always",
+          "tokens": 18
+        },
+        {
+          "label": "./GEMINI.md",
+          "path": "./GEMINI.md",
+          "kind": "instructions",
+          "loadMode": "always",
+          "tokens": 18
+        },
+        {
+          "label": "~/.copilot/copilot-instructions.md",
+          "path": "~/.copilot/copilot-instructions.md",
+          "kind": "instructions",
+          "loadMode": "always",
+          "tokens": 12
+        }
+      ],
+      "mcpServers": [
+        {
+          "name": "context7",
+          "source": "./.mcp.json",
+          "scope": "project",
+          "transport": "stdio",
+          "measured": false
+        },
+        {
+          "name": "playwright",
+          "source": "./.vscode/mcp.json",
+          "scope": "project",
+          "transport": "stdio",
+          "measured": false
+        }
+      ],
+      "unmeasuredBanner": [
+        "built-in system prompt and tools (incl. the built-in GitHub MCP server)",
+        "organization / enterprise instructions",
+        "VS Code settings (instruction files toggles, settings-based instructions) are not read; defaults assumed",
+        "skills and custom agents (not modelled yet)"
+      ],
+      "items": [
+        {
+          "id": "github-copilot:2",
+          "kind": "instructions",
+          "scope": "project",
+          "loadMode": "always",
+          "label": "./.github/copilot-instructions.md",
+          "path": "./.github/copilot-instructions.md",
+          "tokens": {
+            "est": 92,
+            "low": 74,
+            "high": 125
+          },
+          "unmeasured": false,
+          "chars": 361,
+          "lines": 6,
+          "confidence": "documented",
+          "evidence": {
+            "docUrl": "https://code.visualstudio.com/docs/copilot/customization/custom-instructions",
+            "verifiedAt": "2026-11-03"
+          },
+          "notes": [
+            "2 @import(s) not followed (absolute or ~/ path (not loaded by this agent))"
+          ]
+        },
+        {
+          "id": "github-copilot:3",
+          "kind": "instructions",
+          "scope": "project",
+          "loadMode": "always",
+          "label": "./AGENTS.md",
+          "path": "./AGENTS.md",
+          "tokens": {
+            "est": 18,
+            "low": 15,
+            "high": 25
+          },
+          "unmeasured": false,
+          "chars": 71,
+          "lines": 3,
+          "confidence": "documented",
+          "evidence": {
+            "docUrl": "https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/add-custom-instructions",
+            "verifiedAt": "2026-11-03"
+          },
+          "notes": [
+            "VS Code: chat.useAgentsMdFile, on by default (setting not read)"
+          ]
+        },
+        {
+          "id": "github-copilot:4",
+          "kind": "instructions",
+          "scope": "project",
+          "loadMode": "always",
+          "label": "./GEMINI.md",
+          "path": "./GEMINI.md",
+          "tokens": {
+            "est": 18,
+            "low": 15,
+            "high": 25
+          },
+          "unmeasured": false,
+          "chars": 59,
+          "lines": 3,
+          "confidence": "documented",
+          "evidence": {
+            "docUrl": "https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/add-custom-instructions",
+            "verifiedAt": "2026-11-03"
+          },
+          "notes": [
+            "read by Copilot CLI (documented); not listed for VS Code",
+            "@file references are not expanded in GEMINI.md by Copilot CLI (documented)"
+          ]
+        },
+        {
+          "id": "github-copilot:1",
+          "kind": "instructions",
+          "scope": "user",
+          "loadMode": "always",
+          "label": "~/.copilot/copilot-instructions.md",
+          "path": "~/.copilot/copilot-instructions.md",
+          "tokens": {
+            "est": 12,
+            "low": 10,
+            "high": 16
+          },
+          "unmeasured": false,
+          "chars": 47,
+          "lines": 3,
+          "confidence": "documented",
+          "evidence": {
+            "docUrl": "https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/add-custom-instructions",
+            "verifiedAt": "2026-11-03"
+          },
+          "notes": []
+        },
+        {
+          "id": "github-copilot:10",
+          "kind": "mcp-server",
+          "scope": "project",
+          "loadMode": "always",
+          "label": "MCP server \"context7\"",
+          "path": "./.mcp.json",
+          "tokens": null,
+          "unmeasured": true,
+          "unmeasuredReason": "no local tool-list cache or catalog entry; run is static (no server was started)",
+          "chars": 0,
+          "lines": 0,
+          "confidence": "assumed",
+          "evidence": {
+            "docUrl": "https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/add-mcp-servers",
+            "verifiedAt": "2026-11-03"
+          },
+          "notes": [
+            "Copilot MCP tool schemas modelled as loaded up front (unverified)",
+            "project MCP config: loaded only after you trust the folder (assumed trusted)",
+            "transport: stdio"
+          ]
+        },
+        {
+          "id": "github-copilot:11",
+          "kind": "mcp-server",
+          "scope": "project",
+          "loadMode": "always",
+          "label": "MCP server \"playwright\"",
+          "path": "./.vscode/mcp.json",
+          "tokens": null,
+          "unmeasured": true,
+          "unmeasuredReason": "no local tool-list cache or catalog entry; run is static (no server was started)",
+          "chars": 0,
+          "lines": 0,
+          "confidence": "assumed",
+          "evidence": {
+            "docUrl": "https://code.visualstudio.com/docs/copilot/reference/mcp-configuration",
+            "verifiedAt": "2026-11-03"
+          },
+          "notes": [
+            "Copilot MCP tool schemas modelled as loaded up front (unverified)",
+            "VS Code format (top-level \"servers\"): used by VS Code, not read by Copilot CLI (documented)",
+            "transport: stdio"
+          ]
+        },
+        {
+          "id": "github-copilot:7",
+          "kind": "instructions",
+          "scope": "project",
+          "loadMode": "conditional",
+          "label": "./.github/instructions/ts.instructions.md",
+          "path": "./.github/instructions/ts.instructions.md",
+          "tokens": {
+            "est": 33,
+            "low": 26,
+            "high": 44
+          },
+          "unmeasured": false,
+          "chars": 160,
+          "lines": 6,
+          "confidence": "documented",
+          "evidence": {
+            "docUrl": "https://code.visualstudio.com/docs/copilot/customization/custom-instructions#_use-instructionsmd-files",
+            "verifiedAt": "2026-11-03"
+          },
+          "notes": [
+            "applyTo: 2 patterns; attached when Copilot creates or changes a matching file"
+          ]
+        },
+        {
+          "id": "github-copilot:5",
+          "kind": "instructions",
+          "scope": "nested",
+          "loadMode": "conditional",
+          "label": "./packages/api/AGENTS.md",
+          "path": "./packages/api/AGENTS.md",
+          "tokens": {
+            "est": 11,
+            "low": 9,
+            "high": 15
+          },
+          "unmeasured": false,
+          "chars": 45,
+          "lines": 3,
+          "confidence": "documented",
+          "evidence": {
+            "docUrl": "https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/add-custom-instructions",
+            "verifiedAt": "2026-11-03"
+          },
+          "notes": [
+            "applies when Copilot works on files in that directory"
+          ]
+        },
+        {
+          "id": "github-copilot:8",
+          "kind": "instructions",
+          "scope": "user",
+          "loadMode": "conditional",
+          "label": "~/.copilot/instructions/personal.instructions.md",
+          "path": "~/.copilot/instructions/personal.instructions.md",
+          "tokens": {
+            "est": 10,
+            "low": 8,
+            "high": 13
+          },
+          "unmeasured": false,
+          "chars": 43,
+          "lines": 4,
+          "confidence": "documented",
+          "evidence": {
+            "docUrl": "https://code.visualstudio.com/docs/copilot/customization/custom-instructions#_use-instructionsmd-files",
+            "verifiedAt": "2026-11-03"
+          },
+          "notes": [
+            "applyTo: 1 pattern; attached when Copilot creates or changes a matching file",
+            "applyTo matches every file, so in practice it loads on nearly every edit"
+          ]
+        },
+        {
+          "id": "github-copilot:6",
+          "kind": "instructions",
+          "scope": "project",
+          "loadMode": "deferred",
+          "label": "./.github/instructions/backend/review.instructions.md",
+          "path": "./.github/instructions/backend/review.instructions.md",
+          "tokens": {
+            "est": 28,
+            "low": 22,
+            "high": 38
+          },
+          "unmeasured": false,
+          "chars": 134,
+          "lines": 6,
+          "confidence": "documented",
+          "evidence": {
+            "docUrl": "https://code.visualstudio.com/docs/copilot/customization/custom-instructions#_use-instructionsmd-files",
+            "verifiedAt": "2026-11-03"
+          },
+          "notes": [
+            "no applyTo: VS Code may load it on demand when its description matches the task (documented)"
+          ]
+        },
+        {
+          "id": "github-copilot:9",
+          "kind": "instructions",
+          "scope": "project",
+          "loadMode": "on-demand",
+          "label": "./.github/prompts/release.prompt.md",
+          "path": "./.github/prompts/release.prompt.md",
+          "tokens": {
+            "est": 15,
+            "low": 12,
+            "high": 20
+          },
+          "unmeasured": false,
+          "chars": 48,
+          "lines": 5,
+          "confidence": "documented",
+          "evidence": {
+            "docUrl": "https://code.visualstudio.com/docs/copilot/customization/prompt-files",
+            "verifiedAt": "2026-11-03"
+          },
+          "notes": [
+            "prompt file: loaded only when you run it as a /command"
+          ]
+        }
+      ]
+    }
+  ],
+  "excluded": [
+    {
+      "agent": "github-copilot",
+      "path": "./CLAUDE.md",
+      "reason": "identical to ./AGENTS.md (Copilot CLI removes duplicate copies)"
+    },
+    {
+      "agent": "github-copilot",
+      "path": "./.github/instructions/manual.instructions.md",
+      "reason": "no applyTo and no description: only used when attached manually"
+    }
+  ],
+  "findings": [
+    {
+      "id": "F5",
+      "severity": "info",
+      "agent": "github-copilot",
+      "message": "GitHub Copilot: 2 always-loaded items are unmeasured (MCP servers); the always-on total is a lower bound (\"at least\")",
+      "paths": [],
+      "confidence": "needs-your-call",
+      "fix": "If a server is unused, disable or remove it in the agent's own settings. prehello never edits MCP configs."
+    }
+  ],
+  "warnings": [],
+  "notMeasurable": [
+    "the agent's built-in system prompt and built-in tool definitions",
+    "server-side / org rules, Cursor User & Team Rules, claude.ai connectors",
+    "MCP servers whose tools are only known at runtime (no server is started by default)",
+    "files outside the scanned locations; anything the agent injects dynamically (hooks, memory/RAG plugins)"
+  ],
+  "partial": null
+}

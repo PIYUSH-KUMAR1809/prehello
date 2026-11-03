@@ -1,12 +1,8 @@
 export const SCHEMA_VERSION = 1;
 
-export type AgentId = "claude-code" | "cursor" | "codex";
-export const AGENT_NAMES: Record<AgentId, string> = {
-  "claude-code": "Claude Code",
-  cursor: "Cursor",
-  codex: "Codex",
-};
-export const ALL_AGENTS: AgentId[] = ["claude-code", "cursor", "codex"];
+import type { AgentId } from "./agents";
+export type { AgentId } from "./agents";
+export { AGENT_NAMES, ALL_AGENTS } from "./agents";
 
 /** How/when an item enters the context window. */
 export type LoadMode = "always" | "conditional" | "deferred" | "on-demand" | "unknown";

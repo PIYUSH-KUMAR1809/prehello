@@ -1,4 +1,6 @@
 #!/usr/bin/env node
+import { DiffInputError, badgeJson, diffJson, diffSnapshots, overThreshold, parseSnapshot, renderDiffMarkdown, renderDiffTerminal } from "./diff";
+import { ContextParseError, calibrationJson, compare, parseContext, renderCalibration } from "./calibrate";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
@@ -23,16 +25,24 @@ Local-only, read-only scan. No network, no telemetry, no API key. Token counts a
 Usage:
   prehello [path] [options]
   prehello explain grade        print the Context Grade rubric
+  prehello calibrate [path] --file <ctx.txt|->
+                                compare prehello with Claude Code's /context output
+                                (--json for JSON, --save <file> writes a redacted record)
+  prehello diff <base.json> <head.json> [--markdown[=file]] [--json] [--fail-above <n>]
+                                token change between two snapshots (exit 2 over the limit)
 
 Options:
-  --agent <list>        comma list of: claude-code, cursor, codex (forces them "in use")
+  --agent <list>        comma list of agents to force "in use":
+                        ${ALL_AGENTS.join(", ")}
   --window <n|200k|1m>  context window for percentages (default 200k)
   --json                print the report as JSON to stdout (versioned schema)
   --json=<file>         also write the JSON to <file>
+  --save <file>         save a snapshot (the JSON report) for prehello diff
+  --badge <file>        write a shields.io endpoint badge JSON (see docs/github-action.md)
   --redact              strict JSON: no paths or names (share-safe)
   --card[=<file>]       write a share card (no paths or file contents). The file extension picks the format:
                         .svg (default name prehello-card.svg) or .png (prehello-card.png)
-                        write the file name with "=": --card=card.png (a space, "--card card.png", is not accepted)
+                        name the file with "=" or a space: --card=card.png or --card card.png
   --markdown[=<file>]   a shareable Markdown report (title, headline, tables, what to cut, measured vs not measured) for a
                         GitHub issue / PR / README / Slack. Without a file it is printed to stdout INSTEAD of the terminal
                         report (pipe it: prehello --markdown | pbcopy); with a file (.md or .markdown) it is written there
@@ -95,7 +105,7 @@ interface Args {
   positional: string[];
 }
 
-const VALUE_FLAGS = new Set(["agent", "window", "tokenizer", "claude-profile", "card-theme", "card-size", "card-agent", "cwd", "mcp-catalog", "ceiling", "managed-dir", "system-root", "paste-user-rules", "card-headline", "card-format", "card-scale", "png-engine", "max-tokens", "scan-budget-mb", "scan-budget-ms"]);
+const VALUE_FLAGS = new Set(["agent", "window", "tokenizer", "claude-profile", "card-theme", "card-size", "card-agent", "cwd", "mcp-catalog", "ceiling", "managed-dir", "system-root", "paste-user-rules", "card-headline", "card-format", "card-scale", "png-engine", "max-tokens", "scan-budget-mb", "scan-budget-ms", "file", "context-file", "save", "fail-above", "badge"]);
 const BOOL_FLAGS = new Set(["json", "card", "redact", "fix", "no-grade", "no-color", "quiet", "verbose", "about-specs", "version", "help", "no-redact", "no-bundled-catalog", "force", "card-anonymize", "anonymize", "markdown", "markdown-compact", "sarif", "ascii", "include-fixtures"]);
 
 function parseArgs(argv: string[]): Args | string {
@@ -131,6 +141,11 @@ function parseArgs(argv: string[]): Args | string {
     } else if (BOOL_FLAGS.has(name)) {
       if (inline !== undefined && name !== "json" && name !== "card" && name !== "markdown" && name !== "sarif") return `option --${name} does not take a value`;
       if (inline === "" && name === "json") return "--json= needs a file name (for stdout, write --json with no =)";
+      // --card card.png: take the next argument as the file name when it ends in .svg/.png and is not an existing directory
+      if (name === "card" && inline === undefined && i + 1 < argv.length && /\.(svg|png)$/i.test(argv[i + 1]) && !argv[i + 1].startsWith("-") && !isDir(path.resolve(argv[i + 1]))) {
+        flags.set(name, argv[++i]);
+        continue;
+      }
       flags.set(name, inline ?? true);
     } else return `unknown option --${name} (try --help)`;
   }
@@ -160,14 +175,34 @@ async function main(): Promise<void> {
     if (positional[1] === "grade") return void process.stdout.write(renderRubric());
     return fail("usage: prehello explain grade");
   }
-  if (positional[0] === "ci" || positional[0] === "diff" || positional[0] === "calibrate") return fail(`'${positional[0]}' is not part of 0.1 (planned for 0.2)`);
+  const calibrating = positional[0] === "calibrate";
+  if (calibrating) positional.shift();
+  let contextText: string | undefined;
+  if (calibrating) {
+    const dash = positional.indexOf("-");
+    if (dash >= 0) positional.splice(dash, 1);
+    const src = (flags.get("file") ?? flags.get("context-file") ?? (dash >= 0 ? "-" : undefined)) as string | undefined;
+    if (src === undefined || src === "-") {
+      if (src === undefined && process.stdin.isTTY) return fail("usage: prehello calibrate --file ctx.txt (paste the output of /context from Claude Code into ctx.txt), or pipe it: pbpaste | prehello calibrate -");
+      contextText = decodeUserText(fs.readFileSync(0));
+    } else {
+      try {
+        contextText = decodeUserText(fs.readFileSync(src));
+      } catch {
+        return fail(`cannot read /context text from ${src}`);
+      }
+    }
+  } else if (flags.has("file") || flags.has("context-file")) return fail("--file and --context-file belong to 'prehello calibrate'");
+  if (positional[0] === "diff") return runDiff(positional.slice(1), flags);
+  if (flags.has("fail-above")) return fail("--fail-above belongs to 'prehello diff'");
+  if (positional[0] === "ci") return fail("there is no 'ci' command: use the GitHub Action (docs/github-action.md), or prehello --save + prehello diff");
   if (positional.length > 1) return fail("at most one path argument is supported");
 
   const env = process.env;
   const target = (flags.get("cwd") as string | undefined) ?? positional[0] ?? process.cwd();
   const cwdAbs = path.resolve(target);
   if (!isDir(cwdAbs)) {
-    if (flags.get("card") === true && positional[0] && /\.(svg|png)$/i.test(positional[0])) return fail(`not a directory: ${target}. To name the card file write --card=${positional[0]} (with "=", no space)`);
+    if (flags.get("card") === true && positional[0] && /\.(svg|png)$/i.test(positional[0])) return fail(`not a directory: ${target}. To name the card file write --card=${positional[0]}`);
     return fail(`not a directory: ${target}`);
   }
   const cwd = realpathOrSelf(cwdAbs);
@@ -190,8 +225,12 @@ async function main(): Promise<void> {
     const list = String(flags.get("agent")).split(",").map((s) => s.trim().toLowerCase()).filter(Boolean);
     if (!list.length) return fail("--agent needs at least one of: " + ALL_AGENTS.join(", "));
     const bad = list.filter((x) => !ALL_AGENTS.includes(x as AgentId));
-    if (bad.length) return fail(`unknown agent '${bad[0]}' (supported in 0.1: ${ALL_AGENTS.join(", ")})`);
+    if (bad.length) return fail(`unknown agent '${bad[0]}' (supported: ${ALL_AGENTS.join(", ")})`);
     agents = list as AgentId[];
+  }
+  if (calibrating) {
+    if (agents && (agents.length !== 1 || agents[0] !== "claude-code")) return fail("calibrate reads Claude Code's /context; Codex and Cursor have no per-category reading to compare against (yet)");
+    agents = ["claude-code"];
   }
   const cardTheme = String(flags.get("card-theme") ?? "dark");
   const cardSize = String(flags.get("card-size") ?? "og");
@@ -312,6 +351,24 @@ async function main(): Promise<void> {
       return fail(`could not write ${what} to ${file}: ${describeWriteError((e as NodeJS.ErrnoException).code)}`);
     }
   };
+  if (calibrating) {
+    let reading;
+    try {
+      reading = parseContext(contextText ?? "");
+    } catch (e) {
+      if (e instanceof ContextParseError) return fail(e.message);
+      throw e;
+    }
+    const a = report.agents.find((x) => x.id === "claude-code");
+    if (!a) return fail("no Claude Code report to compare against");
+    const cal = compare(reading, a, home);
+    if (flags.has("save")) write(String(flags.get("save")), JSON.stringify(calibrationJson(cal, report, a, true), null, 2) + "\n", "calibration", "json");
+    if (process.exitCode) return;
+    if (flags.get("json") === true) process.stdout.write(JSON.stringify(calibrationJson(cal, report, a, flags.has("redact")), null, 2) + "\n");
+    else process.stdout.write(renderCalibration(cal, report));
+    if (flags.has("save")) process.stderr.write(`Calibration written to ${flags.get("save")} (no paths or names).\n`);
+    return;
+  }
 
   const strict = flags.has("redact");
   const jsonFlag = flags.get("json");
@@ -322,6 +379,12 @@ async function main(): Promise<void> {
   const jsonText = jsonFlag !== undefined ? JSON.stringify(toJson(report, { cwd, home }, strict), null, 2) + "\n" : "";
 
   if (typeof jsonFlag === "string") write(jsonFlag, jsonText, "JSON", "json");
+  if (flags.has("save")) write(String(flags.get("save")), JSON.stringify(toJson(report, { cwd, home }, strict), null, 2) + "\n", "snapshot", "json");
+  if (flags.has("badge")) {
+    // a CI runner has no agent installed: fall back to the agent with the most always-on context in the repository
+    const ba = pickCardAgent(report, flags.get("card-agent") as string | undefined) ?? [...report.agents].filter((a) => a.items.length).sort((x, y) => y.totals.always.est - x.totals.always.est)[0] ?? null;
+    write(String(flags.get("badge")), JSON.stringify(ba ? badgeJson(ba.name, ba.totals.always.measuredItems || !ba.totals.always.unmeasuredItems ? ba.totals.always.est : null, ba.lowerBound) : badgeJson("no agent", null, false)) + "\n", "badge", "badge");
+  }
 
   let cardMsg = "";
   let cardFailed = false;
@@ -398,3 +461,49 @@ main().catch((e: Error) => {
   process.stderr.write(`prehello: internal error: ${e.message}\n`);
   process.exitCode = 1;
 });
+
+function parseTokenCount(v: string): number | undefined {
+  const m = /^(\d+(?:\.\d+)?)([kKmM]?)$/.exec(v.trim());
+  if (!m) return undefined;
+  return Math.round(parseFloat(m[1]) * (m[2].toLowerCase() === "k" ? 1000 : m[2].toLowerCase() === "m" ? 1_000_000 : 1));
+}
+
+/** `prehello diff base.json head.json [--markdown[=file]] [--json] [--fail-above N]`. Reads two saved reports; no scan, no git. */
+function runDiff(files: string[], flags: Map<string, string | true>): void {
+  if (files.length !== 2) return fail("usage: prehello diff <base.json> <head.json> [--markdown] [--json] [--fail-above <tokens>]  (make each file with: prehello --save <file>)");
+  let threshold: number | undefined;
+  if (flags.has("fail-above")) {
+    threshold = parseTokenCount(String(flags.get("fail-above")));
+    if (threshold === undefined) return fail("--fail-above needs a token count, e.g. 2000 or 2k");
+  }
+  const snaps = [];
+  for (const f of files) {
+    let text: string;
+    try {
+      text = fs.readFileSync(f === "-" ? 0 : f, "utf8");
+    } catch {
+      return fail(`cannot read ${f}`);
+    }
+    try {
+      snaps.push(parseSnapshot(text, f));
+    } catch (e) {
+      if (e instanceof DiffInputError) return fail(e.message);
+      throw e;
+    }
+  }
+  const d = diffSnapshots(snaps[0], snaps[1]);
+  const md = flags.get("markdown");
+  if (typeof md === "string") {
+    try {
+      safeWrite(path.resolve(md), renderDiffMarkdown(d, { threshold }), { kind: "md", force: flags.has("force") });
+    } catch (e) {
+      return fail(`diff Markdown not written to ${md}: ${(e as Error).message}`);
+    }
+  }
+  if (flags.get("json") === true) process.stdout.write(JSON.stringify(diffJson(d, threshold), null, 2) + "\n");
+  else if (md === true) process.stdout.write(renderDiffMarkdown(d, { threshold }));
+  else process.stdout.write(renderDiffTerminal(d));
+  const over = threshold !== undefined ? overThreshold(d, threshold) : [];
+  for (const a of over) process.stderr.write(`prehello: ${a.name} always-on context grew by ${fmtTok(a.delta)} tokens (estimate), above --fail-above ${fmtTok(threshold!)}\n`);
+  process.exitCode = over.length ? 2 : 0;
+}

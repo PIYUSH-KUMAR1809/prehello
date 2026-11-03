@@ -1,0 +1,22 @@
+# Dogfood: prehello comments on this repository's own pull requests with the agent-context change.
+name: prehello
+on:
+  pull_request:
+permissions:
+  contents: read
+  pull-requests: write # the one sticky comment; fork PRs get a read-only token and fall back to the job summary
+concurrency:
+  group: prehello-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+jobs:
+  context-diff:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: ./
+        with:
+          fail-above: ""

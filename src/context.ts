@@ -1,4 +1,5 @@
 import path from "node:path";
+import { AGENTS } from "./agents";
 import { AgentId, Excluded, Finding, Item, ItemKind, LoadMode, Confidence, Scope } from "./model";
 import { Counter } from "./tokens/counter";
 import { Profile, profileFor } from "./tokens/families";
@@ -62,7 +63,7 @@ interface DocInfo {
 
 /** Names (files) and "dir/" entries looked for in every directory of the bounded project walk. */
 export const WALK_CANDIDATES = [
-  "CLAUDE.md", "CLAUDE.local.md", ".claude/CLAUDE.md", "AGENTS.md", "AGENTS.override.md",
+  "CLAUDE.md", "CLAUDE.local.md", ".claude/CLAUDE.md", "AGENTS.md", "AGENTS.override.md", "GEMINI.md",
   ".cursor/rules/", ".cursor/skills/", ".agents/skills/", ".claude/skills/",
 ];
 
@@ -113,9 +114,9 @@ export class Ctx {
   isProjectDir(): boolean {
     if (this.cwd === this.home) return false;
     if (this.gitRoot && this.gitRoot !== this.home) return true;
-    const top = ["CLAUDE.md", "AGENTS.md", "CLAUDE.local.md", ".cursorrules", ".mcp.json"];
-    if (top.some((f) => isFile(path.join(this.cwd, f)))) return true;
-    return [".claude", ".cursor", ".codex", ".agents"].some((d) => isDir(path.join(this.cwd, d)));
+    return AGENTS.flatMap((a) => a.projectMarkers as readonly string[]).some((m) =>
+      m.endsWith("/") ? isDir(path.join(this.cwd, m.slice(0, -1))) : isFile(path.join(this.cwd, m)),
+    );
   }
 
   get cwd(): string {
@@ -291,7 +292,7 @@ export class Ctx {
       kind: a.kind,
       scope: a.scope,
       loadMode: a.loadMode,
-      tokens: a.raw === null ? null : prof.apply(a.raw),
+      tokens: a.raw === null ? null : prof.apply(a.raw, a.kind === "mcp-server" ? "json" : "markdown"),
       ...(a.raw === null ? { unmeasuredReason: a.unmeasuredReason ?? "not measurable" } : {}),
       chars: a.chars ?? 0,
       lines: a.lines ?? 0,

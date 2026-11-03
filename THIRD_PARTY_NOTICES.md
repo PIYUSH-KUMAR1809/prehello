@@ -28,6 +28,6 @@ TypeScript (Apache-2.0), vitest (MIT), ajv and ajv-formats (MIT), `@types/*` (MI
 
 ## Documentation
 
-The loading rules in `spec/*.json` are facts summarised from the public documentation of Claude Code, Cursor and Codex, each with the URL it came from. No documentation text is copied.
+The loading rules in `spec/*.json` are facts summarised from the public documentation of Claude Code, Cursor, Codex, GitHub Copilot and Gemini CLI, each with the URL it came from. No documentation text is copied.
 
 The Code of Conduct is the [Contributor Covenant](https://www.contributor-covenant.org) 2.1 (CC BY 4.0).

@@ -1,0 +1,14 @@
+{
+  "agent": "github-copilot",
+  "verifiedAt": "2026-11-03",
+  "verifiedNote": "Instruction locations (~/.copilot/copilot-instructions.md, ~/.copilot/instructions/**, .github/copilot-instructions.md, .github/instructions/**/*.instructions.md with applyTo, AGENTS.md / CLAUDE.md / .claude/CLAUDE.md / GEMINI.md from repo root to cwd and in the path of files being worked on, duplicate removal, relative in-repo @file references) are from GitHub's Copilot CLI docs; description-based on-demand loading, prompt files and .vscode/mcp.json \"servers\" from the VS Code docs; MCP files (~/.copilot/mcp-config.json, .mcp.json cwd->root, .github/mcp.json) from GitHub's Copilot CLI MCP docs (all fetched 2026-11-03). ASSUMED: MCP tool schemas loaded up front, project MCP folder trust granted, VS Code settings at their defaults, the VS Code user mcp.json path per platform. Token accuracy was never validated (the model is user-selectable).",
+  "docs": {
+    "cliInstructions": "https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/add-custom-instructions",
+    "repoInstructions": "https://code.visualstudio.com/docs/copilot/customization/custom-instructions",
+    "pathInstructions": "https://code.visualstudio.com/docs/copilot/customization/custom-instructions#_use-instructionsmd-files",
+    "promptFiles": "https://code.visualstudio.com/docs/copilot/customization/prompt-files",
+    "cliMcp": "https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/add-mcp-servers",
+    "vscodeMcp": "https://code.visualstudio.com/docs/copilot/reference/mcp-configuration"
+  },
+  "caps": {}
+}

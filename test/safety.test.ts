@@ -133,7 +133,7 @@ describe("no-network proof", () => {
     expect(Object.keys(pkg.optionalDependencies ?? {})).toEqual(["@resvg/resvg-wasm"]);
     expect(pkg.files).toContain("assets");
     for (const f of ["Inter-Regular.subset.ttf", "Inter-SemiBold.subset.ttf", "Inter-ExtraBold.subset.ttf", "OFL.txt"]) expect(fs.existsSync(path.join(ROOT, "assets", "fonts", f))).toBe(true);
-    expect(pkg.engines.node).toMatch(/18/);
+    expect(pkg.engines.node).toBe(">=22");
   });
 });
 

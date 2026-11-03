@@ -26,14 +26,14 @@
       "presentInRepoOnly": false,
       "profile": {
         "id": "claude-current",
-        "label": "o200k × 1.5 (Claude-current prior)",
-        "band": "±20%"
+        "label": "o200k × 1.43 (text) / × 1.35 (JSON), Claude-current ratios from published count_tokens measurements",
+        "band": "±15%"
       },
       "totals": {
         "always": {
-          "est": 236,
-          "low": 189,
-          "high": 283,
+          "est": 213,
+          "low": 182,
+          "high": 245,
           "measuredItems": 2,
           "unmeasuredItems": 1
         },
@@ -45,9 +45,9 @@
           "unmeasuredItems": 0
         },
         "deferred": {
-          "est": 9600,
-          "low": 7680,
-          "high": 11520,
+          "est": 8640,
+          "low": 7344,
+          "high": 9936,
           "measuredItems": 1,
           "unmeasuredItems": 0
         },
@@ -66,7 +66,7 @@
           "unmeasuredItems": 0
         }
       },
-      "percentOfWindowAlways": 0.11800000000000001,
+      "percentOfWindowAlways": 0.1065,
       "alwaysIsLowerBound": true,
       "savings": null,
       "grade": {
@@ -99,14 +99,14 @@
           "path": "./.mcp.json",
           "kind": "mcp-server",
           "loadMode": "always",
-          "tokens": 225
+          "tokens": 203
         },
         {
           "label": "./CLAUDE.md",
           "path": "./CLAUDE.md",
           "kind": "instructions",
           "loadMode": "always",
-          "tokens": 11
+          "tokens": 10
         }
       ],
       "mcpServers": [
@@ -139,9 +139,9 @@
           "label": "MCP \"playwright\" (tool names)",
           "path": "./.mcp.json",
           "tokens": {
-            "est": 225,
-            "low": 180,
-            "high": 270
+            "est": 203,
+            "low": 173,
+            "high": 233
           },
           "unmeasured": false,
           "chars": 0,
@@ -166,9 +166,9 @@
           "label": "./CLAUDE.md",
           "path": "./CLAUDE.md",
           "tokens": {
-            "est": 11,
+            "est": 10,
             "low": 9,
-            "high": 13
+            "high": 12
           },
           "unmeasured": false,
           "chars": 24,
@@ -211,9 +211,9 @@
           "label": "MCP \"playwright\" (schemas)",
           "path": "./.mcp.json",
           "tokens": {
-            "est": 9600,
-            "low": 7680,
-            "high": 11520
+            "est": 8640,
+            "low": 7344,
+            "high": 9936
           },
           "unmeasured": false,
           "chars": 0,

@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "local-tool": {
+      "command": "python",
+      "args": [
+        "tool.py"
+      ]
+    }
+  }
+}

@@ -187,13 +187,18 @@ export function discoverCursor(ctx: Ctx): AdapterResult {
 
   // Skills. Listing (name+description) is assumed to load up front, bodies on demand; listing format/cost is UNVERIFIED for Cursor.
   const seenSkill = new Set<string>();
-  const cursorSkillNotes = (extra?: string) => ["Cursor lists each skill's name + description (exact injection format and token cost unverified; counted as name: description)", ...(extra ? [extra] : [])];
+  const cursorSkillNotes = (extra?: string) => [CURSOR_LISTING_NOTE, ...(extra ? [extra] : [])];
   const emitSkills = (recs: SkillRec[], dir: string, scope: Scope, tag: string, confidence: Confidence, note?: string, forceConditional = false) => {
     const fresh = recs.filter((r) => !seenSkill.has(r.realPath));
     for (const r of fresh) seenSkill.add(r.realPath);
     const unscoped = fresh.filter((r) => r.scopedTo.length === 0);
     const scoped = fresh.filter((r) => r.scopedTo.length > 0);
-    const spec = { agent: AGENT, dir, scope, confidence, evidence: ev(SKILLS_DOC), lineFor: (r: SkillRec) => (r.disableModelInvocation ? null : `${r.name}: ${r.desc}`) };
+    const spec = {
+      agent: AGENT, dir, scope, confidence, evidence: ev(SKILLS_DOC),
+      lineFor: (r: SkillRec) => (r.disableModelInvocation ? null : cursorSkillLine(dir, r, "short")),
+      lowLineFor: (r: SkillRec) => cursorSkillLine(dir, r, "none"),
+      highLineFor: (r: SkillRec) => cursorSkillLine(dir, r, "full"),
+    };
     if (unscoped.length) items.push(...skillItems(ctx, { ...spec, tag, recs: unscoped, listingMode: forceConditional ? "conditional" : "always", notes: cursorSkillNotes(note) }));
     if (scoped.length) items.push(...skillItems(ctx, { ...spec, tag: `${tag}, path-scoped`, recs: scoped, listingMode: "conditional", notes: cursorSkillNotes("skills with paths/globs frontmatter are surfaced only when matching files are in play (documented)") }));
   };
@@ -254,3 +259,18 @@ export function discoverCursor(ctx: Ctx): AdapterResult {
   }
   return { items, unmeasuredBanner: banner };
 }
+
+/** Observed Cursor listing (forum.cursor.com/t/163761, staff-confirmed 2026-06-22): description cut to about 80 characters. */
+export const CURSOR_DESC_CHARS = 80;
+const CURSOR_PATH_STANDIN = "/Users/you/.cursor/skills";
+export const CURSOR_LISTING_NOTE =
+  "Cursor lists each skill as <agent_skill fullPath=...> with its description cut to ~80 characters, and drops descriptions when the catalog is large (observed, confirmed by Cursor staff 2026-06; budget undocumented). Estimate = 80-character form; low = path only; high = full description.";
+
+/** One `<agent_skill>` entry. The absolute path is approximated by a fixed stand-in + the path below the skills root (deterministic, never output). */
+export function cursorSkillLine(root: string, r: SkillRec, desc: "short" | "none" | "full"): string {
+  const rel = path.relative(root, r.file).split(path.sep).join("/");
+  const d = r.desc.trim();
+  const text = desc === "none" ? "" : desc === "full" || d.length <= CURSOR_DESC_CHARS ? d : `${d.slice(0, CURSOR_DESC_CHARS)}...`;
+  return `<agent_skill fullPath="${CURSOR_PATH_STANDIN}/${rel}">${text}</agent_skill>`;
+}
+

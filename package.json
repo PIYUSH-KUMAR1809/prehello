@@ -1,7 +1,7 @@
 {
   "name": "prehello",
   "version": "0.1.0",
-  "description": "See what your coding agent (Claude Code, Cursor, Codex) loads before you say hello, and what you could cut. Local-only, read-only, no API key.",
+  "description": "See what your coding agent (Claude Code, Cursor, Codex, GitHub Copilot, Gemini CLI) loads before you say hello, and what you could cut. Local-only, read-only, no API key.",
   "license": "MIT",
   "author": "Piyush Kumar",
   "homepage": "https://github.com/PIYUSH-KUMAR1809/prehello#readme",
@@ -25,11 +25,13 @@
     "THIRD_PARTY_NOTICES.md"
   ],
   "engines": {
-    "node": ">=18"
+    "node": ">=22"
   },
   "scripts": {
     "clean": "node -e \"require('fs').rmSync('dist',{recursive:true,force:true})\"",
+    "prebuild": "node scripts/gen-version.mjs",
     "build": "tsc -p tsconfig.build.json",
+    "pretypecheck": "node scripts/gen-version.mjs",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "test": "npm run build && vitest run",
     "prepack": "npm run clean && npm run build",
@@ -39,6 +41,8 @@
     "claude-code",
     "cursor",
     "codex",
+    "github-copilot",
+    "gemini-cli",
     "agents-md",
     "ai-agents",
     "context-window",
@@ -55,7 +59,7 @@
     "smol-toml": "^1.9.1"
   },
   "devDependencies": {
-    "@types/node": "^20.19.43",
+    "@types/node": "^22.19.0",
     "@types/picomatch": "^4.0.3",
     "ajv": "^8.20.0",
     "ajv-formats": "^3.0.1",

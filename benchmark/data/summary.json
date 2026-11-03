@@ -1,0 +1,699 @@
+{
+  "generatedFrom": "benchmark/data/results.jsonl",
+  "prehello": "0.1.0",
+  "repos": 559,
+  "errors": 0,
+  "sample": [
+    {
+      "bucket": "20-99",
+      "searches": 30,
+      "checked": 653,
+      "skipped": 7,
+      "withAgentFiles": 111,
+      "prevalencePct": 17,
+      "analysed": 111
+    },
+    {
+      "bucket": "100-499",
+      "searches": 16,
+      "checked": 393,
+      "skipped": 7,
+      "withAgentFiles": 110,
+      "prevalencePct": 28,
+      "analysed": 110
+    },
+    {
+      "bucket": "500-1999",
+      "searches": 15,
+      "checked": 369,
+      "skipped": 6,
+      "withAgentFiles": 115,
+      "prevalencePct": 31.2,
+      "analysed": 115
+    },
+    {
+      "bucket": "2000-9999",
+      "searches": 16,
+      "checked": 389,
+      "skipped": 11,
+      "withAgentFiles": 112,
+      "prevalencePct": 28.8,
+      "analysed": 112
+    },
+    {
+      "bucket": "10000+",
+      "searches": 10,
+      "checked": 237,
+      "skipped": 13,
+      "withAgentFiles": 111,
+      "prevalencePct": 46.8,
+      "analysed": 111
+    }
+  ],
+  "prevalenceAllPct": 27.4,
+  "presence": {
+    "CLAUDE.md (any depth)": {
+      "repos": 251,
+      "pct": 44.9
+    },
+    "AGENTS.md (any depth)": {
+      "repos": 379,
+      "pct": 67.8
+    },
+    ".cursor/rules": {
+      "repos": 24,
+      "pct": 4.3
+    },
+    ".github/copilot-instructions.md": {
+      "repos": 73,
+      "pct": 13.1
+    },
+    ".github/instructions": {
+      "repos": 21,
+      "pct": 3.8
+    },
+    "GEMINI.md (any depth)": {
+      "repos": 9,
+      "pct": 1.6
+    },
+    ".mcp.json": {
+      "repos": 22,
+      "pct": 3.9
+    },
+    "skills folder (.claude, .agents, .cursor, .gemini)": {
+      "repos": 127,
+      "pct": 22.7
+    },
+    ".claude/rules": {
+      "repos": 10,
+      "pct": 1.8
+    },
+    ".cursorrules at root (legacy, not counted)": {
+      "repos": 4,
+      "pct": 0.7
+    }
+  },
+  "perAgent": {
+    "claude-code": {
+      "name": "Claude Code",
+      "profile": "claude-current",
+      "allRepos": {
+        "n": 559,
+        "median": 1669,
+        "p90": 6845,
+        "max": 53309,
+        "mean": 3127,
+        "over": {
+          "1000": 64.2,
+          "2000": 44.2,
+          "5000": 18.6,
+          "10000": 5.5,
+          "20000": 1.6
+        },
+        "lowerBoundPct": 3.6
+      },
+      "reposWithOwnFiles": {
+        "n": 270,
+        "median": 2246,
+        "p90": 7172,
+        "max": 53309,
+        "mean": 3759,
+        "over": {
+          "1000": 76.3,
+          "2000": 53.3,
+          "5000": 21.9,
+          "10000": 7.4,
+          "20000": 1.5
+        },
+        "lowerBoundPct": 7.4
+      },
+      "reposWithAnyAlwaysOn": {
+        "n": 477,
+        "median": 2146,
+        "p90": 7385,
+        "max": 53309,
+        "mean": 3665,
+        "over": {
+          "1000": 75.3,
+          "2000": 51.8,
+          "5000": 21.8,
+          "10000": 6.5,
+          "20000": 1.9
+        },
+        "lowerBoundPct": 4
+      },
+      "conditional": {
+        "n": 64,
+        "median": 2185,
+        "p90": 17854,
+        "max": 86615,
+        "mean": 6726
+      },
+      "deferred": {
+        "n": 72,
+        "median": 4883,
+        "p90": 24024,
+        "max": 103907,
+        "mean": 10935
+      }
+    },
+    "cursor": {
+      "name": "Cursor",
+      "profile": "cursor-mixed",
+      "allRepos": {
+        "n": 559,
+        "median": 832,
+        "p90": 5389,
+        "max": 29138,
+        "mean": 1999,
+        "over": {
+          "1000": 46.3,
+          "2000": 31.8,
+          "5000": 11.4,
+          "10000": 3.2,
+          "20000": 0.5
+        },
+        "lowerBoundPct": 0.4
+      },
+      "reposWithOwnFiles": {
+        "n": 371,
+        "median": 1884,
+        "p90": 6331,
+        "max": 29138,
+        "mean": 2994,
+        "over": {
+          "1000": 69.5,
+          "2000": 48,
+          "5000": 17.3,
+          "10000": 4.9,
+          "20000": 0.8
+        },
+        "lowerBoundPct": 0.5
+      },
+      "reposWithAnyAlwaysOn": {
+        "n": 394,
+        "median": 1684,
+        "p90": 6189,
+        "max": 29138,
+        "mean": 2837,
+        "over": {
+          "1000": 65.7,
+          "2000": 45.2,
+          "5000": 16.2,
+          "10000": 4.6,
+          "20000": 0.8
+        },
+        "lowerBoundPct": 0.5
+      },
+      "conditional": {
+        "n": 97,
+        "median": 1831,
+        "p90": 18318,
+        "max": 101496,
+        "mean": 7535
+      },
+      "deferred": {
+        "n": 126,
+        "median": 5402,
+        "p90": 36417,
+        "max": 109078,
+        "mean": 13419
+      }
+    },
+    "codex": {
+      "name": "Codex",
+      "profile": "openai-o200k",
+      "allRepos": {
+        "n": 559,
+        "median": 657,
+        "p90": 4435,
+        "max": 11081,
+        "mean": 1508,
+        "over": {
+          "1000": 42.4,
+          "2000": 27.7,
+          "5000": 7.7,
+          "10000": 0.4,
+          "20000": 0
+        },
+        "lowerBoundPct": 0.2
+      },
+      "reposWithOwnFiles": {
+        "n": 362,
+        "median": 1600,
+        "p90": 5366,
+        "max": 11081,
+        "mean": 2317,
+        "over": {
+          "1000": 65.2,
+          "2000": 42.8,
+          "5000": 11.9,
+          "10000": 0.6,
+          "20000": 0
+        },
+        "lowerBoundPct": 0.3
+      },
+      "reposWithAnyAlwaysOn": {
+        "n": 369,
+        "median": 1581,
+        "p90": 5292,
+        "max": 11081,
+        "mean": 2284,
+        "over": {
+          "1000": 64.2,
+          "2000": 42,
+          "5000": 11.7,
+          "10000": 0.5,
+          "20000": 0
+        },
+        "lowerBoundPct": 0.3
+      },
+      "conditional": {
+        "n": 0,
+        "median": null,
+        "p90": null,
+        "max": null,
+        "mean": null
+      },
+      "deferred": {
+        "n": 72,
+        "median": 3904,
+        "p90": 26581,
+        "max": 83233,
+        "mean": 10884
+      }
+    },
+    "github-copilot": {
+      "name": "GitHub Copilot",
+      "profile": "mixed",
+      "allRepos": {
+        "n": 559,
+        "median": 1889,
+        "p90": 7976,
+        "max": 47965,
+        "mean": 3386,
+        "over": {
+          "1000": 68.5,
+          "2000": 49,
+          "5000": 20.6,
+          "10000": 6.3,
+          "20000": 1.4
+        },
+        "lowerBoundPct": 4.3
+      },
+      "reposWithOwnFiles": {
+        "n": 85,
+        "median": 1971,
+        "p90": 7538,
+        "max": 21121,
+        "mean": 3019,
+        "over": {
+          "1000": 71.8,
+          "2000": 49.4,
+          "5000": 17.6,
+          "10000": 5.9,
+          "20000": 1.2
+        },
+        "lowerBoundPct": 7.1
+      },
+      "reposWithAnyAlwaysOn": {
+        "n": 509,
+        "median": 2230,
+        "p90": 8419,
+        "max": 47965,
+        "mean": 3719,
+        "over": {
+          "1000": 75.2,
+          "2000": 53.8,
+          "5000": 22.6,
+          "10000": 6.9,
+          "20000": 1.6
+        },
+        "lowerBoundPct": 4.5
+      },
+      "conditional": {
+        "n": 125,
+        "median": 2160,
+        "p90": 17837,
+        "max": 101496,
+        "mean": 7761
+      },
+      "deferred": {
+        "n": 1,
+        "median": 2925,
+        "p90": 2925,
+        "max": 2925,
+        "mean": 2925
+      }
+    },
+    "gemini-cli": {
+      "name": "Gemini CLI",
+      "profile": "gemini-unvalidated",
+      "allRepos": {
+        "n": 559,
+        "median": 0,
+        "p90": 100,
+        "max": 3713,
+        "mean": 68,
+        "over": {
+          "1000": 2.3,
+          "2000": 0.7,
+          "5000": 0,
+          "10000": 0,
+          "20000": 0
+        },
+        "lowerBoundPct": 0.4
+      },
+      "reposWithOwnFiles": {
+        "n": 15,
+        "median": 78,
+        "p90": 1944,
+        "max": 3713,
+        "mean": 709,
+        "over": {
+          "1000": 26.7,
+          "2000": 13.3,
+          "5000": 0,
+          "10000": 0,
+          "20000": 0
+        },
+        "lowerBoundPct": 13.3
+      },
+      "reposWithAnyAlwaysOn": {
+        "n": 78,
+        "median": 194,
+        "p90": 1364,
+        "max": 3713,
+        "mean": 489,
+        "over": {
+          "1000": 16.7,
+          "2000": 5.1,
+          "5000": 0,
+          "10000": 0,
+          "20000": 0
+        },
+        "lowerBoundPct": 2.6
+      },
+      "conditional": {
+        "n": 3,
+        "median": 1343,
+        "p90": 4351,
+        "max": 5103,
+        "mean": 2369
+      },
+      "deferred": {
+        "n": 72,
+        "median": 3904,
+        "p90": 26581,
+        "max": 83233,
+        "mean": 10884
+      }
+    }
+  },
+  "contributors": {
+    "claude-code": {
+      "AGENTS.md": {
+        "tokens": 871165,
+        "sharePct": 49.8
+      },
+      "CLAUDE.md": {
+        "tokens": 836240,
+        "sharePct": 47.8
+      },
+      "Skills listing": {
+        "tokens": 24993,
+        "sharePct": 1.4
+      },
+      ".claude/rules": {
+        "tokens": 8020,
+        "sharePct": 0.5
+      },
+      "Subagents listing": {
+        "tokens": 7134,
+        "sharePct": 0.4
+      },
+      "MCP servers": {
+        "tokens": 487,
+        "sharePct": 0
+      }
+    },
+    "cursor": {
+      "AGENTS.md": {
+        "tokens": 1063479,
+        "sharePct": 95.2
+      },
+      "Skills listing": {
+        "tokens": 38511,
+        "sharePct": 3.4
+      },
+      ".cursor/rules": {
+        "tokens": 11819,
+        "sharePct": 1.1
+      },
+      "Imported files (@path)": {
+        "tokens": 3863,
+        "sharePct": 0.3
+      }
+    },
+    "codex": {
+      "AGENTS.md": {
+        "tokens": 795137,
+        "sharePct": 94.3
+      },
+      "Skills listing": {
+        "tokens": 44003,
+        "sharePct": 5.2
+      },
+      "MCP servers": {
+        "tokens": 3687,
+        "sharePct": 0.4
+      }
+    },
+    "github-copilot": {
+      "AGENTS.md": {
+        "tokens": 1075585,
+        "sharePct": 56.8
+      },
+      "CLAUDE.md": {
+        "tokens": 709396,
+        "sharePct": 37.5
+      },
+      "copilot-instructions.md": {
+        "tokens": 82704,
+        "sharePct": 4.4
+      },
+      "MCP servers": {
+        "tokens": 22414,
+        "sharePct": 1.2
+      },
+      "GEMINI.md": {
+        "tokens": 2732,
+        "sharePct": 0.1
+      }
+    },
+    "gemini-cli": {
+      "Skills listing": {
+        "tokens": 29460,
+        "sharePct": 77.2
+      },
+      "GEMINI.md": {
+        "tokens": 7560,
+        "sharePct": 19.8
+      },
+      "AGENTS.md": {
+        "tokens": 1153,
+        "sharePct": 3
+      }
+    }
+  },
+  "singleFile": {
+    "overLines": {
+      "200": 122,
+      "500": 30,
+      "1000": 6
+    }
+  },
+  "mcp": {
+    "repos": 26,
+    "pct": 4.7,
+    "serversPerRepo": {
+      "n": 26,
+      "median": 1,
+      "p90": 4,
+      "max": 5,
+      "mean": 2
+    },
+    "claudeCodeMcpItemsUnmeasuredPct": 71.4,
+    "topServers": [
+      {
+        "name": "playwright",
+        "repos": 4
+      },
+      {
+        "name": "context7",
+        "repos": 3
+      },
+      {
+        "name": "angular-cli",
+        "repos": 2
+      },
+      {
+        "name": "github",
+        "repos": 2
+      },
+      {
+        "name": "servers",
+        "repos": 2
+      },
+      {
+        "name": "trigger",
+        "repos": 2
+      },
+      {
+        "name": "agents",
+        "repos": 1
+      },
+      {
+        "name": "appduct",
+        "repos": 1
+      },
+      {
+        "name": "argent",
+        "repos": 1
+      },
+      {
+        "name": "arxiv",
+        "repos": 1
+      },
+      {
+        "name": "build",
+        "repos": 1
+      },
+      {
+        "name": "chrome-devtools",
+        "repos": 1
+      },
+      {
+        "name": "codegraph",
+        "repos": 1
+      },
+      {
+        "name": "docs-langchain",
+        "repos": 1
+      },
+      {
+        "name": "eslint",
+        "repos": 1
+      }
+    ]
+  },
+  "mistakes": {
+    "F1": {
+      "what": "file longer than the documented guideline",
+      "repos": 93,
+      "pct": 16.6
+    },
+    "F2": {
+      "what": "near-duplicate instruction files",
+      "repos": 18,
+      "pct": 3.2
+    },
+    "F4": {
+      "what": "skill description over the listing cap",
+      "repos": 0,
+      "pct": 0
+    },
+    "F5": {
+      "what": "always-on item that cannot be measured",
+      "repos": 25,
+      "pct": 4.5
+    },
+    "F7": {
+      "what": "AGENTS.md ignored by Claude Code (CLAUDE.md present)",
+      "repos": 114,
+      "pct": 20.4
+    },
+    "F9": {
+      "what": "possible secret in an agent file",
+      "repos": 6,
+      "pct": 1.1
+    },
+    "F11": {
+      "what": ".cursor/rules file Cursor ignores (.md, not .mdc)",
+      "repos": 1,
+      "pct": 0.2
+    },
+    "F12": {
+      "what": "AGENTS.md chain truncated by Codex (32 KiB)",
+      "repos": 19,
+      "pct": 3.4
+    },
+    "F13": {
+      "what": "skills listing over the agent's budget",
+      "repos": 1,
+      "pct": 0.2
+    },
+    "claudeAndAgentsAtRoot": {
+      "what": "CLAUDE.md and AGENTS.md both at the repo root",
+      "repos": 114,
+      "pct": 20.4
+    },
+    "claudeAgentsNearDuplicate": {
+      "what": "a CLAUDE.md / AGENTS.md pair flagged as near-duplicate (F2)",
+      "repos": 8,
+      "pct": 1.4
+    }
+  },
+  "stars": {
+    "spearmanStarsVsMaxAlwaysOn": 0.047,
+    "medianMaxAlwaysOnByBucket": {
+      "20-99": {
+        "n": 111,
+        "median": 1808,
+        "p90": 7096,
+        "max": 53309,
+        "mean": 3521
+      },
+      "100-499": {
+        "n": 110,
+        "median": 2160,
+        "p90": 10006,
+        "max": 39270,
+        "mean": 4141
+      },
+      "500-1999": {
+        "n": 115,
+        "median": 2126,
+        "p90": 8414,
+        "max": 33146,
+        "mean": 3947
+      },
+      "2000-9999": {
+        "n": 112,
+        "median": 2808,
+        "p90": 8010,
+        "max": 12916,
+        "mean": 3582
+      },
+      "10000+": {
+        "n": 111,
+        "median": 1865,
+        "p90": 7253,
+        "max": 50778,
+        "mean": 3895
+      }
+    }
+  },
+  "maxAlwaysOnAnyAgent": {
+    "n": 559,
+    "median": 2205,
+    "p90": 8374,
+    "max": 53309,
+    "mean": 3817
+  },
+  "exitCodes": {
+    "0": 559
+  },
+  "partialRuns": 0,
+  "pluginLeaderboard": "skipped: repositories do not install plugins; plugin weights need real user setups (not collected)"
+}

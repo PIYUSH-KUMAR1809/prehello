@@ -27,28 +27,28 @@
       "presentInRepoOnly": false,
       "profile": {
         "id": "claude-current",
-        "label": "o200k × 1.5 (Claude-current prior)",
-        "band": "±20%"
+        "label": "o200k × 1.43 (text) / × 1.35 (JSON), Claude-current ratios from published count_tokens measurements",
+        "band": "±15%"
       },
       "totals": {
         "always": {
-          "est": 1674,
-          "low": 1339,
-          "high": 2009,
+          "est": 1595,
+          "low": 1357,
+          "high": 1834,
           "measuredItems": 6,
           "unmeasuredItems": 4
         },
         "conditional": {
-          "est": 386,
-          "low": 309,
-          "high": 463,
+          "est": 367,
+          "low": 312,
+          "high": 422,
           "measuredItems": 2,
           "unmeasuredItems": 0
         },
         "deferred": {
-          "est": 1278,
-          "low": 1023,
-          "high": 1533,
+          "est": 1219,
+          "low": 1036,
+          "high": 1402,
           "measuredItems": 2,
           "unmeasuredItems": 0
         },
@@ -67,7 +67,7 @@
           "unmeasuredItems": 0
         }
       },
-      "percentOfWindowAlways": 0.8370000000000001,
+      "percentOfWindowAlways": 0.7975,
       "alwaysIsLowerBound": true,
       "savings": null,
       "grade": {
@@ -104,28 +104,28 @@
           "path": "./CLAUDE.md",
           "kind": "instructions",
           "loadMode": "always",
-          "tokens": 999
+          "tokens": 952
         },
         {
           "label": "~/.claude/CLAUDE.md",
           "path": "~/.claude/CLAUDE.md",
           "kind": "instructions",
           "loadMode": "always",
-          "tokens": 261
+          "tokens": 249
         },
         {
           "label": "./.claude/rules/style.md",
           "path": "./.claude/rules/style.md",
           "kind": "rule",
           "loadMode": "always",
-          "tokens": 248
+          "tokens": 236
         },
         {
           "label": "skill \"db-migrate\"",
           "path": "~/.claude/skills",
           "kind": "skills-listing",
           "loadMode": "always",
-          "tokens": 75,
+          "tokens": 72,
           "note": "inside Skills listing (3 user skills)"
         },
         {
@@ -133,7 +133,7 @@
           "path": "~/.claude/skills",
           "kind": "skills-listing",
           "loadMode": "always",
-          "tokens": 35,
+          "tokens": 33,
           "note": "inside Skills listing (3 user skills)"
         },
         {
@@ -141,7 +141,7 @@
           "path": "~/.claude/skills",
           "kind": "skills-listing",
           "loadMode": "always",
-          "tokens": 26,
+          "tokens": 24,
           "note": "inside Skills listing (3 user skills)"
         },
         {
@@ -149,7 +149,7 @@
           "path": "./.claude/skills",
           "kind": "skills-listing",
           "loadMode": "always",
-          "tokens": 20,
+          "tokens": 19,
           "note": "inside Skills listing (1 project skill)"
         },
         {
@@ -157,7 +157,7 @@
           "path": "~/.claude/agents",
           "kind": "subagents",
           "loadMode": "always",
-          "tokens": 11
+          "tokens": 10
         }
       ],
       "mcpServers": [
@@ -204,9 +204,9 @@
           "label": "./CLAUDE.md",
           "path": "./CLAUDE.md",
           "tokens": {
-            "est": 999,
-            "low": 799,
-            "high": 1199
+            "est": 952,
+            "low": 809,
+            "high": 1095
           },
           "unmeasured": false,
           "chars": 3703,
@@ -226,9 +226,9 @@
           "label": "~/.claude/CLAUDE.md",
           "path": "~/.claude/CLAUDE.md",
           "tokens": {
-            "est": 261,
-            "low": 209,
-            "high": 313
+            "est": 249,
+            "low": 212,
+            "high": 286
           },
           "unmeasured": false,
           "chars": 939,
@@ -248,9 +248,9 @@
           "label": "./.claude/rules/style.md",
           "path": "./.claude/rules/style.md",
           "tokens": {
-            "est": 248,
-            "low": 198,
-            "high": 298
+            "est": 236,
+            "low": 201,
+            "high": 271
           },
           "unmeasured": false,
           "chars": 918,
@@ -270,9 +270,9 @@
           "label": "Skills listing (3 user skills)",
           "path": "~/.claude/skills",
           "tokens": {
-            "est": 135,
-            "low": 108,
-            "high": 162
+            "est": 129,
+            "low": 110,
+            "high": 148
           },
           "unmeasured": false,
           "chars": 455,
@@ -280,21 +280,21 @@
           "breakdown": [
             {
               "label": "db-migrate",
-              "tokens": 75
+              "tokens": 72
             },
             {
               "label": "code-review",
-              "tokens": 35
+              "tokens": 33
             },
             {
               "label": "release-notes",
-              "tokens": 26
+              "tokens": 24
             }
           ],
           "parts": [
             {
               "name": "3 user skills",
-              "tokens": 135,
+              "tokens": 129,
               "count": 3
             }
           ],
@@ -315,9 +315,9 @@
           "label": "Skills listing (1 project skill)",
           "path": "./.claude/skills",
           "tokens": {
-            "est": 20,
+            "est": 19,
             "low": 16,
-            "high": 24
+            "high": 22
           },
           "unmeasured": false,
           "chars": 62,
@@ -325,13 +325,13 @@
           "breakdown": [
             {
               "label": "deploy",
-              "tokens": 20
+              "tokens": 19
             }
           ],
           "parts": [
             {
               "name": "1 project skill",
-              "tokens": 20,
+              "tokens": 19,
               "count": 1
             }
           ],
@@ -352,9 +352,9 @@
           "label": "Subagents listing (1 user)",
           "path": "~/.claude/agents",
           "tokens": {
-            "est": 11,
+            "est": 10,
             "low": 9,
-            "high": 13
+            "high": 12
           },
           "unmeasured": false,
           "chars": 33,
@@ -465,9 +465,9 @@
           "label": "./.claude/rules/frontend.md",
           "path": "./.claude/rules/frontend.md",
           "tokens": {
-            "est": 255,
-            "low": 204,
-            "high": 306
+            "est": 243,
+            "low": 207,
+            "high": 279
           },
           "unmeasured": false,
           "chars": 912,
@@ -489,9 +489,9 @@
           "label": "./packages/web/CLAUDE.md",
           "path": "./packages/web/CLAUDE.md",
           "tokens": {
-            "est": 131,
+            "est": 124,
             "low": 105,
-            "high": 157
+            "high": 143
           },
           "unmeasured": false,
           "chars": 464,
@@ -513,9 +513,9 @@
           "label": "Skill bodies (3 user)",
           "path": "~/.claude/skills",
           "tokens": {
-            "est": 1146,
-            "low": 917,
-            "high": 1375
+            "est": 1093,
+            "low": 929,
+            "high": 1257
           },
           "unmeasured": false,
           "chars": 4130,
@@ -537,9 +537,9 @@
           "label": "Skill bodies (1 project)",
           "path": "./.claude/skills",
           "tokens": {
-            "est": 132,
-            "low": 106,
-            "high": 158
+            "est": 126,
+            "low": 107,
+            "high": 145
           },
           "unmeasured": false,
           "chars": 472,
@@ -565,35 +565,35 @@
       "presentInRepoOnly": false,
       "profile": {
         "id": "cursor-mixed",
-        "label": "o200k; model unknown, so midpoint of GPT-like (×1.0) and Claude-like (×1.5) priors",
-        "band": "wide: GPT-like −3% to Claude-like +20%"
+        "label": "o200k; model unknown, so midpoint of GPT-like (×1.0) and Claude-like (×1.43) ratios",
+        "band": "wide: GPT-like −3% to Claude-like +15%"
       },
       "totals": {
         "always": {
-          "est": 764,
-          "low": 593,
-          "high": 1100,
+          "est": 808,
+          "low": 589,
+          "high": 1139,
           "measuredItems": 5,
           "unmeasuredItems": 2
         },
         "conditional": {
-          "est": 106,
+          "est": 103,
           "low": 82,
-          "high": 153,
+          "high": 140,
           "measuredItems": 1,
           "unmeasuredItems": 0
         },
         "deferred": {
-          "est": 1278,
+          "est": 1242,
           "low": 991,
-          "high": 1839,
+          "high": 1681,
           "measuredItems": 3,
           "unmeasuredItems": 0
         },
         "on-demand": {
-          "est": 113,
+          "est": 109,
           "low": 87,
-          "high": 162,
+          "high": 148,
           "measuredItems": 1,
           "unmeasuredItems": 0
         },
@@ -605,7 +605,7 @@
           "unmeasuredItems": 0
         }
       },
-      "percentOfWindowAlways": 0.382,
+      "percentOfWindowAlways": 0.404,
       "alwaysIsLowerBound": true,
       "savings": null,
       "grade": {
@@ -642,29 +642,29 @@
           "path": "./AGENTS.md",
           "kind": "instructions",
           "loadMode": "always",
-          "tokens": 525
+          "tokens": 510
         },
         {
           "label": "./.cursor/rules/always.mdc",
           "path": "./.cursor/rules/always.mdc",
           "kind": "rule",
           "loadMode": "always",
-          "tokens": 104
-        },
-        {
-          "label": "skill \"db-migrate\"",
-          "path": "~/.claude/skills",
-          "kind": "skills-listing",
-          "loadMode": "always",
-          "tokens": 61,
-          "note": "inside Skills listing (3 user (.claude) skills)"
+          "tokens": 101
         },
         {
           "label": "skill \"code-review\"",
           "path": "~/.claude/skills",
           "kind": "skills-listing",
           "loadMode": "always",
-          "tokens": 28,
+          "tokens": 51,
+          "note": "inside Skills listing (3 user (.claude) skills)"
+        },
+        {
+          "label": "skill \"db-migrate\"",
+          "path": "~/.claude/skills",
+          "kind": "skills-listing",
+          "loadMode": "always",
+          "tokens": 50,
           "note": "inside Skills listing (3 user (.claude) skills)"
         },
         {
@@ -672,7 +672,7 @@
           "path": "~/.claude/skills",
           "kind": "skills-listing",
           "loadMode": "always",
-          "tokens": 20,
+          "tokens": 45,
           "note": "inside Skills listing (3 user (.claude) skills)"
         },
         {
@@ -680,7 +680,7 @@
           "path": "./.claude/skills",
           "kind": "skills-listing",
           "loadMode": "always",
-          "tokens": 15,
+          "tokens": 40,
           "note": "inside Skills listing (1 project (.claude) skill)"
         },
         {
@@ -720,9 +720,9 @@
           "label": "AGENTS.md",
           "path": "./AGENTS.md",
           "tokens": {
-            "est": 525,
+            "est": 510,
             "low": 407,
-            "high": 756
+            "high": 691
           },
           "unmeasured": false,
           "chars": 2314,
@@ -742,31 +742,31 @@
           "label": "Skills listing (3 user (.claude) skills)",
           "path": "~/.claude/skills",
           "tokens": {
-            "est": 109,
-            "low": 84,
-            "high": 157
+            "est": 146,
+            "low": 70,
+            "high": 243
           },
           "unmeasured": false,
-          "chars": 449,
+          "chars": 490,
           "lines": 0,
           "breakdown": [
             {
-              "label": "db-migrate",
-              "tokens": 61
+              "label": "code-review",
+              "tokens": 51
             },
             {
-              "label": "code-review",
-              "tokens": 28
+              "label": "db-migrate",
+              "tokens": 50
             },
             {
               "label": "release-notes",
-              "tokens": 20
+              "tokens": 45
             }
           ],
           "parts": [
             {
               "name": "3 user (.claude) skills",
-              "tokens": 109,
+              "tokens": 146,
               "count": 3
             }
           ],
@@ -776,7 +776,7 @@
             "verifiedAt": "2026-10-25"
           },
           "notes": [
-            "Cursor lists each skill's name + description (exact injection format and token cost unverified; counted as name: description)",
+            "Cursor lists each skill as <agent_skill fullPath=...> with its description cut to ~80 characters, and drops descriptions when the catalog is large (observed, confirmed by Cursor staff 2026-06; budget undocumented). Estimate = 80-character form; low = path only; high = full description.",
             "also read by Cursor for compatibility (documented)"
           ]
         },
@@ -788,9 +788,9 @@
           "label": "./.cursor/rules/always.mdc",
           "path": "./.cursor/rules/always.mdc",
           "tokens": {
-            "est": 104,
+            "est": 101,
             "low": 81,
-            "high": 149
+            "high": 136
           },
           "unmeasured": false,
           "chars": 461,
@@ -812,23 +812,23 @@
           "label": "Skills listing (1 project (.claude) skill)",
           "path": "./.claude/skills",
           "tokens": {
-            "est": 15,
-            "low": 12,
-            "high": 22
+            "est": 40,
+            "low": 22,
+            "high": 54
           },
           "unmeasured": false,
-          "chars": 60,
+          "chars": 132,
           "lines": 0,
           "breakdown": [
             {
               "label": "deploy",
-              "tokens": 15
+              "tokens": 40
             }
           ],
           "parts": [
             {
               "name": "1 project (.claude) skill",
-              "tokens": 15,
+              "tokens": 40,
               "count": 1
             }
           ],
@@ -838,7 +838,7 @@
             "verifiedAt": "2026-10-25"
           },
           "notes": [
-            "Cursor lists each skill's name + description (exact injection format and token cost unverified; counted as name: description)",
+            "Cursor lists each skill as <agent_skill fullPath=...> with its description cut to ~80 characters, and drops descriptions when the catalog is large (observed, confirmed by Cursor staff 2026-06; budget undocumented). Estimate = 80-character form; low = path only; high = full description.",
             "also read by Cursor for compatibility (documented)"
           ]
         },
@@ -852,7 +852,7 @@
           "tokens": {
             "est": 11,
             "low": 9,
-            "high": 16
+            "high": 15
           },
           "unmeasured": false,
           "chars": 47,
@@ -918,9 +918,9 @@
           "label": "./.cursor/rules/tests.mdc",
           "path": "./.cursor/rules/tests.mdc",
           "tokens": {
-            "est": 106,
+            "est": 103,
             "low": 82,
-            "high": 153
+            "high": 140
           },
           "unmeasured": false,
           "chars": 458,
@@ -942,9 +942,9 @@
           "label": "Skill bodies (3 user (.claude))",
           "path": "~/.claude/skills",
           "tokens": {
-            "est": 955,
+            "est": 928,
             "low": 741,
-            "high": 1375
+            "high": 1256
           },
           "unmeasured": false,
           "chars": 4130,
@@ -966,9 +966,9 @@
           "label": "./.cursor/rules/api-design.mdc (body)",
           "path": "./.cursor/rules/api-design.mdc",
           "tokens": {
-            "est": 213,
+            "est": 207,
             "low": 165,
-            "high": 306
+            "high": 280
           },
           "unmeasured": false,
           "chars": 916,
@@ -990,9 +990,9 @@
           "label": "Skill bodies (1 project (.claude))",
           "path": "./.claude/skills",
           "tokens": {
-            "est": 110,
+            "est": 107,
             "low": 85,
-            "high": 158
+            "high": 145
           },
           "unmeasured": false,
           "chars": 472,
@@ -1014,9 +1014,9 @@
           "label": "./.cursor/rules/manual.mdc",
           "path": "./.cursor/rules/manual.mdc",
           "tokens": {
-            "est": 113,
+            "est": 109,
             "low": 87,
-            "high": 162
+            "high": 148
           },
           "unmeasured": false,
           "chars": 468,

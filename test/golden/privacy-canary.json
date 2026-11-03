@@ -27,14 +27,14 @@
       "presentInRepoOnly": false,
       "profile": {
         "id": "claude-current",
-        "label": "o200k × 1.5 (Claude-current prior)",
-        "band": "±20%"
+        "label": "o200k × 1.43 (text) / × 1.35 (JSON), Claude-current ratios from published count_tokens measurements",
+        "band": "±15%"
       },
       "totals": {
         "always": {
-          "est": 266,
-          "low": 213,
-          "high": 319,
+          "est": 253,
+          "low": 215,
+          "high": 291,
           "measuredItems": 2,
           "unmeasuredItems": 1
         },
@@ -67,7 +67,7 @@
           "unmeasuredItems": 0
         }
       },
-      "percentOfWindowAlways": 0.133,
+      "percentOfWindowAlways": 0.1265,
       "alwaysIsLowerBound": true,
       "savings": null,
       "grade": {
@@ -99,14 +99,14 @@
           "path": "~/.claude/CLAUDE.md",
           "kind": "instructions",
           "loadMode": "always",
-          "tokens": 141
+          "tokens": 134
         },
         {
           "label": "./CLAUDE.md",
           "path": "./CLAUDE.md",
           "kind": "instructions",
           "loadMode": "always",
-          "tokens": 125
+          "tokens": 119
         }
       ],
       "mcpServers": [
@@ -132,9 +132,9 @@
           "label": "~/.claude/CLAUDE.md",
           "path": "~/.claude/CLAUDE.md",
           "tokens": {
-            "est": 141,
-            "low": 113,
-            "high": 169
+            "est": 134,
+            "low": 114,
+            "high": 154
           },
           "unmeasured": false,
           "chars": 456,
@@ -154,9 +154,9 @@
           "label": "./CLAUDE.md",
           "path": "./CLAUDE.md",
           "tokens": {
-            "est": 125,
-            "low": 100,
-            "high": 150
+            "est": 119,
+            "low": 101,
+            "high": 137
           },
           "unmeasured": false,
           "chars": 453,
@@ -202,14 +202,14 @@
       "presentInRepoOnly": false,
       "profile": {
         "id": "cursor-mixed",
-        "label": "o200k; model unknown, so midpoint of GPT-like (×1.0) and Claude-like (×1.5) priors",
-        "band": "wide: GPT-like −3% to Claude-like +20%"
+        "label": "o200k; model unknown, so midpoint of GPT-like (×1.0) and Claude-like (×1.43) ratios",
+        "band": "wide: GPT-like −3% to Claude-like +15%"
       },
       "totals": {
         "always": {
-          "est": 91,
+          "est": 89,
           "low": 71,
-          "high": 131,
+          "high": 120,
           "measuredItems": 1,
           "unmeasuredItems": 0
         },
@@ -242,7 +242,7 @@
           "unmeasuredItems": 0
         }
       },
-      "percentOfWindowAlways": 0.0455,
+      "percentOfWindowAlways": 0.0445,
       "alwaysIsLowerBound": false,
       "savings": null,
       "grade": {
@@ -269,7 +269,7 @@
           "path": "./.cursor/rules/canary-rule-name-gamma.mdc",
           "kind": "rule",
           "loadMode": "always",
-          "tokens": 91
+          "tokens": 89
         }
       ],
       "mcpServers": [],
@@ -286,9 +286,9 @@
           "label": "./.cursor/rules/canary-rule-name-gamma.mdc",
           "path": "./.cursor/rules/canary-rule-name-gamma.mdc",
           "tokens": {
-            "est": 91,
+            "est": 89,
             "low": 71,
-            "high": 131
+            "high": 120
           },
           "unmeasured": false,
           "chars": 427,

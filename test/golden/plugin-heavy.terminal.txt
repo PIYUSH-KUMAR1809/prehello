@@ -1,51 +1,55 @@
 prehello 0.1.0 · this folder + user config · window 200k
-Token counts are ESTIMATES (o200k BPE with per-agent scaling priors), shown with ~. Not exact for
+Token counts are ESTIMATES (o200k BPE with per-agent scaling factors), shown with ~. Not exact for
 any model.
 
-Before your first message: Cursor ~5k tokens
+Before your first message: Cursor ~5.2k tokens
 
 What to cut (estimates)
-  Cursor  skills, plugins and MCP servers add ~4.5k tokens before hello: 90% of the measured
+  Cursor  skills, plugins and MCP servers add ~4.7k tokens before hello: 91% of the measured
           always-on total, in 4 groups.
-          Top 3 groups = 94% of that. Removing them would save about 4.2k tokens (2.1% of a 200k
+          Top 3 groups = 95% of that. Removing them would save about 4.5k tokens (2.2% of a 200k
           window); estimate, not a promise.
-           1. plugin analytics-kit (40 skills)                                   ~2.2k    44%
-           2. plugin design-kit (24 skills)                                      ~1.3k    26%
-           3. plugin cloud-kit (14 skills)                                        ~719    14%
+           1. plugin analytics-kit (40 skills)                                   ~2.3k    45%
+           2. plugin design-kit (24 skills)                                      ~1.4k    26%
+           3. plugin cloud-kit (14 skills)                                        ~765    15%
 
 Measured vs. not measured (always-on items)
   Cursor  measured 4 of 4 (100%): 2 skills listings, 1 instruction file, 1 rule
 
 Top offenders (always on, estimates)
-   1. AGENTS.md                                          326   6.6%  ████████████
-   2. .cursor/rules/always.mdc                           164   3.3%  ██████
-   3. skill "analytics-task-12"                           59   1.2%  ██
-   4. skill "analytics-task-26"                           59   1.2%  ██
-   5. skill "analytics-task-3"                            59   1.2%  ██
-   6. skill "analytics-task-34"                           59   1.2%  ██
-   7. skill "design-task-19"                              59   1.2%  ██
-   8. skill "design-task-22"                              59   1.2%  ██
-   9. skill "design-task-4"                               59   1.2%  ██
-  10. skill "design-task-8"                               59   1.2%  ██
+   1. AGENTS.md                                          317   6.1%  ████████████
+   2. .cursor/rules/always.mdc                           159   3.1%  ██████
+   3. skill "analytics-task-14"                           60   1.2%  ██
+   4. skill "analytics-task-3"                            60   1.2%  ██
+   5. skill "analytics-task-5"                            60   1.2%  ██
+   6. skill "analytics-task-10"                           58   1.1%  ██
+   7. skill "analytics-task-11"                           58   1.1%  ██
+   8. skill "analytics-task-12"                           58   1.1%  ██
+   9. skill "analytics-task-13"                           58   1.1%  ██
+  10. skill "analytics-task-15"                           58   1.1%  ██
 
 ── Cursor ─────────────────────────────────────────────────────────────────────────────────  Grade A
-   estimate model: o200k; model unknown, so midpoint of GPT-like (×1.0) and Claude-like (×1.5)
-      priors; band wide: GPT-like −3% to Claude-like +20%
-ALWAYS ON before hello   ~5k tokens (3.9k–7.1k)  ≈ 2.5% of 200k
-   Skills listing (78 skills from 3 plugins)      4,226     85%  ████████████████████
-   AGENTS.md                                        326    6.6%  █▌
-   Skills listing (5 user skills)                   248    5.0%  █
-   .cursor/rules (alwaysApply)                      164    3.3%  ▌
-     · Skills listing (78 skills from 3 plugins): Cursor lists each skill's name + description
-       (exact injection format and token cost unverified; counted as name: description)
+   estimate model: o200k; model unknown, so midpoint of GPT-like (×1.0) and Claude-like (×1.43)
+      ratios; band wide: GPT-like −3% to Claude-like +15%
+ALWAYS ON before hello   ~5.2k tokens (2.8k–10k)  ≈ 2.6% of 200k
+   Skills listing (78 skills from 3 plugins)      4,454     86%  ████████████████████
+   AGENTS.md                                        317    6.1%  █
+   Skills listing (5 user skills)                   258    5.0%  █
+   .cursor/rules (alwaysApply)                      159    3.1%  ▌
+     · Skills listing (78 skills from 3 plugins): Cursor lists each skill as <agent_skill
+       fullPath=...> with its description cut to ~80 characters, and drops descriptions when the
+       catalog is large (observed, confirmed by Cursor staff 2026-06; budget undocumented). Estimate
+       = 80-character form; low = path only; high = full description.
      · Skills listing (78 skills from 3 plugins): plugin found under ~/.cursor/plugins; Cursor's
        on-disk plugin layout and install state are undocumented, so it may not be enabled (assumed)
-     · Skills listing (5 user skills): Cursor lists each skill's name + description (exact injection
-       format and token cost unverified; counted as name: description)
+     · Skills listing (5 user skills): Cursor lists each skill as <agent_skill fullPath=...> with
+       its description cut to ~80 characters, and drops descriptions when the catalog is large
+       (observed, confirmed by Cursor staff 2026-06; budget undocumented). Estimate = 80-character
+       form; low = path only; high = full description.
      · .cursor/rules/always.mdc: alwaysApply: true
-DEFERRED (stub now, body on demand)   ~4.7k tokens (3.6k–6.7k)
-   Skill bodies (78 skills from 3 plugins)      4,383     94%  ████████████████████
-   Skill bodies (5 user)                          280    6.0%  █
+DEFERRED (stub now, body on demand)   ~4.5k tokens (3.6k–6.1k)
+   Skill bodies (78 skills from 3 plugins)      4,260     94%  ████████████████████
+   Skill bodies (5 user)                          272    6.0%  █
      · Skill bodies (78 skills from 3 plugins): loaded only when a skill is used; supporting files
        in the skill folder are not counted
      · Skill bodies (5 user): loaded only when a skill is used; supporting files in the skill folder

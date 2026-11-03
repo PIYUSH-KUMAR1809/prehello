@@ -176,6 +176,7 @@ describe("treemap layout: readable labels, small tiles merged, nothing overflows
   });
 
   const D2 = "Use this skill when working with analytics, dashboards, experiments, feature flags, funnels, retention and cohorts in a product team.";
+  // sizes tuned for the 80-character Cursor skill listing (0.1.0 used 18 managed skills and 260 repeats)
   it("a tall, narrow tile keeps its name (rotated) instead of being dropped", () => {
     const w = world();
     for (const [name, n] of [["analytics-kit", 73], ["design-kit", 14], ["cloud-kit", 6]] as const) {
@@ -183,8 +184,8 @@ describe("treemap layout: readable labels, small tiles merged, nothing overflows
       put(root, { ".cursor-plugin/plugin.json": JSON.stringify({ name }) });
       for (let i = 0; i < n; i++) put(root, { [`skills/${name}-${i}/SKILL.md`]: skillMd(`${name}-${i}`, D2) });
     }
-    for (let i = 0; i < 18; i++) put(w.home, { [`.cursor/skills-cursor/managed-${i}/SKILL.md`]: skillMd(`managed-${i}`, D2.slice(0, 70)) });
-    put(w.project, { "AGENTS.md": "# rules\n" + "Prefer small functions. ".repeat(260) });
+    for (let i = 0; i < 12; i++) put(w.home, { [`.cursor/skills-cursor/managed-${i}/SKILL.md`]: skillMd(`managed-${i}`, D2.slice(0, 70)) });
+    put(w.project, { "AGENTS.md": "# rules\n" + "Prefer small functions. ".repeat(150) });
     const r = scanWorld(w, { agents: ["cursor"] });
     const svg = renderCard(r, agentOf(r, "cursor"), { theme: "dark", size: "og" });
     const narrow = treemap(svg).filter((t) => t.label === null && t.w >= 24 && t.h >= 90);
@@ -297,11 +298,11 @@ describe("CLI", () => {
     expect(fs.readFileSync(c, "utf8")).not.toMatch(/posthog|figma/); // --redact implies anonymised card labels
     fs.rmSync(out, { recursive: true, force: true });
   });
-  it("'--card file.png'' (space) fails fast with a hint to use --card=file.png, before any report", () => {
+  it("'--card file.png' (space) is accepted as the card file name", () => {
     const w = macLikeCursor();
-    const res = runCli(["--agent", "cursor", "--card", "nope.png", "--ceiling", w.root], { home: w.home, cwd: w.project });
-    expect(res.status).toBe(1);
-    expect(res.stderr).toMatch(/--card=nope\.png/);
-    expect(res.stdout).toBe("");
+    const card = path.join(w.project, "nope.png");
+    const res = runCli(["--agent", "cursor", "--card", "nope.png", "--card-format", "png", "--ceiling", w.root], { home: w.home, cwd: w.project, allowWrite: [card] });
+    expect(res.stderr).not.toMatch(/not a directory/);
+    expect(res.stderr).not.toMatch(/unknown option/);
   });
 });

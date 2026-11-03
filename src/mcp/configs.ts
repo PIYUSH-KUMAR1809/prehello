@@ -35,7 +35,7 @@ export function parseMcpMap(map: unknown, warn?: (msg: string) => void): McpServ
     if (!isObj(v)) continue;
     const t = typeof v.type === "string" ? v.type : typeof v.transport === "string" ? v.transport : undefined;
     const transport: McpServerDef["transport"] =
-      t === "http" || t === "streamable-http" ? "http" : t === "sse" ? "sse" : t === "stdio" || typeof v.command === "string" ? "stdio" : typeof v.url === "string" ? "http" : "unknown";
+      t === "http" || t === "streamable-http" ? "http" : t === "sse" ? "sse" : t === "stdio" || t === "local" || typeof v.command === "string" ? "stdio" : typeof v.url === "string" || typeof v.httpUrl === "string" ? "http" : "unknown";
     out.push({ name: sanitize(name, 60), transport, pkg: guessPkg(v), disabled: v.disabled === true || v.enabled === false });
   }
   return out;

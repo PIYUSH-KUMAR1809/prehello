@@ -1,0 +1,7 @@
+claude-opus-4-5-20251101 · 19k/200k tokens (10%)
+⛁ System prompt: 2.7k tokens (1.4%)
+⛁ System tools: 15.4k tokens (7.7%)
+⛁ Memory files: 484 tokens (0.2%)
+⛁ Messages: 664 tokens (0.3%)
+⛶ Free space: 136k (67.9%)
+ ⛝ Autocompact buffer: 45.0k tokens (22.5%)

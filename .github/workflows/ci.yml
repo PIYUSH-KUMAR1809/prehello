@@ -1,4 +1,4 @@
-# CI for prehello: Linux, macOS and Windows, Node 18 / 20 / 22.
+# CI for prehello: Linux, macOS and Windows, Node 22 / 24 / 26 (18 and 20 are end-of-life; engines is >=22).
 #
 # This file is the FIRST real run of the test suite on Windows and macOS: until it has gone green once, Windows and macOS
 # support is "verified by simulation", not "verified".
@@ -12,6 +12,9 @@ name: ci
 on:
   push:
   pull_request:
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
 permissions:
   contents: read
 jobs:
@@ -22,7 +25,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
-        node: [18, 20, 22]
+        node: [22, 24, 26]
     defaults:
       run:
         shell: bash
@@ -39,7 +42,7 @@ jobs:
           # one reproducible clock for every machine
           TZ: UTC
       - name: Windows-shape simulations (8.3 short temp paths, backslash report paths) on Linux
-        if: runner.os == 'Linux' && matrix.node == 20
+        if: runner.os == 'Linux' && matrix.node == 22
         run: PREHELLO_SIM_SHORTPATH=1 PREHELLO_SIM_WINSEP=1 npm test
         env:
           TZ: UTC

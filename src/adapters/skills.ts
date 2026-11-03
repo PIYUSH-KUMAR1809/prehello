@@ -88,6 +88,9 @@ export interface SkillItemsSpec {
   recs: SkillRec[];
   /** The text the agent would list for this skill, or null if it is NOT in the listing (hidden from the model). */
   lineFor: (r: SkillRec) => string | null;
+  /** Optional alternative renderings that bound the listing cost when the injection format varies (e.g. Cursor trims or drops descriptions). */
+  lowLineFor?: (r: SkillRec) => string;
+  highLineFor?: (r: SkillRec) => string;
   /** Listing load mode: "always" normally; "conditional" for path-scoped / nested skills. */
   listingMode: "always" | "conditional";
   confidence: Confidence;
@@ -133,6 +136,14 @@ export function skillItems(ctx: Ctx, s: SkillItemsSpec): Item[] {
       group: s.group,
     });
     it.breakdown = per;
+    if (it.tokens && (s.lowLineFor || s.highLineFor)) {
+      const alt = (fn: (r: SkillRec) => string, tag: string) => {
+        const t = listed.map((l) => fn(l.r)).join("\n") + "\n";
+        return prof.apply(ctx.count(`skills-${tag}|${s.agent}|${s.dir}|${t.length}`, t));
+      };
+      if (s.lowLineFor) it.tokens.low = Math.min(it.tokens.low, alt(s.lowLineFor, "lo").low);
+      if (s.highLineFor) it.tokens.high = Math.max(it.tokens.high, alt(s.highLineFor, "hi").high);
+    }
     // "What to cut" parts: one per plugin (or, without a plugin, the whole group), scaled so they add up to the item's estimate.
     if (it.tokens) {
       const groups = new Map<string, { tokens: number; count: number }>();

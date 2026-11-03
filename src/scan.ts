@@ -2,24 +2,16 @@ import { realpathOrSelf } from "./fs-safe";
 import { Ctx, ScanOptions } from "./context";
 import { cmp } from "./util/fmt";
 import { makeCounter } from "./tokens/counter";
-import { AGENT_NAMES, ALL_AGENTS, AgentId, AgentReport, Report, SCHEMA_VERSION } from "./model";
-import { detectClaude, discoverClaude } from "./adapters/claude-code";
-import { detectCursor, discoverCursor } from "./adapters/cursor";
-import { detectCodex, discoverCodex } from "./adapters/codex";
+import { AGENT_NAMES, ALL_AGENTS, AgentReport, Report, SCHEMA_VERSION } from "./model";
+import { ADAPTERS } from "./adapters";
 import { sumTotals } from "./analyze/totals";
 import { crossFindings, rankFindings } from "./analyze/findings";
 import { gradeAgent } from "./analyze/grade";
 import { savingsOf } from "./analyze/savings";
 import { coverageOf, mcpServersOf, offendersOf } from "./analyze/summary";
-import { Detection, AdapterResult } from "./adapters/types";
 
-export const VERSION = "0.1.0";
-
-const ADAPTERS: Record<AgentId, { detect: (c: Ctx) => Detection; discover: (c: Ctx) => AdapterResult }> = {
-  "claude-code": { detect: detectClaude, discover: discoverClaude },
-  cursor: { detect: detectCursor, discover: discoverCursor },
-  codex: { detect: detectCodex, discover: discoverCodex },
-};
+import { VERSION } from "./version";
+export { VERSION };
 
 export const NOT_MEASURABLE = [
   "the agent's built-in system prompt and built-in tool definitions",

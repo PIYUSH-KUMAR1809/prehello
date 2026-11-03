@@ -24,14 +24,14 @@
       "presentInRepoOnly": true,
       "profile": {
         "id": "claude-current",
-        "label": "o200k × 1.5 (Claude-current prior)",
-        "band": "±20%"
+        "label": "o200k × 1.43 (text) / × 1.35 (JSON), Claude-current ratios from published count_tokens measurements",
+        "band": "±15%"
       },
       "totals": {
         "always": {
-          "est": 134,
-          "low": 107,
-          "high": 161,
+          "est": 127,
+          "low": 108,
+          "high": 146,
           "measuredItems": 1,
           "unmeasuredItems": 0
         },
@@ -64,7 +64,7 @@
           "unmeasuredItems": 0
         }
       },
-      "percentOfWindowAlways": 0.067,
+      "percentOfWindowAlways": 0.0635,
       "alwaysIsLowerBound": false,
       "savings": null,
       "grade": null,
@@ -86,7 +86,7 @@
           "path": "./CLAUDE.md",
           "kind": "instructions",
           "loadMode": "always",
-          "tokens": 134
+          "tokens": 127
         }
       ],
       "mcpServers": [],
@@ -104,9 +104,9 @@
           "label": "./CLAUDE.md",
           "path": "./CLAUDE.md",
           "tokens": {
-            "est": 134,
-            "low": 107,
-            "high": 161
+            "est": 127,
+            "low": 108,
+            "high": 146
           },
           "unmeasured": false,
           "chars": 455,
@@ -128,14 +128,14 @@
       "presentInRepoOnly": true,
       "profile": {
         "id": "cursor-mixed",
-        "label": "o200k; model unknown, so midpoint of GPT-like (×1.0) and Claude-like (×1.5) priors",
-        "band": "wide: GPT-like −3% to Claude-like +20%"
+        "label": "o200k; model unknown, so midpoint of GPT-like (×1.0) and Claude-like (×1.43) ratios",
+        "band": "wide: GPT-like −3% to Claude-like +15%"
       },
       "totals": {
         "always": {
-          "est": 109,
+          "est": 106,
           "low": 84,
-          "high": 157,
+          "high": 143,
           "measuredItems": 1,
           "unmeasuredItems": 0
         },
@@ -168,7 +168,7 @@
           "unmeasuredItems": 0
         }
       },
-      "percentOfWindowAlways": 0.0545,
+      "percentOfWindowAlways": 0.053,
       "alwaysIsLowerBound": false,
       "savings": null,
       "grade": null,
@@ -190,7 +190,7 @@
           "path": "./.cursorrules",
           "kind": "instructions",
           "loadMode": "always",
-          "tokens": 109
+          "tokens": 106
         }
       ],
       "mcpServers": [],
@@ -207,9 +207,9 @@
           "label": ".cursorrules (legacy)",
           "path": "./.cursorrules",
           "tokens": {
-            "est": 109,
+            "est": 106,
             "low": 84,
-            "high": 157
+            "high": 143
           },
           "unmeasured": false,
           "chars": 459,

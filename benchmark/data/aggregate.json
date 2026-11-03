@@ -1,0 +1,8 @@
+{
+  "note": "Counts only. Findings listed here are never recorded per repo.",
+  "findings": {
+    "F9": {
+      "repos": 6
+    }
+  }
+}

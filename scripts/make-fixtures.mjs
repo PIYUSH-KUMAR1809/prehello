@@ -6,7 +6,9 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), "..", "test", "fixtures");
-fs.rmSync(ROOT, { recursive: true, force: true });
+// Hand-made fixtures (not generated here) survive a re-run.
+const KEEP = new Set(["context-output"]);
+for (const e of fs.existsSync(ROOT) ? fs.readdirSync(ROOT) : []) if (!KEEP.has(e)) fs.rmSync(path.join(ROOT, e), { recursive: true, force: true });
 
 let seed = 42;
 const rnd = () => ((seed = (seed * 1664525 + 1013904223) >>> 0) / 2 ** 32);
@@ -204,5 +206,46 @@ const sharedText = doc("Acme Web engineering guide", ["Commands", "Architecture"
   for (let i = 1; i <= 5; i++) skill(path.join(home, ".cursor", "skills"), `my-helper-${i}`, desc("my own workflows"));
   write(path.join(proj, "AGENTS.md"), doc("Acme Web engineering guide", ["Commands", "Architecture", "Testing"]));
   write(path.join(proj, ".cursor", "rules", "always.mdc"), `---\nalwaysApply: true\n---\n\n${para(10)}\n`);
+}
+
+// ---------- copilot-mix: GitHub Copilot (CLI + VS Code) ----------
+{
+  const { home, proj } = fx("copilot-mix");
+  git(proj);
+  const shared = "# Shared agent guide\n\nRun npm test before pushing. Keep handlers thin.\n";
+  write(path.join(home, ".copilot", "copilot-instructions.md"), "# Personal\n\nAnswer briefly. Prefer TypeScript.\n");
+  write(path.join(home, ".copilot", "instructions", "personal.instructions.md"), `---\napplyTo: "**"\n---\nAlways explain trade-offs in one sentence.\n`);
+  write(path.join(home, ".copilot", "mcp-config.json"), j({ mcpServers: { context7: { type: "local", command: "npx", args: ["-y", "@upstash/context7-mcp"], tools: ["*"] } } }));
+  write(path.join(proj, ".github", "copilot-instructions.md"), "# Repo instructions\n\nSee @../docs/style.md for style.\nIgnored: @/etc/hosts and @~/private.md\n\n" + para(3) + "\n");
+  write(path.join(proj, "docs", "style.md"), "# Style\n\nTwo-space indent. No default exports.\n");
+  write(path.join(proj, "AGENTS.md"), shared);
+  write(path.join(proj, "CLAUDE.md"), shared); // identical: Copilot CLI removes the duplicate
+  write(path.join(proj, "GEMINI.md"), "# Gemini notes\n\n@docs/style.md is not expanded by Copilot.\n");
+  write(path.join(proj, ".github", "instructions", "ts.instructions.md"), `---\napplyTo: "**/*.ts,**/*.tsx"\n---\n# TypeScript\n\n${para(2)}\n`);
+  write(path.join(proj, ".github", "instructions", "backend", "review.instructions.md"), `---\ndescription: "Use when reviewing API handlers."\n---\n# Review\n\n${para(2)}\n`);
+  write(path.join(proj, ".github", "instructions", "manual.instructions.md"), "# Manual only\n\nAttach me by hand.\n");
+  write(path.join(proj, ".github", "prompts", "release.prompt.md"), `---\nagent: agent\ndescription: Cut a release\n---\nBump the version, update the changelog and tag.\n`);
+  write(path.join(proj, ".vscode", "mcp.json"), j({ servers: { playwright: { command: "npx", args: ["@playwright/mcp@latest"] } } }));
+  write(path.join(proj, ".mcp.json"), j({ mcpServers: { context7: { command: "npx", args: ["-y", "@upstash/context7-mcp"] } } }));
+  write(path.join(proj, "packages", "api", "AGENTS.md"), "# API package\n\nHandlers return typed errors.\n");
+}
+// ---------- gemini-mix: Gemini CLI ----------
+{
+  const { home, proj, root } = fx("gemini-mix");
+  git(proj);
+  write(path.join(root, "GEMINI.md"), "# Above the .git boundary: never loaded\n"); // parent of the project
+  write(path.join(home, ".gemini", "GEMINI.md"), "# Global\n\nBe concise.\n");
+  write(path.join(home, ".gemini", "AGENTS.md"), "# Global agents file (listed in context.fileName)\n\nPrefer small diffs.\n");
+  write(path.join(home, ".gemini", "settings.json"), j({ context: { fileName: ["GEMINI.md", "AGENTS.md"] }, mcpServers: { github: { httpUrl: "https://api.example.invalid/mcp" } } }));
+  write(path.join(home, ".gemini", "extensions", "acme-ext", "gemini-extension.json"), j({ name: "acme-ext", version: "1.0.0", contextFileName: "ACME.md", mcpServers: { github: { command: "node", args: ["x.js"] }, "acme-db": { command: "node", args: ["${extensionPath}/db.js"] } } }));
+  write(path.join(home, ".gemini", "extensions", "acme-ext", "ACME.md"), "# Acme extension\n\nUse the acme-db tools for SQL.\n");
+  write(path.join(proj, "GEMINI.md"), "# Project\n\n@./docs/a.md\n\n```\n@./docs/ignored.md\n```\n\n" + para(3) + "\n");
+  write(path.join(proj, "docs", "a.md"), "# A\n\nImported. Also @./b.md\n");
+  write(path.join(proj, "docs", "b.md"), "# B\n\nImported twice removed.\n");
+  write(path.join(proj, "docs", "ignored.md"), "# Ignored\n\nInside a code block, so not imported.\n");
+  write(path.join(proj, "AGENTS.md"), "# Agents\n\nShared with other agents.\n");
+  write(path.join(proj, "services", "GEMINI.md"), "# Services\n\nLoaded just in time.\n");
+  write(path.join(proj, ".gemini", "settings.json"), j({ mcpServers: { "local-tool": { command: "python", args: ["tool.py"] } } }));
+  write(path.join(proj, ".gemini", "skills", "deploy", "SKILL.md"), "---\nname: deploy\ndescription: Deploy the app to staging.\n---\nRun the deploy script.\n");
 }
 console.log("fixtures written to", ROOT);

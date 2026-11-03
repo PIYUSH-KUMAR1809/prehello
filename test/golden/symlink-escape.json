@@ -26,8 +26,8 @@
       "presentInRepoOnly": false,
       "profile": {
         "id": "claude-current",
-        "label": "o200k × 1.5 (Claude-current prior)",
-        "band": "±20%"
+        "label": "o200k × 1.43 (text) / × 1.35 (JSON), Claude-current ratios from published count_tokens measurements",
+        "band": "±15%"
       },
       "totals": {
         "always": {
@@ -120,14 +120,14 @@
       "presentInRepoOnly": true,
       "profile": {
         "id": "cursor-mixed",
-        "label": "o200k; model unknown, so midpoint of GPT-like (×1.0) and Claude-like (×1.5) priors",
-        "band": "wide: GPT-like −3% to Claude-like +20%"
+        "label": "o200k; model unknown, so midpoint of GPT-like (×1.0) and Claude-like (×1.43) ratios",
+        "band": "wide: GPT-like −3% to Claude-like +15%"
       },
       "totals": {
         "always": {
           "est": 9,
           "low": 7,
-          "high": 13,
+          "high": 12,
           "measuredItems": 1,
           "unmeasuredItems": 0
         },
@@ -201,7 +201,7 @@
           "tokens": {
             "est": 9,
             "low": 7,
-            "high": 13
+            "high": 12
           },
           "unmeasured": false,
           "chars": 21,

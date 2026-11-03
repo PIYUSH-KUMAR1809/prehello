@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "note": "Claude-to-o200k token ratios from PUBLISHED Anthropic count_tokens measurements (not measured by prehello). factor = median of the published points for that content kind; band = relative half-width used for low/high. Unvalidated until n >= 100 own measurements (scripts/calibrate-anthropic.mjs). See docs/ACCURACY.md.",
+  "claude": {
+    "measuredAt": "2026-10-23",
+    "tokenizer": "Claude 4.7 and later (Opus/Sonnet/Haiku 5.5 give identical counts per both sources)",
+    "n": 10,
+    "unvalidated": true,
+    "byKind": {
+      "markdown": {
+        "factor": 1.43,
+        "band": 0.15,
+        "points": [
+          { "ratio": 1.486, "what": "English prose reference text, 430 o200k tokens", "source": "https://measuredlab.com/tools/token-counter/" },
+          { "ratio": 1.38, "what": "5 Markdown/reST files, 44,621 o200k tokens", "source": "https://aitoollabs.dev/posts/count-tokens-in-codebase/" }
+        ]
+      },
+      "json": {
+        "factor": 1.35,
+        "band": 0.15,
+        "points": [
+          { "ratio": 1.282, "what": "JSON reference text, 535 o200k tokens", "source": "https://measuredlab.com/tools/token-counter/" },
+          { "ratio": 1.42, "what": "5 YAML/JSON/TOML files, 3,391 o200k tokens", "source": "https://aitoollabs.dev/posts/count-tokens-in-codebase/" }
+        ]
+      }
+    },
+    "legacyRatio": {
+      "value": 0.82,
+      "what": "Sonnet 4.6 (pre-4.7 tokenizer) used 18% fewer tokens than 4.7+ on the same 33 files",
+      "source": "https://aitoollabs.dev/posts/count-tokens-in-codebase/"
+    }
+  }
+}

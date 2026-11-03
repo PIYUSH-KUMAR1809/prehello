@@ -1,5 +1,5 @@
 prehello 0.1.0 · this folder + user config · window 200k
-Token counts are ESTIMATES (o200k BPE with per-agent scaling priors), shown with ~. Not exact for
+Token counts are ESTIMATES (o200k BPE with per-agent scaling factors), shown with ~. Not exact for
 any model.
 
 Before your first message: Codex ~5.8k tokens

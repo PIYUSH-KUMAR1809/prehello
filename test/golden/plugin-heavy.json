@@ -26,14 +26,14 @@
       "presentInRepoOnly": false,
       "profile": {
         "id": "cursor-mixed",
-        "label": "o200k; model unknown, so midpoint of GPT-like (×1.0) and Claude-like (×1.5) priors",
-        "band": "wide: GPT-like −3% to Claude-like +20%"
+        "label": "o200k; model unknown, so midpoint of GPT-like (×1.0) and Claude-like (×1.43) ratios",
+        "band": "wide: GPT-like −3% to Claude-like +15%"
       },
       "totals": {
         "always": {
-          "est": 4964,
-          "low": 3852,
-          "high": 7148,
+          "est": 5188,
+          "low": 2848,
+          "high": 10032,
           "measuredItems": 4,
           "unmeasuredItems": 0
         },
@@ -45,9 +45,9 @@
           "unmeasuredItems": 0
         },
         "deferred": {
-          "est": 4663,
+          "est": 4532,
           "low": 3618,
-          "high": 6714,
+          "high": 6134,
           "measuredItems": 2,
           "unmeasuredItems": 0
         },
@@ -66,7 +66,7 @@
           "unmeasuredItems": 0
         }
       },
-      "percentOfWindowAlways": 2.4819999999999998,
+      "percentOfWindowAlways": 2.5940000000000003,
       "alwaysIsLowerBound": false,
       "savings": {
         "n": 3,
@@ -74,28 +74,28 @@
           {
             "label": "plugin analytics-kit",
             "kind": "skills",
-            "tokens": 2193,
+            "tokens": 2327,
             "count": 40
           },
           {
             "label": "plugin design-kit",
             "kind": "skills",
-            "tokens": 1314,
+            "tokens": 1361,
             "count": 24
           },
           {
             "label": "plugin cloud-kit",
             "kind": "skills",
-            "tokens": 719,
+            "tokens": 765,
             "count": 14
           }
         ],
-        "topTokens": 4226,
-        "groupsTokens": 4474,
+        "topTokens": 4453,
+        "groupsTokens": 4711,
         "groupsCount": 4,
-        "pctOfAlways": 85.13295729250603,
-        "pctOfGroups": 94.45686186857398,
-        "pctOfWindow": 2.113,
+        "pctOfAlways": 85.83269082498073,
+        "pctOfGroups": 94.5234557418807,
+        "pctOfWindow": 2.2265,
         "note": "estimate: what removing these groups would save; not a promise"
       },
       "grade": {
@@ -103,7 +103,7 @@
         "score": 95,
         "provisional": false,
         "reasons": [
-          "always-on is ~2.5% of the window (−5)"
+          "always-on is ~2.6% of the window (−5)"
         ]
       },
       "coverage": {
@@ -126,29 +126,21 @@
           "path": "./AGENTS.md",
           "kind": "instructions",
           "loadMode": "always",
-          "tokens": 326
+          "tokens": 317
         },
         {
           "label": "./.cursor/rules/always.mdc",
           "path": "./.cursor/rules/always.mdc",
           "kind": "rule",
           "loadMode": "always",
-          "tokens": 164
+          "tokens": 159
         },
         {
-          "label": "skill \"analytics-task-12\"",
+          "label": "skill \"analytics-task-14\"",
           "path": "~/.cursor/plugins",
           "kind": "skills-listing",
           "loadMode": "always",
-          "tokens": 59,
-          "note": "inside Skills listing (78 skills from 3 plugins)"
-        },
-        {
-          "label": "skill \"analytics-task-26\"",
-          "path": "~/.cursor/plugins",
-          "kind": "skills-listing",
-          "loadMode": "always",
-          "tokens": 59,
+          "tokens": 60,
           "note": "inside Skills listing (78 skills from 3 plugins)"
         },
         {
@@ -156,55 +148,63 @@
           "path": "~/.cursor/plugins",
           "kind": "skills-listing",
           "loadMode": "always",
-          "tokens": 59,
+          "tokens": 60,
           "note": "inside Skills listing (78 skills from 3 plugins)"
         },
         {
-          "label": "skill \"analytics-task-34\"",
+          "label": "skill \"analytics-task-5\"",
           "path": "~/.cursor/plugins",
           "kind": "skills-listing",
           "loadMode": "always",
-          "tokens": 59,
+          "tokens": 60,
           "note": "inside Skills listing (78 skills from 3 plugins)"
         },
         {
-          "label": "skill \"design-task-19\"",
+          "label": "skill \"analytics-task-10\"",
           "path": "~/.cursor/plugins",
           "kind": "skills-listing",
           "loadMode": "always",
-          "tokens": 59,
+          "tokens": 58,
           "note": "inside Skills listing (78 skills from 3 plugins)"
         },
         {
-          "label": "skill \"design-task-22\"",
+          "label": "skill \"analytics-task-11\"",
           "path": "~/.cursor/plugins",
           "kind": "skills-listing",
           "loadMode": "always",
-          "tokens": 59,
+          "tokens": 58,
           "note": "inside Skills listing (78 skills from 3 plugins)"
         },
         {
-          "label": "skill \"design-task-4\"",
+          "label": "skill \"analytics-task-12\"",
           "path": "~/.cursor/plugins",
           "kind": "skills-listing",
           "loadMode": "always",
-          "tokens": 59,
+          "tokens": 58,
           "note": "inside Skills listing (78 skills from 3 plugins)"
         },
         {
-          "label": "skill \"design-task-8\"",
+          "label": "skill \"analytics-task-13\"",
           "path": "~/.cursor/plugins",
           "kind": "skills-listing",
           "loadMode": "always",
-          "tokens": 59,
+          "tokens": 58,
           "note": "inside Skills listing (78 skills from 3 plugins)"
         },
         {
-          "label": "skill \"my-helper-4\"",
+          "label": "skill \"analytics-task-15\"",
+          "path": "~/.cursor/plugins",
+          "kind": "skills-listing",
+          "loadMode": "always",
+          "tokens": 58,
+          "note": "inside Skills listing (78 skills from 3 plugins)"
+        },
+        {
+          "label": "skill \"my-helper-2\"",
           "path": "~/.cursor/skills",
           "kind": "skills-listing",
           "loadMode": "always",
-          "tokens": 51,
+          "tokens": 52,
           "note": "inside Skills listing (5 user skills)"
         },
         {
@@ -212,23 +212,7 @@
           "path": "~/.cursor/skills",
           "kind": "skills-listing",
           "loadMode": "always",
-          "tokens": 51,
-          "note": "inside Skills listing (5 user skills)"
-        },
-        {
-          "label": "skill \"my-helper-2\"",
-          "path": "~/.cursor/skills",
-          "kind": "skills-listing",
-          "loadMode": "always",
-          "tokens": 49,
-          "note": "inside Skills listing (5 user skills)"
-        },
-        {
-          "label": "skill \"my-helper-3\"",
-          "path": "~/.cursor/skills",
-          "kind": "skills-listing",
-          "loadMode": "always",
-          "tokens": 49,
+          "tokens": 52,
           "note": "inside Skills listing (5 user skills)"
         },
         {
@@ -236,7 +220,23 @@
           "path": "~/.cursor/skills",
           "kind": "skills-listing",
           "loadMode": "always",
-          "tokens": 48,
+          "tokens": 51,
+          "note": "inside Skills listing (5 user skills)"
+        },
+        {
+          "label": "skill \"my-helper-3\"",
+          "path": "~/.cursor/skills",
+          "kind": "skills-listing",
+          "loadMode": "always",
+          "tokens": 51,
+          "note": "inside Skills listing (5 user skills)"
+        },
+        {
+          "label": "skill \"my-helper-4\"",
+          "path": "~/.cursor/skills",
+          "kind": "skills-listing",
+          "loadMode": "always",
+          "tokens": 51,
           "note": "inside Skills listing (5 user skills)"
         }
       ],
@@ -255,61 +255,61 @@
           "label": "Skills listing (78 skills from 3 plugins)",
           "path": "~/.cursor/plugins",
           "tokens": {
-            "est": 4226,
-            "low": 3280,
-            "high": 6086
+            "est": 4454,
+            "low": 2347,
+            "high": 8898
           },
           "unmeasured": false,
-          "chars": 18076,
+          "chars": 15473,
           "lines": 0,
           "breakdown": [
             {
-              "label": "analytics-task-12",
-              "tokens": 59
-            },
-            {
-              "label": "analytics-task-26",
-              "tokens": 59
+              "label": "analytics-task-14",
+              "tokens": 60
             },
             {
               "label": "analytics-task-3",
-              "tokens": 59
+              "tokens": 60
             },
             {
-              "label": "analytics-task-34",
-              "tokens": 59
+              "label": "analytics-task-5",
+              "tokens": 60
             },
             {
-              "label": "design-task-19",
-              "tokens": 59
+              "label": "analytics-task-10",
+              "tokens": 58
             },
             {
-              "label": "design-task-22",
-              "tokens": 59
+              "label": "analytics-task-11",
+              "tokens": 58
             },
             {
-              "label": "design-task-4",
-              "tokens": 59
+              "label": "analytics-task-12",
+              "tokens": 58
             },
             {
-              "label": "design-task-8",
-              "tokens": 59
+              "label": "analytics-task-13",
+              "tokens": 58
+            },
+            {
+              "label": "analytics-task-15",
+              "tokens": 58
             }
           ],
           "parts": [
             {
               "name": "plugin analytics-kit",
-              "tokens": 2193,
+              "tokens": 2327,
               "count": 40
             },
             {
               "name": "plugin design-kit",
-              "tokens": 1314,
+              "tokens": 1361,
               "count": 24
             },
             {
               "name": "plugin cloud-kit",
-              "tokens": 719,
+              "tokens": 765,
               "count": 14
             }
           ],
@@ -319,7 +319,7 @@
             "verifiedAt": "2026-10-25"
           },
           "notes": [
-            "Cursor lists each skill's name + description (exact injection format and token cost unverified; counted as name: description)",
+            "Cursor lists each skill as <agent_skill fullPath=...> with its description cut to ~80 characters, and drops descriptions when the catalog is large (observed, confirmed by Cursor staff 2026-06; budget undocumented). Estimate = 80-character form; low = path only; high = full description.",
             "plugin found under ~/.cursor/plugins; Cursor's on-disk plugin layout and install state are undocumented, so it may not be enabled (assumed)"
           ]
         },
@@ -331,9 +331,9 @@
           "label": "AGENTS.md",
           "path": "./AGENTS.md",
           "tokens": {
-            "est": 326,
+            "est": 317,
             "low": 253,
-            "high": 470
+            "high": 429
           },
           "unmeasured": false,
           "chars": 1407,
@@ -353,39 +353,39 @@
           "label": "Skills listing (5 user skills)",
           "path": "~/.cursor/skills",
           "tokens": {
-            "est": 248,
-            "low": 192,
-            "high": 356
+            "est": 258,
+            "low": 121,
+            "high": 490
           },
           "unmeasured": false,
-          "chars": 1036,
+          "chars": 845,
           "lines": 0,
           "breakdown": [
             {
-              "label": "my-helper-4",
-              "tokens": 51
+              "label": "my-helper-2",
+              "tokens": 52
             },
             {
               "label": "my-helper-5",
-              "tokens": 51
-            },
-            {
-              "label": "my-helper-2",
-              "tokens": 49
-            },
-            {
-              "label": "my-helper-3",
-              "tokens": 49
+              "tokens": 52
             },
             {
               "label": "my-helper-1",
-              "tokens": 48
+              "tokens": 51
+            },
+            {
+              "label": "my-helper-3",
+              "tokens": 51
+            },
+            {
+              "label": "my-helper-4",
+              "tokens": 51
             }
           ],
           "parts": [
             {
               "name": "5 user skills",
-              "tokens": 248,
+              "tokens": 258,
               "count": 5
             }
           ],
@@ -395,7 +395,7 @@
             "verifiedAt": "2026-10-25"
           },
           "notes": [
-            "Cursor lists each skill's name + description (exact injection format and token cost unverified; counted as name: description)"
+            "Cursor lists each skill as <agent_skill fullPath=...> with its description cut to ~80 characters, and drops descriptions when the catalog is large (observed, confirmed by Cursor staff 2026-06; budget undocumented). Estimate = 80-character form; low = path only; high = full description."
           ]
         },
         {
@@ -406,9 +406,9 @@
           "label": "./.cursor/rules/always.mdc",
           "path": "./.cursor/rules/always.mdc",
           "tokens": {
-            "est": 164,
+            "est": 159,
             "low": 127,
-            "high": 236
+            "high": 215
           },
           "unmeasured": false,
           "chars": 722,
@@ -430,9 +430,9 @@
           "label": "Skill bodies (78 skills from 3 plugins)",
           "path": "~/.cursor/plugins",
           "tokens": {
-            "est": 4383,
+            "est": 4260,
             "low": 3401,
-            "high": 6311
+            "high": 5766
           },
           "unmeasured": false,
           "chars": 18598,
@@ -454,9 +454,9 @@
           "label": "Skill bodies (5 user)",
           "path": "~/.cursor/skills",
           "tokens": {
-            "est": 280,
+            "est": 272,
             "low": 217,
-            "high": 403
+            "high": 368
           },
           "unmeasured": false,
           "chars": 1168,

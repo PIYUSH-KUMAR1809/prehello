@@ -14,6 +14,7 @@ export interface RunOpts {
   allowWrite?: string[];
   env?: Record<string, string>;
   prefix?: string[]; // e.g. ["unshare","-rn"]
+  input?: string;
 }
 
 export function runCli(args: string[], o: RunOpts): SpawnSyncReturns<string> & { guardLog: string } {
@@ -27,6 +28,7 @@ export function runCli(args: string[], o: RunOpts): SpawnSyncReturns<string> & {
   const res = spawnSync(cmd, [...pre, ...nodeArgs], {
     cwd: o.cwd ?? ROOT,
     encoding: "utf8",
+    ...(o.input !== undefined ? { input: o.input } : {}),
     env: {
       HOME: o.home,
       USERPROFILE: o.home, // Windows takes the home folder from here

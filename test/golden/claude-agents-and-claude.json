@@ -26,14 +26,14 @@
       "presentInRepoOnly": false,
       "profile": {
         "id": "claude-current",
-        "label": "o200k × 1.5 (Claude-current prior)",
-        "band": "±20%"
+        "label": "o200k × 1.43 (text) / × 1.35 (JSON), Claude-current ratios from published count_tokens measurements",
+        "band": "±15%"
       },
       "totals": {
         "always": {
-          "est": 258,
-          "low": 206,
-          "high": 310,
+          "est": 246,
+          "low": 209,
+          "high": 283,
           "measuredItems": 1,
           "unmeasuredItems": 0
         },
@@ -66,7 +66,7 @@
           "unmeasuredItems": 0
         }
       },
-      "percentOfWindowAlways": 0.129,
+      "percentOfWindowAlways": 0.123,
       "alwaysIsLowerBound": false,
       "savings": null,
       "grade": {
@@ -95,7 +95,7 @@
           "path": "./CLAUDE.md",
           "kind": "instructions",
           "loadMode": "always",
-          "tokens": 258
+          "tokens": 246
         }
       ],
       "mcpServers": [],
@@ -113,9 +113,9 @@
           "label": "./CLAUDE.md",
           "path": "./CLAUDE.md",
           "tokens": {
-            "est": 258,
-            "low": 206,
-            "high": 310
+            "est": 246,
+            "low": 209,
+            "high": 283
           },
           "unmeasured": false,
           "chars": 909,
@@ -137,14 +137,14 @@
       "presentInRepoOnly": true,
       "profile": {
         "id": "cursor-mixed",
-        "label": "o200k; model unknown, so midpoint of GPT-like (×1.0) and Claude-like (×1.5) priors",
-        "band": "wide: GPT-like −3% to Claude-like +20%"
+        "label": "o200k; model unknown, so midpoint of GPT-like (×1.0) and Claude-like (×1.43) ratios",
+        "band": "wide: GPT-like −3% to Claude-like +15%"
       },
       "totals": {
         "always": {
-          "est": 220,
+          "est": 214,
           "low": 171,
-          "high": 317,
+          "high": 289,
           "measuredItems": 1,
           "unmeasuredItems": 0
         },
@@ -177,7 +177,7 @@
           "unmeasuredItems": 0
         }
       },
-      "percentOfWindowAlways": 0.11,
+      "percentOfWindowAlways": 0.107,
       "alwaysIsLowerBound": false,
       "savings": null,
       "grade": null,
@@ -199,7 +199,7 @@
           "path": "./AGENTS.md",
           "kind": "instructions",
           "loadMode": "always",
-          "tokens": 220
+          "tokens": 214
         }
       ],
       "mcpServers": [],
@@ -216,9 +216,9 @@
           "label": "AGENTS.md",
           "path": "./AGENTS.md",
           "tokens": {
-            "est": 220,
+            "est": 214,
             "low": 171,
-            "high": 317
+            "high": 289
           },
           "unmeasured": false,
           "chars": 924,

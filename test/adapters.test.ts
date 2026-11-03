@@ -69,8 +69,8 @@ describe("claude-code adapter", () => {
     const file = fs.readdirSync(path.join(m.home, ".claude", "projects"))[0];
     const full = fs.readFileSync(path.join(m.home, ".claude", "projects", file, "memory", "MEMORY.md"), "utf8");
     expect(full.split("\n").length).toBeGreaterThan(200);
-    const fullTokens = Math.round(makeCounter("auto").count(full.replace(/\r\n/g, "\n")) * 1.5);
-    const first200 = Math.round(makeCounter("auto").count(full.split("\n").slice(0, 200).join("\n")) * 1.5);
+    const fullTokens = Math.round(makeCounter("auto").count(full.replace(/\r\n/g, "\n")) * 1.43);
+    const first200 = Math.round(makeCounter("auto").count(full.split("\n").slice(0, 200).join("\n")) * 1.43);
     expect(mem.tokens!.est).toBeLessThan(fullTokens);
     expect(Math.abs(mem.tokens!.est - first200)).toBeLessThan(first200 * 0.02);
   });
@@ -236,6 +236,8 @@ describe("goldens (fixture HOME + project; deterministic)", () => {
     ["binary-garbage", {}],
     ["privacy-canary", {}],
     ["plugin-heavy", { agents: ["cursor"] }],
+    ["copilot-mix", { agents: ["github-copilot"] }],
+    ["gemini-mix", { agents: ["gemini-cli"] }],
   ];
   for (const [name, o] of cases) {
     it.skipIf(name === "symlink-escape" && !CAN_SYMLINK)(`${name}: terminal + json match goldens`, () => {

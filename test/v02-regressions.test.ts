@@ -362,8 +362,8 @@ describe("--max-tokens (CI gate)", () => {
 });
 
 describe("README/help consistency", () => {
-  it("README no longer claims a 2 MB cap and documents the new flags", () => {
-    const readme = fs.readFileSync(path.join(__dirname, "..", "README.md"), "utf8");
+  it("README + docs/REFERENCE.md no longer claim a 2 MB cap and document the new flags", () => {
+    const readme = ["README.md", "docs/REFERENCE.md"].map((f) => fs.readFileSync(path.join(__dirname, "..", f), "utf8")).join("\n");
     expect(readme).not.toMatch(/over 2 MB/);
     for (const f of ["--max-tokens", "--card-headline", "--card-format", "--card-scale", "--force", "--scan-budget-mb", "--markdown", "--markdown-compact", "--anonymize", "--ascii", "USERPROFILE", "resvg-wasm"]) expect(readme).toContain(f);
   });

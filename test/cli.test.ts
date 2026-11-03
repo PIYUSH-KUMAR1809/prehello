@@ -12,7 +12,7 @@ const base = (m: { root: string }) => ["--ceiling", m.root, "--managed-dir", pat
 describe("cli", () => {
   it("--version, --help, explain grade, --about-specs", () => {
     const home = mkTmp("prehello-h-");
-    expect(runCli(["--version"], { home }).stdout.trim()).toBe("0.1.0");
+    expect(runCli(["--version"], { home }).stdout.trim()).toBe(JSON.parse(fs.readFileSync(path.join(__dirname, "..", "package.json"), "utf8")).version);
     const help = runCli(["--help"], { home }).stdout;
     expect(help).toMatch(/what your coding agent loads before you say hello/);
     expect(help).toMatch(/No network, no telemetry/);
@@ -74,8 +74,8 @@ describe("cli", () => {
   it("rejects out-of-scope commands and flags instead of silently ignoring them", () => {
     const m = materialize("realistic");
     for (const [args, re] of [
-      [["ci"], /not part of 0\.1/],
-      [["diff"], /not part of 0\.1/],
+      [["ci"], /GitHub Action/],
+      [["diff"], /usage: prehello diff/],
       [["--tokenizer", "exact"], /network/],
       [["--bogus"], /unknown option/],
       [["--window", "abc"], /--window/],
@@ -124,6 +124,35 @@ describe("cli", () => {
     expect(res.stderr).toMatch(/Card written/);
     expect(fs.readFileSync(card, "utf8")).toMatch(/viewBox="0 0 1080 1080"/);
     fs.rmSync(out, { recursive: true, force: true });
+  });
+
+  it("--card accepts the file name after a space (--card x.svg) and the card carries the npx call to action", () => {
+    const m = materialize("realistic");
+    const out = mkTmp("prehello-c-");
+    const card = path.join(out, "x.svg");
+    const res = runCli([m.project, "--card", card, ...base(m)], { home: m.home, cwd: m.project, allowWrite: [card] });
+    expect(res.status === 0 || res.status === 3).toBe(true);
+    expect(res.stdout + res.stderr).toMatch(/Card written/);
+    const svg = fs.readFileSync(card, "utf8");
+    expect(svg).toMatch(/npx prehello/);
+    expect(svg).toMatch(/github\.com\/PIYUSH-KUMAR1809\/prehello/);
+    fs.rmSync(out, { recursive: true, force: true });
+  });
+
+  it("--card followed by an existing directory whose name ends in .png still scans that directory", () => {
+    const m = materialize("realistic");
+    const dir = mkTmp("prehello-d-");
+    const odd = path.join(dir, "shots.png");
+    fs.mkdirSync(odd);
+    const card = path.join(odd, "card.svg");
+    const res = runCli(["--card", odd, ...base(m)], { home: m.home, cwd: m.project, allowWrite: [card] });
+    expect(res.stderr).not.toMatch(/not a directory/);
+    fs.rmSync(dir, { recursive: true, force: true });
+  });
+
+  it("src/version.ts matches package.json (single source of truth)", () => {
+    const pkg = JSON.parse(fs.readFileSync(path.join(__dirname, "..", "package.json"), "utf8"));
+    expect(fs.readFileSync(path.join(__dirname, "..", "src", "version.ts"), "utf8")).toContain(`VERSION = "${pkg.version}"`);
   });
 
   it("works from a subdirectory of the repo (git root discovery) and with --cwd", () => {

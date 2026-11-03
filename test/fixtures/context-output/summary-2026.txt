@@ -1,0 +1,31 @@
+/context
+
+Context Usage
+Opus 5 (1M context)
+claude-opus-5[1m]
+138.8k/1m tokens (14%)
+
+Estimated usage by category
+  System prompt:    4.4k tokens  (0.4%)
+  System tools:      21k tokens  (2.1%)
+  MCP tools:         265 tokens  (0.0%)
+  Memory files:     3.2k tokens  (0.3%)
+  Skills:           6.2k tokens  (0.6%)
+  Messages:       104.2k tokens (10.4%)
+  Free space:      860.7k       (86.1%)
+
+MCP tools · /mcp (loaded on-demand)
+└ 126 tools · 265 tokens
+
+Memory files · /memory
+└ 1 file · 3.2k tokens
+
+Skills · /skills
+└ 48 skills · 6.2k tokens
+
+/context all to expand
+
+ Suggestions
+ ℹ File reads using 76.1k tokens (8%) → save ~22.8k
+   If you are re-reading files, consider referencing earlier reads.
+   Use offset/limit for large files.

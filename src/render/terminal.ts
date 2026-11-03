@@ -1,5 +1,6 @@
 import { AgentReport, Item, LoadMode, Report, Totals } from "../model";
 import { fmtInt, fmtPct, fmtTok, fmtWindow, sanitize, shortenLabel, shortenLeft, wrap } from "../util/fmt";
+import { AGENTS, agentMeta } from "../agents";
 import { displayPath } from "../redact";
 import { RUBRIC } from "../analyze/grade";
 
@@ -20,21 +21,6 @@ const MODE_TITLES: Record<LoadMode, string> = {
   unknown: "UNKNOWN LOAD BEHAVIOUR",
 };
 
-const LOOKED_FOR: Array<[string, string]> = [
-  ["Claude Code", "~/.claude, ~/.claude.json, `claude` on PATH; CLAUDE.md, .claude/, .mcp.json in the project"],
-  ["Cursor", "~/.cursor, Cursor.app, `cursor` on PATH; .cursor/, .cursorrules, AGENTS.md in the project"],
-  ["Codex", "~/.codex, `codex` on PATH; AGENTS.md, .codex/, .agents/skills in the project"],
-];
-
-const WHERE_LOOKED: Record<string, string> = {
-  "claude-code": "CLAUDE.md (project, parent folders, ~/.claude), .claude/{rules,skills,commands}, plugins, .mcp.json, ~/.claude.json",
-  cursor: ".cursor/rules (incl. nested), AGENTS.md, .cursorrules, skills folders, ~/.cursor/{skills,plugins,mcp.json}, .cursor/mcp.json",
-  codex: "AGENTS.md chain, ~/.codex/{AGENTS.md,config.toml}, .agents/skills, ~/.agents/skills, .codex/config.toml",
-};
-
-const AGENT_HINT: Record<string, string> = {
-  cursor: "Cursor's User Rules live inside the app, not on disk. Paste them into a file and run with --paste-user-rules <file> to count them.",
-};
 
 const KIND_NOUN: Record<string, [string, string]> = {
   instructions: ["instruction file", "instruction files"],
@@ -181,14 +167,14 @@ export function renderTerminal(r: Report, o: TermOpts): string {
   const shown = headlineAgents(r);
 
   out.push(`${p.bold("prehello " + r.tool.version)} · ${dp(r.scan.cwd) === "." ? "this folder" : shortenLeft(sanitize(dp(r.scan.cwd), 400), 60)} + user config · window ${win}`);
-  out.push(...wrap(`Token counts are ESTIMATES (${r.scan.tokenizer.method === "bpe-o200k" ? "o200k BPE with per-agent scaling priors" : "chars/3.5 heuristic"}), shown with ~. Not exact for any model.`, W).map((l) => p.dim(l)));
+  out.push(...wrap(`Token counts are ESTIMATES (${r.scan.tokenizer.method === "bpe-o200k" ? "o200k BPE with per-agent scaling factors" : "chars/3.5 heuristic"}), shown with ~. Not exact for any model.`, W).map((l) => p.dim(l)));
   out.push("");
 
   if (r.agents.length === 0) {
     out.push(`No coding agents detected on this machine, and no agent files found in ${dp(r.scan.cwd) === "." ? "this folder" : dp(r.scan.cwd)}.`);
     out.push("");
     out.push(p.bold("prehello looked for"));
-    for (const [n, t] of LOOKED_FOR) out.push(...wrap(t, W, `  ${n.padEnd(12)} `, " ".repeat(15)));
+    for (const m of AGENTS) out.push(...wrap(m.lookedFor, W, `  ${m.name.padEnd(15)} `, " ".repeat(18)));
     out.push("");
     out.push(p.bold("Try"));
     out.push("  prehello ~/code/my-project       scan a project folder (default: the current directory)");
@@ -269,8 +255,9 @@ export function renderTerminal(r: Report, o: TermOpts): string {
     if (!a.items.length) {
       const by = a.detectedBy.length ? ` (via ${a.detectedBy.join(", ")})` : "";
       out.push(p.bold(`   ${a.name} is installed${by}, but nothing that loads before hello was found.`));
-      out.push(...wrap(`This is NOT a score of 0 and NOT proof the agent loads nothing: it still loads its own system prompt and tools. Looked in: ${WHERE_LOOKED[a.id]}.`, W, "   ", "   ").map((l) => p.dim(l)));
-      if (AGENT_HINT[a.id]) out.push(...wrap(AGENT_HINT[a.id], W, "   ", "   ").map((l) => p.dim(l)));
+      out.push(...wrap(`This is NOT a score of 0 and NOT proof the agent loads nothing: it still loads its own system prompt and tools. Looked in: ${agentMeta(a.id).whereLooked}.`, W, "   ", "   ").map((l) => p.dim(l)));
+      const hint = agentMeta(a.id).hint;
+      if (hint) out.push(...wrap(hint, W, "   ", "   ").map((l) => p.dim(l)));
     }
     if (a.mcpServers.length) {
       const names = a.mcpServers.map((m) => m.name);

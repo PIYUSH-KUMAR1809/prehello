@@ -1,0 +1,175 @@
+❯ /context
+  ⎿   Context Usage
+     ⛁ ⛁ ⛁ ⛁ ⛁ ⛁ ⛁ ⛁ ⛁ ⛁   claude-opus-4-5-20251101 · 32k/200k tokens (16%)
+     ⛀ ⛀ ⛁ ⛁ ⛁ ⛀ ⛁ ⛀ ⛶ ⛶   ⛁ System prompt: 2.8k tokens (1.4%)
+     ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶   ⛁ System tools: 17.7k tokens (8.9%)
+     ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶   ⛁ MCP tools: 1.1k tokens (0.5%)
+     ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶   ⛁ Custom agents: 623 tokens (0.3%)
+     ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶   ⛁ Memory files: 7.3k tokens (3.6%)
+     ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶   ⛁ Skills: 2.1k tokens (1.1%)
+     ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛝ ⛝ ⛝   ⛁ Messages: 65 tokens (0.0%)
+     ⛝ ⛝ ⛝ ⛝ ⛝ ⛝ ⛝ ⛝ ⛝ ⛝   ⛶ Free space: 123k (61.7%)
+     ⛝ ⛝ ⛝ ⛝ ⛝ ⛝ ⛝ ⛝ ⛝ ⛝   ⛝ Autocompact buffer: 45.0k tokens (22.5%)
+
+     MCP tools · /mcp
+     └ mcp__morph-mcp__edit_file: 636 tokens
+     └ mcp__morph-mcp__warpgrep_codebase_search: 421 tokens
+
+     Custom agents · /agents
+
+     User
+     └ agentica-agent: 36 tokens
+     └ review-agent: 33 tokens
+     └ plan-agent: 24 tokens
+     └ plan-reviewer: 24 tokens
+     └ debug-agent: 24 tokens
+     └ braintrust-analyst: 23 tokens
+     └ memory-extractor: 23 tokens
+     └ onboard: 23 tokens
+     └ validate-agent: 23 tokens
+     └ scribe: 22 tokens
+     └ context-query-agent: 21 tokens
+     └ oracle: 21 tokens
+     └ session-analyst: 21 tokens
+     └ research-codebase: 20 tokens
+     └ chronicler: 19 tokens
+     └ kraken: 19 tokens
+     └ profiler: 18 tokens
+     └ architect: 17 tokens
+     └ herald: 17 tokens
+     └ atlas: 17 tokens
+     └ judge: 16 tokens
+     └ arbiter: 16 tokens
+     └ maestro: 16 tokens
+     └ phoenix: 16 tokens
+     └ sleuth: 16 tokens
+     └ scout: 16 tokens
+     └ spark: 15 tokens
+     └ pathfinder: 15 tokens
+     └ aegis: 14 tokens
+     └ critic: 13 tokens
+     └ surveyor: 13 tokens
+     └ liaison: 12 tokens
+
+     Memory files · /memory
+     └ ~/.dotfiles/claude/rules/claim-verification.md: 508 tokens
+     └ ~/.dotfiles/claude/rules/no-haiku.md: 73 tokens
+     └ ~/.dotfiles/claude/rules/hook-auto-execute.md: 153 tokens
+     └ ~/.dotfiles/claude/rules/dynamic-recall.md: 1.3k tokens
+     └ ~/.dotfiles/claude/rules/destructive-commands.md: 490 tokens
+     └ ~/.dotfiles/claude/rules/agent-model-selection.md: 228 tokens
+     └ ~/.dotfiles/claude/rules/tldr-cli.md: 1.2k tokens
+     └ ~/.dotfiles/claude/rules/use-scout-not-explore.md: 226 tokens
+     └ ~/.dotfiles/claude/rules/proactive-delegation.md: 624 tokens
+     └ ~/.dotfiles/claude/rules/proactive-memory-disclosure.md: 343 tokens
+     └ ~/.dotfiles/claude/rules/agent-memory-recall.md: 175 tokens
+     └ ~/.dotfiles/claude/rules/modern-cli-tools.md: 1.5k tokens
+     └ ~/.dotfiles/claude/rules/cross-terminal-db.md: 382 tokens
+
+     Skills · /skills
+
+     User
+     └ wordpress-php-dev: 138 tokens
+     └ compound-learnings: 55 tokens
+     └ fix: 34 tokens
+     └ discovery-interview: 33 tokens
+     └ debug-hooks: 32 tokens
+     └ repo-research-analyst: 31 tokens
+     └ tdd-migration-pipeline: 30 tokens
+     └ shapely-compute: 29 tokens
+     └ agentica-sdk: 28 tokens
+     └ tldr-code: 28 tokens
+     └ hook-developer: 27 tokens
+     └ math: 27 tokens
+     └ braintrust-tracing: 27 tokens
+     └ workflow-router: 26 tokens
+     └ test-driven-development: 26 tokens
+     └ research-agent: 26 tokens
+     └ slash-commands: 26 tokens
+     └ tdd: 26 tokens
+     └ math-router: 25 tokens
+     └ pint-compute: 25 tokens
+     └ agentica-prompts: 25 tokens
+     └ plan-agent: 25 tokens
+     └ SonarQube: 25 tokens
+     └ help: 25 tokens
+     └ implement_task: 24 tokens
+     └ validate-agent: 24 tokens
+     └ explore: 24 tokens
+     └ agentica-server: 24 tokens
+     └ research-external: 23 tokens
+     └ sub-agents: 23 tokens
+     └ release: 23 tokens
+     └ mcp-chaining: 23 tokens
+     └ implement_plan_micro: 23 tokens
+     └ continuity_ledger: 22 tokens
+     └ tdd-migrate: 22 tokens
+     └ skill-upgrader: 22 tokens
+     └ agentica-claude-proxy: 21 tokens
+     └ math-help: 21 tokens
+     └ resume_handoff: 21 tokens
+     └ morph-apply: 21 tokens
+     └ implement_plan: 21 tokens
+     └ agentica-infrastructure: 21 tokens
+     └ gemini-image-generator: 21 tokens
+     └ review: 21 tokens
+     └ cli-reference: 21 tokens
+     └ refactor: 21 tokens
+     └ research: 20 tokens
+     └ tldr-stats: 20 tokens
+     └ perplexity-search: 20 tokens
+     └ describe_pr: 20 tokens
+     └ test: 20 tokens
+     └ create_handoff: 20 tokens
+     └ premortem: 20 tokens
+     └ build: 20 tokens
+     └ prove: 19 tokens
+     └ recall-reasoning: 19 tokens
+     └ migrate: 19 tokens
+     └ commit: 18 tokens
+     └ repoprompt: 18 tokens
+     └ firecrawl-scrape: 18 tokens
+     └ skill-developer: 18 tokens
+     └ onboard: 18 tokens
+     └ github-search: 18 tokens
+     └ debug: 18 tokens
+     └ qlty-check: 17 tokens
+     └ security: 17 tokens
+     └ mot: 17 tokens
+     └ ast-grep-find: 17 tokens
+     └ morph-search: 17 tokens
+     └ braintrust-analyze: 16 tokens
+     └ graceful-degradation: 16 tokens
+     └ search-router: 16 tokens
+     └ reference-sdk: 16 tokens
+     └ completion-check: 16 tokens
+     └ nia-docs: 16 tokens
+     └ dead-code: 15 tokens
+     └ parallel-agent-contracts: 14 tokens
+     └ explicit-identity: 13 tokens
+     └ no-polling-agents: 13 tokens
+     └ router-first-architecture: 13 tokens
+     └ agentica-spawn: 13 tokens
+     └ opc-architecture: 12 tokens
+     └ complete-skill: 12 tokens
+     └ agent-context-isolation: 12 tokens
+     └ qlty-during-development: 12 tokens
+     └ idempotent-redundancy: 11 tokens
+     └ background-agent-pings: 11 tokens
+     └ observe-before-editing: 11 tokens
+     └ agent-orchestration: 11 tokens
+     └ parallel-agents: 11 tokens
+     └ index-at-creation: 10 tokens
+     └ async-repl-protocol: 10 tokens
+     └ skill-development: 10 tokens
+     └ modular-code: 10 tokens
+     └ agentic-workflow: 10 tokens
+     └ llm-tuning-patterns: 10 tokens
+     └ search-hierarchy: 10 tokens
+     └ environment-triage: 9 tokens
+     └ no-task-output: 9 tokens
+     └ search-tools: 9 tokens
+     └ wiring: 7 tokens
+     └ mcp-scripts: 7 tokens
+     └ git-commits: 7 tokens
+     └ hooks: 7 tokens

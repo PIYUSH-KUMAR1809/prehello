@@ -1,0 +1,83 @@
+prehello 0.1.0 · this folder + user config · window 200k
+Token counts are ESTIMATES (o200k BPE with per-agent scaling factors), shown with ~. Not exact for
+any model.
+
+Before your first message: GitHub Copilot ≥ ~140 tokens
+
+Measured vs. not measured (always-on items)
+  GitHub Copilot  measured 4 of 6 (67%): 4 instruction files
+                  NOT measured: 2 MCP server entries (context7, playwright); no token count, never
+                    shown as 0
+
+Top offenders (always on, estimates)
+   1. .github/copilot-instructions.md                     92    66%  ████████████
+   2. AGENTS.md                                           18    13%  ██
+   3. GEMINI.md                                           18    13%  ██
+   4. ~/.copilot/copilot-instructions.md                  12   8.6%  █▌
+
+── GitHub Copilot ───────────────────────────────────────────────────  Grade B (provisional, capped)
+   estimate model: o200k; model unknown, so midpoint of GPT-like (×1.0) and Claude-like (×1.43)
+      ratios; band wide: GPT-like −3% to Claude-like +15%
+ALWAYS ON before hello   ≥ ~140 tokens (114–191)  ≈ < 0.1% of 200k  + 2 unmeasured
+   .github/copilot-instructions.md (+1 @import)           92     66%  ████████████████████
+   AGENTS.md                                              18     13%  ███▌
+   GEMINI.md                                              18     13%  ███▌
+   ~/.copilot/copilot-instructions.md                     12    8.6%  ██▌
+   MCP server "context7"                           unmeasured
+   MCP server "playwright"                         unmeasured
+     · .github/copilot-instructions.md: 2 @import(s) not followed (absolute or ~/ path (not loaded
+       by this agent))
+     · AGENTS.md: VS Code: chat.useAgentsMdFile, on by default (setting not read)
+     · GEMINI.md: read by Copilot CLI (documented); not listed for VS Code
+     · GEMINI.md: @file references are not expanded in GEMINI.md by Copilot CLI (documented)
+     · MCP server "context7": Copilot MCP tool schemas modelled as loaded up front (unverified)
+     · MCP server "context7": project MCP config: loaded only after you trust the folder (assumed
+       trusted)
+     · MCP server "context7": transport: stdio
+     · MCP server "playwright": Copilot MCP tool schemas modelled as loaded up front (unverified)
+     · MCP server "playwright": VS Code format (top-level "servers"): used by VS Code, not read by
+       Copilot CLI (documented)
+     · MCP server "playwright": transport: stdio
+     · MCP server "context7" unmeasured: no local tool-list cache or catalog entry; run is static
+       (no server was started)
+     · MCP server "playwright" unmeasured: no local tool-list cache or catalog entry; run is static
+       (no server was started)
+CONDITIONAL (path/dir triggers)   ~54 tokens (43–72)
+   path-specific instructions (applyTo) (2 files)         43     80%  ████████████████████
+   packages/api/AGENTS.md                                 11     20%  █████
+     · .github/instructions/ts.instructions.md: applyTo: 2 patterns; attached when Copilot creates
+       or changes a matching file
+     · packages/api/AGENTS.md: applies when Copilot works on files in that directory
+     · ~/.copilot/instructions/personal.instructions.md: applyTo: 1 pattern; attached when Copilot
+       creates or changes a matching file
+     · ~/.copilot/instructions/personal.instructions.md: applyTo matches every file, so in practice
+       it loads on nearly every edit
+DEFERRED (stub now, body on demand)   ~28 tokens (22–38)
+   instructions loaded by description         28    100%  ████████████████████
+     · …ithub/instructions/backend/review.instructions.md: no applyTo: VS Code may load it on demand
+       when its description matches the task (documented)
+ON-DEMAND (only if invoked)   ~15 tokens (12–20)
+   prompt files (/commands)         15    100%  ████████████████████
+     · .github/prompts/release.prompt.md: prompt file: loaded only when you run it as a /command
+   MCP servers configured (2): context7, playwright; tool-schema size unknown (not in the catalog,
+      no server is started)
+   not measurable from disk: built-in system prompt and tools (incl. the built-in GitHub MCP server)
+      · organization / enterprise instructions · VS Code settings (instruction files toggles,
+      settings-based instructions) are not read; defaults assumed · skills and custom agents (not
+      modelled yet)
+
+Findings (1)
+ ℹ GitHub Copilot: 2 always-loaded items are unmeasured (MCP servers); the always-on total is a
+   lower bound ("at least")
+
+Not loaded / ignored (2)
+   github-copilot: ./CLAUDE.md — identical to ./AGENTS.md (Copilot CLI removes duplicate copies)
+   github-copilot: ./.github/instructions/manual.instructions.md — no applyTo and no description:
+      only used when attached manually
+
+Never measured: the agent's built-in system prompt and built-in tool definitions; server-side / org
+rules, Cursor User & Team Rules, claude.ai connectors; MCP servers whose tools are only known at
+runtime (no server is started by default); files outside the scanned locations; anything the agent
+injects dynamically (hooks, memory/RAG plugins).
+Context Grade (GitHub Copilot): B (provisional, capped at B: some always-loaded items are
+unmeasured) — heuristic, not a standard. See: prehello explain grade

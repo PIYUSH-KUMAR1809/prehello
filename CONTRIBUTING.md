@@ -21,7 +21,7 @@ npm test            # builds, then runs the whole suite (about a minute)
 node dist/cli.js --help
 ```
 
-Node 18, 20 or 22. The suite spawns the built CLI (`dist/cli.js`) in a sandbox with a hermetic `HOME`, so it never reads your real agent config.
+Node 22 or 24. The suite spawns the built CLI (`dist/cli.js`) in a sandbox with a hermetic `HOME`, so it never reads your real agent config.
 
 ## Tests
 

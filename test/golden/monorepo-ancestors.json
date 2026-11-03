@@ -26,21 +26,21 @@
       "presentInRepoOnly": false,
       "profile": {
         "id": "claude-current",
-        "label": "o200k × 1.5 (Claude-current prior)",
-        "band": "±20%"
+        "label": "o200k × 1.43 (text) / × 1.35 (JSON), Claude-current ratios from published count_tokens measurements",
+        "band": "±15%"
       },
       "totals": {
         "always": {
-          "est": 408,
-          "low": 327,
-          "high": 489,
+          "est": 387,
+          "low": 330,
+          "high": 446,
           "measuredItems": 4,
           "unmeasuredItems": 0
         },
         "conditional": {
-          "est": 134,
-          "low": 107,
-          "high": 161,
+          "est": 127,
+          "low": 108,
+          "high": 146,
           "measuredItems": 1,
           "unmeasuredItems": 0
         },
@@ -66,7 +66,7 @@
           "unmeasuredItems": 0
         }
       },
-      "percentOfWindowAlways": 0.20400000000000001,
+      "percentOfWindowAlways": 0.1935,
       "alwaysIsLowerBound": false,
       "savings": null,
       "grade": {
@@ -93,28 +93,28 @@
           "path": "./CLAUDE.md",
           "kind": "instructions",
           "loadMode": "always",
-          "tokens": 137
+          "tokens": 130
         },
         {
           "label": "./.claude/CLAUDE.md",
           "path": "./apps/web/.claude/CLAUDE.md",
           "kind": "instructions",
           "loadMode": "always",
-          "tokens": 134
+          "tokens": 127
         },
         {
           "label": "../CLAUDE.md",
           "path": "./apps/CLAUDE.md",
           "kind": "instructions",
           "loadMode": "always",
-          "tokens": 126
+          "tokens": 120
         },
         {
           "label": "./CLAUDE.local.md",
           "path": "./apps/web/CLAUDE.local.md",
           "kind": "instructions",
           "loadMode": "always",
-          "tokens": 11
+          "tokens": 10
         }
       ],
       "mcpServers": [],
@@ -132,9 +132,9 @@
           "label": "../../CLAUDE.md",
           "path": "./CLAUDE.md",
           "tokens": {
-            "est": 137,
-            "low": 110,
-            "high": 164
+            "est": 130,
+            "low": 111,
+            "high": 150
           },
           "unmeasured": false,
           "chars": 462,
@@ -156,9 +156,9 @@
           "label": "./.claude/CLAUDE.md",
           "path": "./apps/web/.claude/CLAUDE.md",
           "tokens": {
-            "est": 134,
-            "low": 107,
-            "high": 161
+            "est": 127,
+            "low": 108,
+            "high": 146
           },
           "unmeasured": false,
           "chars": 469,
@@ -178,9 +178,9 @@
           "label": "../CLAUDE.md",
           "path": "./apps/CLAUDE.md",
           "tokens": {
-            "est": 126,
-            "low": 101,
-            "high": 151
+            "est": 120,
+            "low": 102,
+            "high": 138
           },
           "unmeasured": false,
           "chars": 465,
@@ -202,9 +202,9 @@
           "label": "./CLAUDE.local.md",
           "path": "./apps/web/CLAUDE.local.md",
           "tokens": {
-            "est": 11,
+            "est": 10,
             "low": 9,
-            "high": 13
+            "high": 12
           },
           "unmeasured": false,
           "chars": 25,
@@ -224,9 +224,9 @@
           "label": "./src/CLAUDE.md",
           "path": "./apps/web/src/CLAUDE.md",
           "tokens": {
-            "est": 134,
-            "low": 107,
-            "high": 161
+            "est": 127,
+            "low": 108,
+            "high": 146
           },
           "unmeasured": false,
           "chars": 464,

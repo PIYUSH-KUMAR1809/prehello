@@ -1,0 +1,46 @@
+# Publish to npm when a full version tag vX.Y.Z is pushed (git tag v1.0.0 && git push origin v1.0.0).
+# Only vX.Y.Z triggers: the moving major tag `v1` (what `uses: <owner>/prehello@v1` resolves to) never matches,
+# so moving it neither publishes nor fails. Pre-release tags (v1.0.0-rc.1) do not match either.
+# Needs the repository secret NPM_TOKEN (an npm granular access token with publish rights for prehello).
+# --provenance links the npm package to this workflow run; it needs id-token: write.
+name: release
+on:
+  push:
+    tags: ["v[0-9]+.[0-9]+.[0-9]+"]
+permissions:
+  contents: read
+concurrency:
+  group: release
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+          registry-url: https://registry.npmjs.org
+      - name: Tag must match package.json version
+        run: |
+          pkg="$(node -p "require('./package.json').version")"
+          if [ "${GITHUB_REF_NAME}" != "v${pkg}" ]; then
+            echo "::error::tag ${GITHUB_REF_NAME} does not match package.json version ${pkg}"
+            exit 1
+          fi
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm test
+        env:
+          TZ: UTC
+      - name: Install smoke test
+        run: node scripts/smoke-install.mjs
+      - name: Generated version matches package.json
+        run: git diff --exit-code src/version.ts
+      - run: npm publish --provenance --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

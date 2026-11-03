@@ -121,8 +121,9 @@ describe("token counting and bands", () => {
     expect(profileFor("claude-code", "bpe-o200k", "current").unvalidated).toBe(true);
     expect(profileFor("cursor", "bpe-o200k", "current").unvalidated).toBe(true);
     expect(profileFor("codex", "bpe-o200k", "current").apply(1000)).toEqual({ est: 1000, low: 970, high: 1030 });
-    expect(profileFor("claude-code", "bpe-o200k", "current").apply(1000)).toEqual({ est: 1500, low: 1200, high: 1800 });
-    expect(profileFor("claude-code", "bpe-o200k", "legacy").apply(1000).est).toBe(1200);
+    expect(profileFor("claude-code", "bpe-o200k", "current").apply(1000)).toEqual({ est: 1430, low: 1216, high: 1644 });
+    expect(profileFor("claude-code", "bpe-o200k", "current").apply(1000, "json")).toEqual({ est: 1350, low: 1148, high: 1552 });
+    expect(profileFor("claude-code", "bpe-o200k", "legacy").apply(1000).est).toBe(1173);
     expect(profileFor("claude-code", "heuristic", "current").band).toBe("±35%");
   });
 });

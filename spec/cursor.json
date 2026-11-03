@@ -1,7 +1,7 @@
 {
   "agent": "cursor",
   "verifiedAt": "2026-10-25",
-  "verifiedNote": "Rule modes, skill locations (native + compat dirs), skill frontmatter (paths/globs, disable-model-invocation), plugin manifest/default component dirs, and lazy MCP loading (tool names static, descriptions on demand) are from Cursor's docs and blog (fetched 2026-10-25). UNVERIFIED (marked assumed): how Cursor injects agent-requested rule descriptions and the skills listing, ~/.cursor/skills-cursor (observed on a real Mac only), the plugin cache/marketplace on-disk layout and install state, and whether nested .cursor/rules apply (docs and forum disagree).",
+  "verifiedNote": "Rule modes, skill locations (native + compat dirs), skill frontmatter (paths/globs, disable-model-invocation), plugin manifest/default component dirs, and lazy MCP loading (tool names static, descriptions on demand) are from Cursor's docs and blog (fetched 2026-10-25). UNVERIFIED (marked assumed): how Cursor injects agent-requested rule descriptions, ~/.cursor/skills-cursor (observed on a real Mac only), the plugin cache/marketplace on-disk layout and install state, and whether nested .cursor/rules apply (docs and forum disagree). Skills listing (observed 2026-11-03 from forum.cursor.com/t/163761 and /t/163768, Cursor staff replies of 2026-06-22/25): <agent_skills><available_skills><agent_skill fullPath=\"...\">description</agent_skill>, descriptions shortened (80 chars + ellipsis seen in cloud agents) and, past an undocumented cap, path only; modelled as 80-char entries with path-only/full-description bounds.",
   "docs": {
     "rules": "https://cursor.com/docs/rules",
     "mcp": "https://cursor.com/docs/mcp",

@@ -1,8 +1,8 @@
 prehello 0.1.0 · this folder + user config · window 200k
-Token counts are ESTIMATES (o200k BPE with per-agent scaling priors), shown with ~. Not exact for
+Token counts are ESTIMATES (o200k BPE with per-agent scaling factors), shown with ~. Not exact for
 any model.
 
-Before your first message: Claude Code ≥ ~1.7k tokens · Cursor ≥ ~764 tokens · Codex ≥ ~506 tokens
+Before your first message: Claude Code ≥ ~1.6k tokens · Cursor ≥ ~808 tokens · Codex ≥ ~506 tokens
 
 Measured vs. not measured (always-on items)
   Claude Code  measured 6 of 10 (60%): 2 instruction files, 2 skills listings, 1 rule, 1 subagents
@@ -17,26 +17,27 @@ Measured vs. not measured (always-on items)
                NOT measured: 1 MCP server entry (docs); no token count, never shown as 0
 
 Top offenders (always on, estimates)
-   1. CLAUDE.md  [Claude Code]                           999    60%  ████████████
-   2. AGENTS.md  [Cursor]                                525    69%  ██████
+   1. CLAUDE.md  [Claude Code]                           952    60%  ████████████
+   2. AGENTS.md  [Cursor]                                510    63%  ██████
    3. AGENTS.md  [Codex]                                 420    83%  █████
-   4. ~/.claude/CLAUDE.md  [Claude Code]                 261    16%  ███
-   5. .claude/rules/style.md  [Claude Code]              248    15%  ██▌
-   6. .cursor/rules/always.mdc  [Cursor]                 104    14%  █
+   4. ~/.claude/CLAUDE.md  [Claude Code]                 249    16%  ███
+   5. .claude/rules/style.md  [Claude Code]              236    15%  ██▌
+   6. .cursor/rules/always.mdc  [Cursor]                 101    13%  █
    7. ~/.codex/AGENTS.md  [Codex]                         86    17%  █
-   8. skill "db-migrate"  [Claude Code]                   75   4.5%  ▌
-   9. skill "db-migrate"  [Cursor]                        61   8.0%  ▌
-  10. skill "code-review"  [Claude Code]                  35   2.1%  
+   8. skill "db-migrate"  [Claude Code]                   72   4.5%  ▌
+   9. skill "code-review"  [Cursor]                       51   6.3%  ▌
+  10. skill "db-migrate"  [Cursor]                        50   6.2%  ▌
 
 ── Claude Code ──────────────────────────────────────────────────────  Grade B (provisional, capped)
-   estimate model: o200k × 1.5 (Claude-current prior); band ±20%
-ALWAYS ON before hello   ≥ ~1.7k tokens (1.3k–2k)  ≈ 0.8% of 200k  + 4 unmeasured
-   CLAUDE.md (+1 @import)                  999     60%  ████████████████████
-   ~/.claude/CLAUDE.md                     261     16%  █████
-   .claude/rules/*.md                      248     15%  ████▌
-   Skills listing (3 user skills)          135    8.1%  ██▌
-   Skills listing (1 project skill)         20    1.2%  
-   Subagents listing (1 user)               11    0.7%  
+   estimate model: o200k × 1.43 (text) / × 1.35 (JSON), Claude-current ratios from published
+      count_tokens measurements; band ±15%
+ALWAYS ON before hello   ≥ ~1.6k tokens (1.4k–1.8k)  ≈ 0.8% of 200k  + 4 unmeasured
+   CLAUDE.md (+1 @import)                  952     60%  ████████████████████
+   ~/.claude/CLAUDE.md                     249     16%  █████
+   .claude/rules/*.md                      236     15%  ████▌
+   Skills listing (3 user skills)          129    8.1%  ██▌
+   Skills listing (1 project skill)         19    1.2%  
+   Subagents listing (1 user)               10    0.6%  
    MCP server "github"               unmeasured
    MCP server "local-db"             unmeasured
    MCP server "playwright"           unmeasured
@@ -64,15 +65,15 @@ ALWAYS ON before hello   ≥ ~1.7k tokens (1.3k–2k)  ≈ 0.8% of 200k  + 4 unm
        (no server was started)
      · MCP server "sentry" unmeasured: no local tool-list cache or catalog entry; run is static (no
        server was started)
-CONDITIONAL (path/dir triggers)   ~386 tokens (309–463)
-   .claude/rules/*.md (path-scoped)        255     66%  ████████████████████
-   packages/web/CLAUDE.md                  131     34%  ██████████
+CONDITIONAL (path/dir triggers)   ~367 tokens (312–422)
+   .claude/rules/*.md (path-scoped)        243     66%  ████████████████████
+   packages/web/CLAUDE.md                  124     34%  ██████████
      · .claude/rules/frontend.md: path-scoped (paths: 2 patterns) → conditional
      · packages/web/CLAUDE.md: loaded when Claude works in this subdirectory (not in /context at
        start)
-DEFERRED (stub now, body on demand)   ~1.3k tokens (1k–1.5k)
-   Skill bodies (3 user)         1,146     90%  ████████████████████
-   Skill bodies (1 project)        132     10%  ██
+DEFERRED (stub now, body on demand)   ~1.2k tokens (1k–1.4k)
+   Skill bodies (3 user)         1,093     90%  ████████████████████
+   Skill bodies (1 project)        126     10%  ██
      · Skill bodies (3 user): loaded only when a skill is used; supporting files in the skill folder
        are not counted
      · Skill bodies (1 project): loaded only when a skill is used; supporting files in the skill
@@ -83,22 +84,26 @@ DEFERRED (stub now, body on demand)   ~1.3k tokens (1k–1.5k)
       on disk) · hook output
 
 ── Cursor ───────────────────────────────────────────────────────────  Grade B (provisional, capped)
-   estimate model: o200k; model unknown, so midpoint of GPT-like (×1.0) and Claude-like (×1.5)
-      priors; band wide: GPT-like −3% to Claude-like +20%
-ALWAYS ON before hello   ≥ ~764 tokens (593–1.1k)  ≈ 0.4% of 200k  + 2 unmeasured
-   AGENTS.md                                           525     69%  ████████████████████
-   Skills listing (3 user (.claude) skills)            109     14%  ████
-   .cursor/rules (alwaysApply)                         104     14%  ███▌
-   Skills listing (1 project (.claude) skill)           15    2.0%  ▌
+   estimate model: o200k; model unknown, so midpoint of GPT-like (×1.0) and Claude-like (×1.43)
+      ratios; band wide: GPT-like −3% to Claude-like +15%
+ALWAYS ON before hello   ≥ ~808 tokens (589–1.1k)  ≈ 0.4% of 200k  + 2 unmeasured
+   AGENTS.md                                           510     63%  ████████████████████
+   Skills listing (3 user (.claude) skills)            146     18%  █████▌
+   .cursor/rules (alwaysApply)                         101     13%  ███▌
+   Skills listing (1 project (.claude) skill)           40    5.0%  █▌
    .cursor/rules descriptions (agent-requested)         11    1.4%  
    MCP server "fetch"                            unmeasured
    MCP server "filesystem"                       unmeasured
-     · Skills listing (3 user (.claude) skills): Cursor lists each skill's name + description (exact
-       injection format and token cost unverified; counted as name: description)
+     · Skills listing (3 user (.claude) skills): Cursor lists each skill as <agent_skill
+       fullPath=...> with its description cut to ~80 characters, and drops descriptions when the
+       catalog is large (observed, confirmed by Cursor staff 2026-06; budget undocumented). Estimate
+       = 80-character form; low = path only; high = full description.
      · Skills listing (3 user (.claude) skills): also read by Cursor for compatibility (documented)
      · .cursor/rules/always.mdc: alwaysApply: true
-     · Skills listing (1 project (.claude) skill): Cursor lists each skill's name + description
-       (exact injection format and token cost unverified; counted as name: description)
+     · Skills listing (1 project (.claude) skill): Cursor lists each skill as <agent_skill
+       fullPath=...> with its description cut to ~80 characters, and drops descriptions when the
+       catalog is large (observed, confirmed by Cursor staff 2026-06; budget undocumented). Estimate
+       = 80-character form; low = path only; high = full description.
      · Skills listing (1 project (.claude) skill): also read by Cursor for compatibility
        (documented)
      · .cursor/rules/api-design.mdc (description): description is visible so the agent can decide to
@@ -115,20 +120,20 @@ ALWAYS ON before hello   ≥ ~764 tokens (593–1.1k)  ≈ 0.4% of 200k  + 2 unm
        server was started)
      · MCP server "filesystem" unmeasured: no local tool-list cache or catalog entry; run is static
        (no server was started)
-CONDITIONAL (path/dir triggers)   ~106 tokens (82–153)
-   .cursor/rules (glob-scoped)        106    100%  ████████████████████
+CONDITIONAL (path/dir triggers)   ~103 tokens (82–140)
+   .cursor/rules (glob-scoped)        103    100%  ████████████████████
      · .cursor/rules/tests.mdc: globs: 2 patterns
-DEFERRED (stub now, body on demand)   ~1.3k tokens (991–1.8k)
-   Skill bodies (3 user (.claude))               955     75%  ████████████████████
-   .cursor/rules bodies (agent-requested)        213     17%  ████
-   Skill bodies (1 project (.claude))            110    8.6%  ██
+DEFERRED (stub now, body on demand)   ~1.2k tokens (991–1.7k)
+   Skill bodies (3 user (.claude))               928     75%  ████████████████████
+   .cursor/rules bodies (agent-requested)        207     17%  ████
+   Skill bodies (1 project (.claude))            107    8.6%  ██
      · Skill bodies (3 user (.claude)): loaded only when a skill is used; supporting files in the
        skill folder are not counted
      · .cursor/rules/api-design.mdc (body): fetched only if the agent decides it is relevant
      · Skill bodies (1 project (.claude)): loaded only when a skill is used; supporting files in the
        skill folder are not counted
-ON-DEMAND (only if invoked)   ~113 tokens (87–162)
-   .cursor/rules (manual @-mention)        113    100%  ████████████████████
+ON-DEMAND (only if invoked)   ~109 tokens (87–148)
+   .cursor/rules (manual @-mention)        109    100%  ████████████████████
      · .cursor/rules/manual.mdc: no alwaysApply/globs/description: only via @-mention
    MCP servers configured (2): fetch, filesystem; tool-schema size unknown (not in the catalog, no
       server is started)

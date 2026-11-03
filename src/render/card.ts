@@ -3,6 +3,8 @@ import { fmtPct, fmtTok, fmtWindow, xmlEscape } from "../util/fmt";
 import { squarify } from "./treemap";
 import { cardTiles } from "../analyze/savings";
 import { scrubSecrets } from "../util/secrets";
+import { agentMeta } from "../agents";
+export const REPO_URL = "github.com/PIYUSH-KUMAR1809/prehello";
 
 export interface CardOpts {
   theme: "dark" | "light";
@@ -190,7 +192,7 @@ export function renderCard(r: Report, a: AgentReport, o: CardOpts): string {
   const unvalidated = a.profile.id.startsWith("claude") || a.profile.id === "cursor-mixed" || a.profile.id === "heuristic";
   const footSize = og ? 17 : 20;
   const footLines = wrapSegments(
-    ["prehello", "local-only scan", `estimate band: ${a.profile.band}${unvalidated ? " (unvalidated)" : ""}`, `window ${fmtWindow(r.scan.window)}`, ...(r.partial ? ["PARTIAL scan"] : [])],
+    ["npx prehello", REPO_URL, "local-only scan", `estimate band: ${a.profile.band}${unvalidated ? " (unvalidated)" : ""}`, `window ${fmtWindow(r.scan.window)}`, ...(r.partial ? ["PARTIAL scan"] : [])],
     maxCharsFor(innerW, footSize),
   );
   const footLineH = footSize + 6;
@@ -289,7 +291,7 @@ export function renderCard(r: Report, a: AgentReport, o: CardOpts): string {
   for (const m of ["deferred", "conditional", "on-demand"] as const) if (mode(m).measuredItems) chips.push(`${m} ~${fmtTok(mode(m).est)}`);
   const unm = a.totals.always.unmeasuredItems + a.totals.deferred.unmeasuredItems;
   if (unm) chips.push(`unmeasured: ${unm} item${unm > 1 ? "s" : ""}`);
-  if (a.id === "cursor") chips.push("unmeasured: User Rules");
+  chips.push(...(agentMeta(a.id).cardChips ?? []));
   if (r.partial) chips.unshift("partial scan");
   let cx = pad;
   const chipSize = 18;

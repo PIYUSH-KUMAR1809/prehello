@@ -26,8 +26,8 @@
       "presentInRepoOnly": false,
       "profile": {
         "id": "claude-current",
-        "label": "o200k × 1.5 (Claude-current prior)",
-        "band": "±20%"
+        "label": "o200k × 1.43 (text) / × 1.35 (JSON), Claude-current ratios from published count_tokens measurements",
+        "band": "±15%"
       },
       "totals": {
         "always": {
@@ -120,14 +120,14 @@
       "presentInRepoOnly": true,
       "profile": {
         "id": "cursor-mixed",
-        "label": "o200k; model unknown, so midpoint of GPT-like (×1.0) and Claude-like (×1.5) priors",
-        "band": "wide: GPT-like −3% to Claude-like +20%"
+        "label": "o200k; model unknown, so midpoint of GPT-like (×1.0) and Claude-like (×1.43) ratios",
+        "band": "wide: GPT-like −3% to Claude-like +15%"
       },
       "totals": {
         "always": {
-          "est": 8,
+          "est": 7,
           "low": 6,
-          "high": 11,
+          "high": 10,
           "measuredItems": 1,
           "unmeasuredItems": 0
         },
@@ -160,7 +160,7 @@
           "unmeasuredItems": 0
         }
       },
-      "percentOfWindowAlways": 0.004,
+      "percentOfWindowAlways": 0.0034999999999999996,
       "alwaysIsLowerBound": false,
       "savings": null,
       "grade": null,
@@ -182,7 +182,7 @@
           "path": "./AGENTS.md",
           "kind": "instructions",
           "loadMode": "always",
-          "tokens": 8
+          "tokens": 7
         }
       ],
       "mcpServers": [],
@@ -199,9 +199,9 @@
           "label": "AGENTS.md",
           "path": "./AGENTS.md",
           "tokens": {
-            "est": 8,
+            "est": 7,
             "low": 6,
-            "high": 11
+            "high": 10
           },
           "unmeasured": false,
           "chars": 24,

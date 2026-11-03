@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import type { AgentId } from "./agents";
 
 export interface Spec {
   agent: string;
@@ -13,7 +14,7 @@ export interface Spec {
 const SPEC_DIR = path.join(__dirname, "..", "spec");
 const cache = new Map<string, Spec>();
 
-export function loadSpec(agent: "claude-code" | "cursor" | "codex"): Spec {
+export function loadSpec(agent: AgentId): Spec {
   let s = cache.get(agent);
   if (!s) {
     s = JSON.parse(fs.readFileSync(path.join(SPEC_DIR, `${agent}.json`), "utf8")) as Spec;
@@ -26,7 +27,7 @@ export function loadBundledCatalogPath(): string {
   return path.join(SPEC_DIR, "mcp-weights.json");
 }
 
-export function evidenceFor(agent: "claude-code" | "cursor" | "codex", doc: string): { docUrl: string; verifiedAt: string } {
+export function evidenceFor(agent: AgentId, doc: string): { docUrl: string; verifiedAt: string } {
   const s = loadSpec(agent);
   return { docUrl: s.docs[doc] ?? Object.values(s.docs)[0], verifiedAt: s.verifiedAt };
 }

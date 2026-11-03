@@ -6,3 +6,4 @@
 # Fixtures that test CRLF handling must keep their CRLF.
 test/fixtures/**/crlf* -text
 test/fixtures/crlf-unicode/** -text
+test/fixtures/context-output/grid-*.txt -text

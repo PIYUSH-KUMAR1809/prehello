@@ -18,6 +18,11 @@ export interface InstrOpts {
   jail?: string;
   stripComments: boolean;
   imports: boolean;
+  /** Override the directories @imports may read from (default: home, git root/cwd, the file's own folder). */
+  importRoots?: string[];
+  importMaxDepth?: number;
+  /** Skip absolute and ~/ imports (Copilot CLI). */
+  importRelativeOnly?: boolean;
   confidence: Confidence;
   evidence: { docUrl: string; verifiedAt: string };
   guidelineLines?: number;
@@ -54,14 +59,14 @@ export function loadInstruction(ctx: Ctx, filePath: string, o: InstrOpts): Item 
   if (o.stripComments) text = stripHtmlComments(text);
   let detail: string | undefined;
   if (o.imports) {
-    const roots = [realpathOrSelf(ctx.home), realpathOrSelf(ctx.gitRoot ?? ctx.cwd), realpathOrSelf(path.dirname(filePath))];
-    const res = expandImports(text, filePath, ctx.home, (real) => roots.some((root) => isInside(real, root)), { stripComments: o.stripComments, read: (t) => ctx.read(t, { quiet: true }) });
+    const roots = (o.importRoots ?? [ctx.home, ctx.gitRoot ?? ctx.cwd, path.dirname(filePath)]).map(realpathOrSelf);
+    const res = expandImports(text, filePath, ctx.home, (real) => roots.some((root) => isInside(real, root)), { stripComments: o.stripComments, read: (t) => ctx.read(t, { quiet: true }), maxDepth: o.importMaxDepth, relativeOnly: o.importRelativeOnly });
     text = res.text;
     if (res.imported) detail = `(+${res.imported} @import${res.imported > 1 ? "s" : ""})`;
     if (res.skipped.length) notes.push(`${res.skipped.length} @import(s) not followed (${[...new Set(res.skipped.map((s) => s.reason))].join(", ")})`);
   }
   if (!text.trim()) return null;
-  const key = `${r.realPath}|${o.stripComments ? 1 : 0}${o.imports ? 1 : 0}|${o.transform ? text.length : ""}`;
+  const key = `${r.realPath}|${o.stripComments ? 1 : 0}${o.imports ? 1 : 0}|${o.importRoots ? o.importRoots.join(",") : ""}${o.importMaxDepth ?? ""}${o.importRelativeOnly ? "r" : ""}|${o.transform ? text.length : ""}`;
   const raw = ctx.count(key, text);
   if (!o.noAnalyze) ctx.analyzeDoc(o.agent, filePath, r.text, afterTransform, raw, o.guidelineLines);
   return ctx.makeItem({

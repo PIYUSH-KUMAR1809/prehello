@@ -1,0 +1,19 @@
+{
+  "name": "acme-ext",
+  "version": "1.0.0",
+  "contextFileName": "ACME.md",
+  "mcpServers": {
+    "github": {
+      "command": "node",
+      "args": [
+        "x.js"
+      ]
+    },
+    "acme-db": {
+      "command": "node",
+      "args": [
+        "${extensionPath}/db.js"
+      ]
+    }
+  }
+}

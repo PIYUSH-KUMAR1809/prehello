@@ -379,7 +379,7 @@ export function toSarif(r: Report, o: SarifOpts): Record<string, unknown> {
               name: d.name,
               shortDescription: { text: d.short },
               fullDescription: { text: d.full },
-              help: { text: `${d.help}\nSee the SARIF section of the prehello README for the rule list.`, markdown: `${d.help}\n\nSee the SARIF section of the prehello README for the rule list.` },
+              help: { text: `${d.help}\nThe rule list is in docs/REFERENCE.md (SARIF) in the prehello repository.`, markdown: `${d.help}\n\nThe rule list is in docs/REFERENCE.md (SARIF) in the prehello repository.` },
               defaultConfiguration: { level: d.level },
               properties: { tags: ["context", "tokens", "coding-agents"], precision: d.precision },
             })),
@@ -401,7 +401,7 @@ const round1 = (x: number): number => Math.round(x * 10) / 10;
 function runProps(r: Report, shown: AgentReport[], o: SarifOpts, noFiles: boolean): Record<string, unknown> {
   return {
     prehello: {
-      note: "All token numbers are estimates (o200k BPE with per-agent scaling priors), not exact for any model. An unmeasured item has no number, never 0. A total marked isLowerBound is 'at least'.",
+      note: "All token numbers are estimates (o200k BPE with per-agent scaling factors), not exact for any model. An unmeasured item has no number, never 0. A total marked isLowerBound is 'at least'.",
       tokenizer: r.scan.tokenizer.method,
       claudeProfile: r.scan.claudeProfile,
       windowTokens: r.scan.window,

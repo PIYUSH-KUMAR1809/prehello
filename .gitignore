@@ -31,3 +31,5 @@ coverage/
 .dev/
 docs/PRODUCT_PLAN.md
 docs/PUBLISH_CHECKLIST.md
+!test/fixtures/**/.vscode/
+benchmark/.cache/

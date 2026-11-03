@@ -1,0 +1,77 @@
+name: prehello context diff
+description: Comment on a pull request with how much always-on agent context (CLAUDE.md, AGENTS.md, rules, skills, MCP) it adds before the first message.
+author: Piyush Kumar
+branding:
+  icon: message-square
+  color: blue
+
+inputs:
+  path:
+    description: Folder to scan, relative to the repository root.
+    default: "."
+  fail-above:
+    description: Fail the check when any agent's always-on context grows by more than this many tokens (e.g. 2000 or 2k). Empty = never fail.
+    default: ""
+  comment:
+    description: Post or update one sticky PR comment ("true"/"false"). The job summary is always written.
+    default: "true"
+  version:
+    description: prehello version from npm (e.g. 1.0.0). Empty = build the copy of prehello this action was checked out from.
+    default: ""
+  github-token:
+    description: Token used for the PR comment. Needs pull-requests write.
+    default: ${{ github.token }}
+
+outputs:
+  delta:
+    description: Largest always-on token change across agents (estimate; negative when context shrank).
+    value: ${{ steps.diff.outputs.delta }}
+  over-limit:
+    description: "true when fail-above was set and exceeded."
+    value: ${{ steps.diff.outputs.over }}
+
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 22
+
+    - name: Install prehello
+      shell: bash
+      env:
+        PREHELLO_VERSION: ${{ inputs.version }}
+        ACTION_PATH: ${{ github.action_path }}
+      run: bash "$ACTION_PATH/scripts/action/install.sh"
+
+    - name: Scan base and head
+      shell: bash
+      env:
+        SCAN_PATH: ${{ inputs.path }}
+        BASE_SHA: ${{ github.event.pull_request.base.sha }}
+      run: bash "$GITHUB_ACTION_PATH/scripts/action/scan.sh"
+
+    - name: Diff
+      id: diff
+      shell: bash
+      env:
+        FAIL_ABOVE: ${{ inputs.fail-above }}
+      run: bash "$GITHUB_ACTION_PATH/scripts/action/diff.sh"
+
+    - name: Comment
+      if: inputs.comment == 'true' && github.event.pull_request.number != ''
+      shell: bash
+      env:
+        GH_TOKEN: ${{ inputs.github-token }}
+        PR_NUMBER: ${{ github.event.pull_request.number }}
+        REPO: ${{ github.repository }}
+      run: bash "$GITHUB_ACTION_PATH/scripts/action/comment.sh"
+
+    - name: Check limit
+      if: steps.diff.outputs.over == 'true'
+      shell: bash
+      env:
+        FAIL_ABOVE: ${{ inputs.fail-above }}
+      run: |
+        echo "::error::prehello: always-on agent context grew more than the fail-above limit ($FAIL_ABOVE tokens). See the PR comment or job summary."
+        exit 1

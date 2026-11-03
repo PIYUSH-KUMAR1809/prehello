@@ -26,14 +26,14 @@
       "presentInRepoOnly": false,
       "profile": {
         "id": "claude-current",
-        "label": "o200k × 1.5 (Claude-current prior)",
-        "band": "±20%"
+        "label": "o200k × 1.43 (text) / × 1.35 (JSON), Claude-current ratios from published count_tokens measurements",
+        "band": "±15%"
       },
       "totals": {
         "always": {
-          "est": 11,
+          "est": 10,
           "low": 9,
-          "high": 13,
+          "high": 12,
           "measuredItems": 1,
           "unmeasuredItems": 2
         },
@@ -66,7 +66,7 @@
           "unmeasuredItems": 0
         }
       },
-      "percentOfWindowAlways": 0.0055000000000000005,
+      "percentOfWindowAlways": 0.005,
       "alwaysIsLowerBound": true,
       "savings": null,
       "grade": {
@@ -98,7 +98,7 @@
           "path": "./CLAUDE.md",
           "kind": "instructions",
           "loadMode": "always",
-          "tokens": 11
+          "tokens": 10
         }
       ],
       "mcpServers": [
@@ -131,9 +131,9 @@
           "label": "./CLAUDE.md",
           "path": "./CLAUDE.md",
           "tokens": {
-            "est": 11,
+            "est": 10,
             "low": 9,
-            "high": 13
+            "high": 12
           },
           "unmeasured": false,
           "chars": 24,

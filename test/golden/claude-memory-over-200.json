@@ -26,14 +26,14 @@
       "presentInRepoOnly": false,
       "profile": {
         "id": "claude-current",
-        "label": "o200k × 1.5 (Claude-current prior)",
-        "band": "±20%"
+        "label": "o200k × 1.43 (text) / × 1.35 (JSON), Claude-current ratios from published count_tokens measurements",
+        "band": "±15%"
       },
       "totals": {
         "always": {
-          "est": 7480,
-          "low": 5984,
-          "high": 8976,
+          "est": 7130,
+          "low": 6061,
+          "high": 8200,
           "measuredItems": 2,
           "unmeasuredItems": 0
         },
@@ -66,7 +66,7 @@
           "unmeasuredItems": 0
         }
       },
-      "percentOfWindowAlways": 3.74,
+      "percentOfWindowAlways": 3.565,
       "alwaysIsLowerBound": false,
       "savings": null,
       "grade": {
@@ -74,7 +74,7 @@
         "score": 90,
         "provisional": false,
         "reasons": [
-          "always-on is ~3.7% of the window (−5)",
+          "always-on is ~3.6% of the window (−5)",
           "1 silent truncation(s) (−5)"
         ]
       },
@@ -97,14 +97,14 @@
           "path": "~/.claude/projects/<SLUG>/memory/MEMORY.md",
           "kind": "memory",
           "loadMode": "always",
-          "tokens": 7469
+          "tokens": 7120
         },
         {
           "label": "./CLAUDE.md",
           "path": "./CLAUDE.md",
           "kind": "instructions",
           "loadMode": "always",
-          "tokens": 11
+          "tokens": 10
         }
       ],
       "mcpServers": [],
@@ -122,9 +122,9 @@
           "label": "MEMORY.md (auto memory)",
           "path": "~/.claude/projects/<SLUG>/memory/MEMORY.md",
           "tokens": {
-            "est": 7469,
-            "low": 5975,
-            "high": 8963
+            "est": 7120,
+            "low": 6052,
+            "high": 8188
           },
           "unmeasured": false,
           "chars": 20262,
@@ -147,9 +147,9 @@
           "label": "./CLAUDE.md",
           "path": "./CLAUDE.md",
           "tokens": {
-            "est": 11,
+            "est": 10,
             "low": 9,
-            "high": 13
+            "high": 12
           },
           "unmeasured": false,
           "chars": 24,

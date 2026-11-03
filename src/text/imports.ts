@@ -39,7 +39,7 @@ export function expandImports(
   filePath: string,
   home: string,
   allowed: (realPath: string) => boolean,
-  opts: { stripComments: boolean; read?: (target: string) => ReadResult },
+  opts: { stripComments: boolean; read?: (target: string) => ReadResult; maxDepth?: number; relativeOnly?: boolean },
 ): ImportResult {
   const seen = new Set<string>([realpathOrSelf(filePath)]);
   const skipped: ImportResult["skipped"] = [];
@@ -57,11 +57,16 @@ export function expandImports(
         if (tried === MAX_CANDIDATES + 1) skipped.push({ spec: "(more)", reason: `more than ${MAX_CANDIDATES} @imports; the rest were not followed` });
         continue;
       }
+      if (opts.relativeOnly && (spec.startsWith("~") || path.isAbsolute(spec) || /^[A-Za-z]:[\\/]/.test(spec))) {
+        skipped.push({ spec, reason: "absolute or ~/ path (not loaded by this agent)" });
+        continue;
+      }
       const target = spec.startsWith("~/") ? path.join(home, spec.slice(2)) : path.resolve(path.dirname(from), spec);
       const real = realpathOrSelf(target);
       if (seen.has(real)) continue;
-      if (depth >= MAX_DEPTH) {
-        skipped.push({ spec, reason: "depth>4" });
+      const maxDepth = opts.maxDepth ?? MAX_DEPTH;
+      if (depth >= maxDepth) {
+        skipped.push({ spec, reason: `depth>${maxDepth}` });
         continue;
       }
       if (!allowed(real)) {

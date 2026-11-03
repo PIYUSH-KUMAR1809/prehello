@@ -1,0 +1,17 @@
+{
+  "agent": "gemini-cli",
+  "verifiedAt": "2026-11-03",
+  "verifiedNote": "GEMINI.md hierarchy (~/.gemini/GEMINI.md, workspace dirs and parents up to context.memoryBoundaryMarkers, default [\".git\"]), just-in-time subdirectory files, context.fileName (string or list), @file imports (max depth 5, code regions ignored), extensions in ~/.gemini/extensions/<name>/gemini-extension.json (contextFileName, mcpServers; settings win on a clash), mcpServers in ~/.gemini/settings.json and .gemini/settings.json (workspace overrides user) and skills (name + description up front) are from the google-gemini/gemini-cli docs (main, fetched 2026-11-03). The docs disagree on subdirectory files (gemini-md.md: just-in-time; reference/configuration.md: eager scan up to 200 dirs); prehello follows gemini-md.md and calls them conditional. ASSUMED: MCP tool schemas loaded up front, extensions enabled, legacy top-level contextFileName. Token accuracy was never validated and no Gemini tokenizer ratio is applied.",
+  "docs": {
+    "geminiMd": "https://github.com/google-gemini/gemini-cli/blob/main/docs/cli/gemini-md.md",
+    "imports": "https://github.com/google-gemini/gemini-cli/blob/main/docs/reference/memport.md",
+    "settings": "https://github.com/google-gemini/gemini-cli/blob/main/docs/reference/configuration.md",
+    "mcp": "https://github.com/google-gemini/gemini-cli/blob/main/docs/reference/configuration.md#mcpservers",
+    "extensions": "https://github.com/google-gemini/gemini-cli/blob/main/docs/extensions/reference.md",
+    "skills": "https://github.com/google-gemini/gemini-cli/blob/main/docs/cli/skills.md"
+  },
+  "caps": {
+    "importMaxDepth": 5,
+    "discoveryMaxDirs": 200
+  }
+}
