@@ -1,14 +1,17 @@
 version: 2
+# One monthly PR for everything, so there is at most one Dependabot branch at a time.
+multi-ecosystem-groups:
+  all-updates:
+    schedule:
+      interval: monthly
 updates:
   - package-ecosystem: npm
     directory: /
-    schedule:
-      interval: weekly
-    open-pull-requests-limit: 5
-    groups:
-      dev-dependencies:
-        dependency-type: development
+    patterns: ["*"]
+    multi-ecosystem-group: all-updates
+    open-pull-requests-limit: 1
   - package-ecosystem: github-actions
     directory: /
-    schedule:
-      interval: weekly
+    patterns: ["*"]
+    multi-ecosystem-group: all-updates
+    open-pull-requests-limit: 1
