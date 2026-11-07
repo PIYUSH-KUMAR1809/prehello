@@ -6,8 +6,8 @@
       "tool": {
         "driver": {
           "name": "prehello",
-          "version": "0.1.0",
-          "semanticVersion": "0.1.0",
+          "version": "1.0.0",
+          "semanticVersion": "1.0.0",
           "shortDescription": {
             "text": "Shows what a coding agent loads into context before the first message. Token counts are estimates."
           },

@@ -1,6 +1,6 @@
 {
   "name": "prehello",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "See what your coding agent (Claude Code, Cursor, Codex, GitHub Copilot, Gemini CLI) loads before you say hello, and what you could cut. Local-only, read-only, no API key.",
   "license": "MIT",
   "author": "Piyush Kumar",

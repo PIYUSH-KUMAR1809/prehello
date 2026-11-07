@@ -1,4 +1,4 @@
-prehello 0.1.0 · this folder + user config · window 200k
+prehello 1.0.0 · this folder + user config · window 200k
 Token counts are ESTIMATES (o200k BPE with per-agent scaling factors), shown with ~. Not exact for
 any model.
 
