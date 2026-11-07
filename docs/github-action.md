@@ -25,13 +25,9 @@ jobs:
 
 `@v1` is a moving major tag (maintainers: `git tag -f v1 vX.Y.Z && git push -f origin v1` after a release). Only full `vX.Y.Z` tags trigger the npm release workflow, so moving `v1` publishes nothing.
 
-The comment looks like:
+The comment looks like this (a real `prehello diff --markdown` run on a demo repo where a PR grows CLAUDE.md; rendered GitHub-style):
 
-> **prehello: context before hello**
->
-> | Agent | Base | Head | Change |
-> |---|---:|---:|---:|
-> | `Claude Code` | 6 | 778 | **+772** |
+![The prehello PR comment](images/pr-comment.png)
 
 ## Inputs
 

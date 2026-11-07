@@ -1,17 +1,23 @@
 version: 2
 # One monthly PR for everything, so there is at most one Dependabot branch at a time.
+# Major versions are skipped; upgrade those on purpose.
 multi-ecosystem-groups:
   all-updates:
     schedule:
       interval: monthly
+    open-pull-requests-limit: 1
 updates:
   - package-ecosystem: npm
     directory: /
     patterns: ["*"]
     multi-ecosystem-group: all-updates
-    open-pull-requests-limit: 1
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
   - package-ecosystem: github-actions
     directory: /
     patterns: ["*"]
     multi-ecosystem-group: all-updates
-    open-pull-requests-limit: 1
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]

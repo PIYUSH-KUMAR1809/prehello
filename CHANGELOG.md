@@ -31,6 +31,9 @@ Planned as 1.0.0. The version in `package.json` stays 0.1.0 until the release.
 - When a skipped fixture folder held agent files, the terminal report, Markdown and SARIF (`properties.prehello.fixtureFoldersSkipped`) say how many were skipped (a count, no paths) and `--json` has `scan.fixturesSkipped` (absent when 0). Not a warning; the exit code is unchanged.
 - A scan whose root is itself inside a fixtures folder never skips anything, and the scanned project's own top-level files are never skipped.
 
+#### Docs
+- README rewritten for 1.0: all five agents up front, benchmark numbers and charts, the GitHub Action snippet, error bands, and new screenshots in `docs/images/` (terminal scan, what-to-cut list, PR comment, share card) from real runs on a demo setup built from the test fixtures. Sample cards regenerated. `prehello diff --markdown`: the per-agent `<summary>` line is plain escaped text (GitHub does not render Markdown backticks there).
+
 #### Release and repository tooling
 - `release.yml`: pushing a `vX.Y.Z` tag (for the next release; the moving `v1` Action tag and pre-release tags do not trigger it) runs typecheck, tests and the install smoke test, checks that the tag matches `package.json`, then publishes to npm with provenance.
 - Dependabot (npm and GitHub Actions, weekly), CodeQL and OpenSSF Scorecard workflows.

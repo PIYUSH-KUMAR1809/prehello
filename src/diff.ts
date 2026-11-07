@@ -138,7 +138,7 @@ export function renderDiffMarkdown(d: DiffResult, opts: { threshold?: number } =
     for (const a of d.agents) out.push(`| ${mdCode(a.name, true)} | ${cell(a.base)} | ${cell(a.head)}${a.lowerBound ? " (at least)" : ""} | **${signedTok(a.delta)}**${a.deltaPct !== null && a.delta ? ` (${a.deltaPct > 0 ? "+" : ""}${a.deltaPct}%)` : ""} |`);
     out.push("");
     for (const a of d.agents.filter((x) => x.changes.length)) {
-      out.push(`<details><summary>${mdCode(a.name)}: ${a.changes.length + a.moreChanges} changed item(s)</summary>`, "", "| Change | Item | Base | Head |", "|---:|---|---:|---:|");
+      out.push(`<details><summary>${summaryText(a.name)}: ${a.changes.length + a.moreChanges} changed item(s)</summary>`, "", "| Change | Item | Base | Head |", "|---:|---|---:|---:|");
       for (const c of a.changes) out.push(`| ${signedTok(c.delta)} | ${chg(c)} ${mdCode(c.label, true)} | ${cell(c.base)} | ${cell(c.head)} |`);
       if (a.moreChanges) out.push(`| | … ${a.moreChanges} more | | |`);
       out.push("", "</details>", "");
@@ -164,4 +164,12 @@ export function diffJson(d: DiffResult, threshold?: number): object {
 export function badgeJson(name: string, est: number | null, lowerBound: boolean): object {
   const color = est === null ? "lightgrey" : est < 5000 ? "brightgreen" : est < 15000 ? "green" : est < 30000 ? "yellow" : est < 60000 ? "orange" : "red";
   return { schemaVersion: 1, label: "context before hello", message: est === null ? "unmeasured" : `${lowerBound ? "≥" : "~"}${fmtTok(est)} tokens (${name})`, color };
+}
+
+/** Plain text for inside <summary>: GitHub does not render Markdown there, so no backticks; HTML-escaped. */
+function summaryText(name: string): string {
+  let t = name.replace(/[\u0000-\u001f\u007f-\u009f\u200b-\u200f\u2028-\u202e\u2060-\u2069\ufeff]+/g, " ").replace(/\s+/g, " ").trim();
+  if (t.length > 80) t = t.slice(0, 77) + "...";
+  if (!t) t = "(unnamed)";
+  return t.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/@/g, "&#64;").replace(/#/g, "&#35;");
 }

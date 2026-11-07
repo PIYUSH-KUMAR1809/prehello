@@ -41,6 +41,11 @@ describe("diffSnapshots", () => {
     expect(same.agents[0].changes).toEqual([]);
     expect(renderDiffMarkdown(same)).toMatch(/No change in always-on context/);
   });
+  it("Markdown: <summary> holds plain escaped text, no backticks", () => {
+    const d = diffSnapshots(snap([{ id: "claude-code", always: 0, items: [] }]), snap([{ id: "claude-code", always: 5, items: [["./a", 5]] }]));
+    const line = renderDiffMarkdown(d).split("\n").find((l) => l.includes("<summary>"))!;
+    expect(line).toBe("<details><summary>Claude Code: 1 changed item(s)</summary>");
+  });
   it("caps the item list at 10 and says how many more", () => {
     const items: Array<[string, number]> = Array.from({ length: 14 }, (_, i) => [`./f${i}.md`, i + 1]);
     const d = diffSnapshots(snap([{ id: "cursor", always: 0, items: [] }]), snap([{ id: "cursor", always: 105, items }]));

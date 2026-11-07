@@ -10,92 +10,81 @@
   <img src="https://img.shields.io/badge/platform-linux%20%7C%20macos%20%7C%20windows-lightgrey" alt="Linux, macOS and Windows">
 </p>
 
-<p align="center">
-  <img src="docs/sample-card-cursor.png" width="760" alt="A prehello share card: 'Skills and plugins cost ~3.9k tokens before hello', with a treemap of which plugins and files they come from">
-  <br>
-  <sub>A share card (<code>--card=card.png</code>). Sample data shaped like a real Cursor setup, not a real machine.</sub>
-</p>
-
-Every Claude Code, Cursor, Codex, GitHub Copilot or Gemini CLI session starts with a pile of rules, skills, plugin listings and MCP servers already sitting
-in the context window, before you type a word. **prehello** scans your repo and your home-directory agent config and tells you
-**how many tokens that is, which plugin or skill folder is responsible, and roughly what removing the top few would save.**
+Every **Claude Code, Cursor, Codex, GitHub Copilot and Gemini CLI** session starts with rules, skills, plugin listings and MCP servers already
+in the context window, before you type a word. **prehello** scans your repo and your user-level agent config and tells you
+**how many tokens that is, which plugin or file is responsible, and roughly what removing the top few would save.**
 
 - **Local and read-only.** No network, no telemetry, no API key, no child processes. Nothing leaves your machine.
-- **Honest numbers.** Every count is an estimate (`~`). What it cannot measure is listed, never shown as 0.
-- **Actionable.** A ranked "what to cut" list, a share card, a Markdown report, SARIF for code scanning, and a `--max-tokens` CI gate.
-
-## Try it
+- **Honest numbers.** Every count is an estimate (`~`) with a published error band. What it cannot measure is listed, never shown as 0.
+- **Actionable.** A ranked "what to cut" list, a share card, a PR comment on every pull request, a badge, SARIF and a `--max-tokens` CI gate.
 
 ```sh
-npx prehello                                   # scan the current folder plus your user-level agent config
-npx prehello ~/code/your-project               # scan a specific project
-npx prehello ~/code/your-project --card=card.png  # also write a PNG share card
-npm install -g prehello                        # or install it once and run `prehello`
+npx prehello                          # this folder plus your user-level agent config
+npx prehello ~/code/your-project      # a specific project
+npx prehello --card=card.png          # also write a PNG share card
 ```
 
-Needs Node 22 or newer, on Linux, macOS or Windows.
-
-<details>
-<summary>Run from source instead</summary>
-
-```sh
-git clone https://github.com/PIYUSH-KUMAR1809/prehello.git
-cd prehello
-npm ci && npm run build
-node dist/cli.js ~/code/your-project
-```
-
-</details>
+Needs Node 22 or newer, on Linux, macOS or Windows. `npm install -g prehello` installs it as `prehello`.
 
 ## What it prints
 
-A real run on bundled **fixture** data (`test/fixtures/plugin-heavy`: three invented plugins plus a few skills), not anyone's real numbers:
+<p align="center"><img src="https://raw.githubusercontent.com/PIYUSH-KUMAR1809/prehello/main/docs/images/scan.png" width="760" alt="prehello terminal output: per-agent totals for Claude Code, Cursor, Codex, GitHub Copilot and Gemini CLI, the what-to-cut list, measured vs not measured, and top offenders"></p>
 
-```text
-prehello 0.1.0 · this folder + user config · window 200k
-Token counts are ESTIMATES (o200k BPE with per-agent scaling factors), shown with
-~. Not exact for any model.
+<sub>A real run of prehello 1.0 on a demo setup built from the bundled test fixtures (`test/fixtures/`), not anyone's real machine.</sub>
 
-Before your first message: Cursor ~5.2k tokens
+Below this first screen come a per-agent breakdown (always-on / conditional / deferred / on-demand), findings, and a Context Grade
+(a heuristic of this tool, not a standard). The full output is in [docs/REFERENCE.md](docs/REFERENCE.md).
 
-What to cut (estimates)
-  Cursor  skills, plugins and MCP servers add ~4.7k tokens before hello: 91% of
-          the measured always-on total, in 4 groups.
-          Top 3 groups = 95% of that. Removing them would save about 4.5k tokens
-          (2.2% of a 200k window); estimate, not a promise.
-           1. plugin analytics-kit (40 skills)               ~2.3k    45%
-           2. plugin design-kit (24 skills)                  ~1.4k    26%
-           3. plugin cloud-kit (14 skills)                    ~765    15%
+> **Read the numbers as "what YOUR config adds".** The agent's built-in system prompt and tool definitions are not on disk, so no static
+> scanner can see them. prehello's total is the part *you* control. For the exact live total in one Claude Code session, use `/context`.
 
-Measured vs. not measured (always-on items)
-  Cursor  measured 4 of 4 (100%): 2 skills listings, 1 instruction file, 1 rule
-...
+**The share card** (`--card=card.png`) holds no paths or file contents:
+
+<p align="center"><img src="https://raw.githubusercontent.com/PIYUSH-KUMAR1809/prehello/main/docs/images/card.png" width="640" alt="prehello share card: Skills and plugins cost at least ~4.9k tokens before hello, with a treemap of plugins"></p>
+
+## What 559 public repos load before hello
+
+The [State of agent context 2026](docs/BENCHMARK.md) benchmark checked 2,041 public GitHub repos; 559 ship agent files. prehello ran on each with an
+empty HOME, so only the repo's own files count.
+
+- The median repo adds **~2.2k tokens** before hello. p90 is ~8.4k, the largest ~53k.
+- **20.4%** have both CLAUDE.md and AGENTS.md at the root, so Claude Code ignores the AGENTS.md.
+- **16.6%** have an instruction file longer than the agent's documented guideline; **3.4%** have an AGENTS.md chain Codex truncates at 32 KiB.
+- Stars don't predict size (Spearman 0.05), but they do predict adoption: **47%** of 10k+ star repos ship agent files, vs **17%** at 20–99 stars.
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/PIYUSH-KUMAR1809/prehello/main/benchmark/charts/always-on-by-agent.png" width="420" alt="Always-on tokens per agent across 559 repos">
+  <img src="https://raw.githubusercontent.com/PIYUSH-KUMAR1809/prehello/main/benchmark/charts/mistakes.png" width="420" alt="Common agent-file mistakes across 559 repos">
+</p>
+
+Data, scripts and how to reproduce it are in [`benchmark/`](benchmark/) and [docs/BENCHMARK.md](docs/BENCHMARK.md).
+
+## A PR comment on every pull request
+
+```yaml
+# .github/workflows/prehello.yml
+on: pull_request
+permissions: { contents: read, pull-requests: write }
+jobs:
+  context-diff:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0, persist-credentials: false }
+      - uses: PIYUSH-KUMAR1809/prehello@v1
+        with: { fail-above: 2k }   # optional
 ```
 
-That is the first screen. Below it come a per-agent breakdown (always-on / conditional / deferred / on-demand), what could not be measured, and a
-Context Grade (a heuristic of this tool, not a standard). The full output is in [docs/REFERENCE.md](docs/REFERENCE.md).
+<p align="center"><img src="https://raw.githubusercontent.com/PIYUSH-KUMAR1809/prehello/main/docs/images/pr-comment.png" width="640" alt="The prehello PR comment: a table of base, head and change per agent"></p>
 
-> **Read the numbers as "what YOUR config adds".** The agent's own built-in system prompt and built-in tool definitions are **not** counted:
-> they are usually the largest fixed chunk of the context window and are not on disk, so no static scanner can see them. prehello's total is the part
-> *you* control. For the exact live total in one Claude Code session, use `/context`.
+One sticky comment per PR, updated on every push. Fork PRs fall back to the job summary. Details, inputs and the README badge
+(`--badge badge.json`, a shields.io endpoint) are in [docs/github-action.md](docs/github-action.md).
 
-### On one real machine
+## How accurate is it?
 
-The author's own Cursor setup, one run of prehello 0.1.0 on 2026-10-25. **One machine, estimates, not reproducible from this repo.**
-
-| What | Estimate, before hello |
-| --- | --- |
-| Skills, plugins and MCP servers | **at least ~14.3k tokens** (a lower bound: items prehello cannot measure, such as Cursor User Rules, are not in it) |
-| Cut list, top 3 of 6 groups | `plugin posthog` ~10.3k (72%), `plugin figma` ~1.7k, 18 Cursor-managed skills ~1.3k: removing them would save about **~13.2k** |
-
-Almost all of it is skill listings, mostly from one plugin. Every enabled skill puts its name and description in the context on every session,
-whether you use it or not. That is what the cut list is for, and removing a plugin you actually use costs you the plugin.
-
-### Across 559 public repositories
-
-The [State of agent context 2026](docs/BENCHMARK.md) benchmark ran prehello with an empty HOME on 559 public GitHub repositories that ship agent files.
-The median repo adds **~2.2k tokens** before hello (p90 ~8.4k, max ~53k). 20% have both CLAUDE.md and AGENTS.md at the root, so Claude Code ignores AGENTS.md,
-and 17% have an instruction file longer than the agent's documented guideline. Data and scripts are in [`benchmark/`](benchmark/).
+Counts use the o200k tokenizer with per-agent factors from published measurements. Bands: Codex ±3%, Claude Code ±15%,
+Cursor and Copilot −3% to +15% (model unknown), Gemini CLI −3% to +64% (unvalidated). Sources and caveats are in [docs/ACCURACY.md](docs/ACCURACY.md).
+`prehello calibrate --file ctx.txt` compares the estimate with your own Claude Code `/context` reading, per category.
 
 ## Outputs
 
@@ -120,7 +109,7 @@ and exits 1 without a stack trace, and the SVG card and everything else keep wor
 
 ## Agents covered
 
-Claude Code, Cursor, Codex, GitHub Copilot (CLI and VS Code), Gemini CLI, and plain `AGENTS.md` files. Details of what is scanned for each are in [docs/REFERENCE.md](docs/REFERENCE.md). Not yet: Windsurf, Cline.
+Claude Code, Cursor, Codex, GitHub Copilot (CLI and VS Code), Gemini CLI, and plain `AGENTS.md` files. What is scanned for each is in [docs/REFERENCE.md](docs/REFERENCE.md). Not yet: Windsurf, Cline.
 
 ## FAQ
 
@@ -144,7 +133,7 @@ runs in CI, and ranks *which plugin or skill folder* to remove.
 
 **Why does it say "Skipped N fixture folders"?** A repo that tests agent tooling keeps sample `AGENTS.md`, `CLAUDE.md`, `.cursor/rules` and skills under `test/fixtures/` and similar. No agent loads those, so prehello skips such folders by default and says how many it skipped (only folders where it found agent files). `--include-fixtures` counts them; scanning a folder that is itself inside a fixtures folder never skips anything.
 
-**Does it work on Windows?** Yes. CI runs the full suite on Ubuntu, Windows and macOS with Node 22 and 24. See [docs/REFERENCE.md](docs/REFERENCE.md).
+**Does it work on Windows?** Yes. CI runs the full suite on Ubuntu, Windows and macOS with Node 22, 24 and 26. See [docs/REFERENCE.md](docs/REFERENCE.md).
 
 ## Limitations
 

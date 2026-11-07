@@ -4,6 +4,10 @@ Long-form details moved out of the README. Back to the [README](../README.md).
 
 Everything here describes the current CLI. Commands below say `prehello`; from a source checkout run `node dist/cli.js` instead.
 
+The "What to cut" list ranks the plugin, skill folder or MCP server groups to remove first (a 1.0 run on a demo setup built from the test fixtures):
+
+![The what-to-cut list](images/what-to-cut.png)
+
 <details>
 <summary><b>Full sample output (fixture, not a real machine)</b></summary>
 
@@ -306,7 +310,7 @@ The number goes to stderr, so `--json` on stdout stays valid. Exit code 2 wins o
   Examples of `assumed`: how Cursor and Codex format their skills listing and what it costs, Cursor's `~/.cursor/skills-cursor`, Cursor plugin install state,
   nested `.cursor/rules`, and whether Codex loads MCP schemas upfront.
 - **The Context Grade is a heuristic of this tool**, not a standard. `prehello explain grade` prints the exact rubric.
-- **Windows and macOS:** the full test suite runs in CI on Ubuntu, Windows and macOS with Node 22 and 24 (Node 18, 20 and 22 up to 0.1.0, green on 2026-10-25) (GitHub-hosted runners only; not tried on a range
+- **Windows and macOS:** the full test suite runs in CI on Ubuntu, Windows and macOS with Node 22, 24 and 26 (Node 18, 20 and 22 up to 0.1.0, green on 2026-10-25) (GitHub-hosted runners only; not tried on a range
   of real Windows consoles, locales or corporate setups). Windows specifics (USERPROFILE home, drive letters, UNC, backslash globs, CRLF/BOM/UTF-16 files, reserved device names, case-insensitive file systems)
   are covered by tests, partly by simulation. Only the three listed agents plus plain `AGENTS.md` are covered.
 
